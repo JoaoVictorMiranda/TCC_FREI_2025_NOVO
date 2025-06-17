@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comentários</title>
+    <link rel="stylesheet" href="/public/css/global.css">
+    <link rel="stylesheet" href="/src/pages/commentsScreen/comments.css">
+    <script src="/src/pages/commentsScreen/comments.js"></script>
+</head>
+<body>
+
+    <div class="container_header">
+        <div class="container_header_elements">
+
+            <div class="container_header_logo">
+                <a href="#"><img src="/public/assets/images/logo cult bridge_white.png.png" width="220px" height="100px" alt=""></a>
+            </div>
+
+            <div class="container_header_links">
+                <div class="container_header_links_effect">
+                    <a href="/src/pages/home/index.html">Página Inicial</a>
+                </div>
+
+                <div class="container_header_nav">
+                    <select>
+                        <option value="Navegar">Navegar</option>
+                        <option value="Filmes">Filmes</option>
+                        <option value="Séries">Séries</option>
+                        <option value="Jogos">Jogos</option>
+                    </select>
+                </div>
+
+                <div class="container_header_links_effect">
+                    <a href="#">Listas</a>
+                </div>
+
+                <div class="container_header_elements_icons">
+                    <a href="#"><img src="/public/assets/images/packard-bell.png" width="30px" height="30px" alt=""></a>
+                    <a href="#"><img src="/public/assets/images/lupa.png" width="30px" height="30px" alt=""></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<div class="containerComments">
+    <h2>CultBridge</h2>
+    <textarea id="textoComentario" placeholder="Digite aqui..."></textarea>
+    <button onclick="postarComentario()">Postar</button>
+
+    <div class="comentarios" id="areaComentarios"></div>
+    
+        <div class="apagarComengtario">
+            <button onclick="apagarComentarios()">Apagar Comentários</button>
+        </div>
+</div>]
+
+</body>
+</html>

@@ -1,0 +1,181 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.container_header_logo {
+    transform: translateX(-250px);
+}
+
+.container_header {
+    background-color: black;
+    background-size: cover;
+    height: 70px;
+}
+
+.container_header_elements {
+    padding: 10px;
+}
+
+.container_header_elements {
+    display: flex;
+    justify-content: space-around;
+}
+
+.container_header_links {
+    display: flex;
+    justify-content: space-around;
+    column-gap: 30px;
+}
+
+.container_header_links a {
+    text-decoration: none;
+    color: white;
+    padding-top: 15px;
+}
+
+.container_header_links_effect {
+    margin-top: 15px;
+}
+
+.container_header_links_effect :hover {
+    color: #7B2121;
+    transition: all 0.5s;
+}
+
+.container_header_links select {
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    width: 120px;
+    height: 30px;
+    padding: 5px;
+    margin-top: 10px;
+    background-color: transparent;
+    color: white;
+}
+
+.container_header_nav :hover {
+    border: white solid 1px;
+}
+
+.container_header_nav option {
+    color: black;
+}
+
+.container_header_elements_icons img {
+    filter: invert(1);
+    margin-top: 10px;
+}
+
+.container_header_button button {
+    background-color: #7B2121;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    width: 120px;
+    height: 30px;
+    margin-top: 10px;
+    transition: 0.05s;
+}
+
+.container_header_button button:hover{
+    transform: scale(1.04);
+}
+
+.container_header_button a{
+    color: white;
+    text-decoration:none;
+    font-weight: bold;
+}
+
+
+.container_header_configuration img {
+    filter: invert(1);
+    margin-top: 10px;
+}
+
+
+
+.container_header_elements_after {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 30px;
+}
+
+.containerComments {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+    gap: 20px;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.containerComments h2 {
+    font-size: 35px;
+    color: #7B2121;
+}
+
+textarea {
+    width: 800px;
+    height: 40px;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+    border: 1px solid white;
+    backdrop-filter: blur(4px);
+}
+
+textarea::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #7B2121;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    font-weight: bold;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+.comentarios {
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.comentarios p {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid white;
+    word-wrap: break-word;
+    backdrop-filter: blur(4px);
+}
+
+.apagarComentario {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    margin-left: 100px;
+}
