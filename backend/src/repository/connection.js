@@ -9,4 +9,4 @@ const connection = await mysql.createConnection({
 
 export { connection }
 
-//CADA UM QUE FOR TESTAR FAZ AI SEU CONNECTION não vou passar os meus
+//CADA UM QUE FOR TESTAR FAZ AI SEU CONNECTION não vou passar os meus           
