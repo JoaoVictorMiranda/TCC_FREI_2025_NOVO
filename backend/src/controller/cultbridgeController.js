@@ -4,6 +4,11 @@ import { Router } from 'express';
 
 const endpoints = Router();
 
+
+
+
+
+
 endpoints.get('/users', async (req, res) => {
     let usuarios = await repo.listarUsuarios();
     res.send(usuarios);

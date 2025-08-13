@@ -1,10 +1,12 @@
 import express from 'express'
+import cors from 'cors'
 import 'dotenv/config'
-import * as cultRepo from './repository/cultbridgeRepository.js'
+import * as cultRepo from './repository/cultbridgeRepository.js';
 import { adicionarRotas } from './rotas.js';
 
 const api = express();
 api.use(express.json());
+api.use(cors());
 
 const PORT = process.env.PORT || 3000;
 

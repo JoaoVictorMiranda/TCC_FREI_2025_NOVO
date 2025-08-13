@@ -8,16 +8,24 @@ export async function listarUsuarios() {
     return registros;
 }
 
+
+
+
+
+//Fazer uma verificação de se o email ja esta cadastrado dentro do database 
+
 export async function inserirUsuario(dadosUsuario) {
     const comando = `
-    INSERT INTO users(name, email, nascimento)
+    INSERT INTO users(name, email, nascimento, password)
     values
-    (?,?,?);
+    (?,?,?,?);
 `
     let [info] = await connection.query(comando, [
         dadosUsuario.name,
         dadosUsuario.email,
-        dadosUsuario.nascimeto
+        dadosUsuario.nascimento,
+        dadosUsuario.password
+
     ]);
 
     return info.insertId;

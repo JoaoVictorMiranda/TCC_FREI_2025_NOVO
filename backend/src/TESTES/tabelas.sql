@@ -6,7 +6,8 @@ CREATE TABLE users (
     id int PRIMARY KEY auto_increment,
     name varchar(200),
     email varchar(200),
-    nascimento date
+    nascimento date, 
+    password varchar(16)
 );
 
 
