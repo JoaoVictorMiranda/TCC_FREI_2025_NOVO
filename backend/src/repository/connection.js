@@ -2,9 +2,9 @@ import mysql from 'mysql2/promise'
 
 const connection = await mysql.createConnection({
     host: 'localhost',
-    user: 'ADMINISTRADOR',
-    password: '',
-    database: 'cultbridge'
+    user: 'jonas',
+    password: '1234',
+    database: 'bancogeral'
 })
 
 export { connection }
