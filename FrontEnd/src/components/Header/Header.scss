@@ -1,12 +1,14 @@
 .container_header {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
+    .hamburguer{
+        cursor: pointer;
+    }
 
     .container_nav {
         ul {
-
             display: flex;
             gap: 2rem;
             list-style: none;
@@ -26,7 +28,8 @@
 
             li:hover {
                 background-color: #373f47;
-                
+                cursor: pointer;
+
             }
 
             li:hover a {
@@ -42,11 +45,58 @@
         gap: .7rem;
         align-items: center;
 
+        .sumido{
+            display: none;
+        }
+
+        .input_pesquisa {
+            padding: 0.5rem;
+            position: absolute;
+            right: 50vw;
+            transform: translate(50%, 50%);
+            top: 7vh;
+            z-index: 10001; /* Acima do overlay */
+            border: none;
+            border-radius: 10px;
+        }
+          
+          .input_pesquisa:focus {
+            background-color: #cecece;
+            outline: none;
+            border: 2px solid black;
+          }
+          
+          .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.637); /* Leve escurecimento */
+            z-index: 10000;
+          }
+
+        .pesquisa {
+            img {
+                height: 1000%;
+                width: 100%;
+            }
+            width: 10%;
+            padding: .3rem;
+            border-radius: 5px;
+        }
+
+        .pesquisa:hover {
+            background-color: #808080;
+            padding: .3rem;
+            cursor: pointer;
+        }
+
         .foto_perfil {
             width: 50px;
             height: 50px;
-            background-color: #313131;
             border-radius: 50%;
+            background-color: #373f47;
         }
     }
 
