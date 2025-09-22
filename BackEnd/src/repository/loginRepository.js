@@ -37,3 +37,4 @@ export async function loginUsuario(email, senha) {
     ])
     return info[0];
 }
+
