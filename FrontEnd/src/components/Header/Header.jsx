@@ -9,7 +9,7 @@ const Header = () => {
     const [showInput, setShowInput] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
     let [usuario, setUsuario] = useState("Lucas Viana");
-  const inputRef = useRef(null);
+    const inputRef = useRef(null);
 
     function pesquisa() {
         setShowInput(true);
@@ -28,16 +28,16 @@ const Header = () => {
     let [haburguer, setHaburguer] = useState(Barras);
 
 
-function trocarBarras(){
-    if(haburguer == Barras){
-        setHaburguer(habuge)
-    }else if(haburguer == habuge){
-        setHaburguer(Barras)
+    function trocarBarras() {
+        if (haburguer == Barras) {
+            setHaburguer(habuge)
+        } else if (haburguer == habuge) {
+            setHaburguer(Barras)
+        }
     }
-}
     return (
         <div className='container_header' onLoad={puxarUsuario}>
-            <div> <img src={haburguer}  onClick={trocarBarras} height={50} className='hamburguer' /> </div>
+            <div> <img src={haburguer} onClick={trocarBarras} height={50} className='hamburguer' /> </div>
             <div>
                 <nav className='container_nav' >
                     <ul>
@@ -53,7 +53,7 @@ function trocarBarras(){
             <div className='header_login'>
                 {isFocused && <div className="overlay" onClick={() => setIsFocused(false)}></div>}
                 <img src={Pesquisa} className='pesquisa' onClick={pesquisa} />
-                <h3>{usuario}</h3>
+                <Link to={'/login'} ><h3>{usuario}</h3></Link>
                 <div className="caixa_pesquisa">
                     <input
                         type="text"
