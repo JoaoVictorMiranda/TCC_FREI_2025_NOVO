@@ -25,8 +25,7 @@ export async function loginUsuario(email, senha) {
     SELECT id_user,
     nome,
     email,
-    nascimento,
-    role
+    nascimento
     FROM usuarios
     WHERE email = ? 
     and senha = MD5(?)
