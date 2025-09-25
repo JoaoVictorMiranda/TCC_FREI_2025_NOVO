@@ -1,67 +1,107 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router';
+import { useNavigate, Link } from 'react-router-dom';
 import './Login.scss';
-import { useNavigate } from 'react-router-dom';
-
-import api from '../../api.js'
-
+import iconeControle from '../../assets/iconecontrole.svg';
+import camera from '../../assets/camera.svg';
 
 const Login = () => {
     const navigate = useNavigate();
-    const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    });
+    const [loading, setLoading] = useState(false);
 
-
-    if (localStorage.token == true) {
-        navigate('/perfil'); // ou a rota que você quiser
-    }
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
-        try {
-            const response = await api.post('/user', {
-                email: email,
-                senha: senha
-            });
-            let token = response.data.token;
+        // Simulação de login
+        setTimeout(() => {
+            console.log('Login realizado:', formData);
+            setLoading(false);
+            navigate('/community');
+        }, 2000);
+    };
 
-            localStorage.setItem("token", token);
-            navigate('/perfil'); // ou a rota que você quiser
+    const handleVoltar = () => {
+        navigate('/');
+    };
 
-        } catch (error) {
-            console.error('Erro ao fazer login:', error.response?.data || error.message);
-        }
+    const handleSocialLogin = (provider) => {
+        console.log(`Login com ${provider}`);
     };
 
     return (
-        <div className='container_login'>
-            <h1>Faça Seu login:</h1>
-            <div className="login">
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="email">Email: </label>
+        <div className={`login-container ${loading ? 'loading' : ''}`}>
+            <form onSubmit={handleSubmit} className="login-form">
+                <h1>CineCommunity</h1>
+
+                <div className="input-group">
+                    <label htmlFor="email">Email</label>
                     <input
                         type="email"
                         id="email"
                         name="email"
-                        placeholder="Pedro@email.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="seu@email.com"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        required
                     />
+                </div>
 
-                    <label htmlFor="senha">Senha: </label>
+                <div className="input-group">
+                    <label htmlFor="password">Senha</label>
                     <input
                         type="password"
-                        id="senha"
-                        name="senha"
-                        placeholder="SenhaForte1234"
-                        value={senha}
-                        onChange={(e) => setSenha(e.target.value)}
+                        id="password"
+                        name="password"
+                        placeholder="Sua senha"
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        required
                     />
+                </div>
 
-                    <button type="submit">Enviar</button>
-                </form>
-                <p>Não tem login? <Link to="/registrar">Registrar</Link></p>
+                <div className="help-links">
+                    <Link to="/forgot-password">Esqueceu a senha?</Link>
+                    <Link to="/register">Criar conta</Link>
+                </div>
+
+                <button type="submit" className="login-button" disabled={loading}>
+                    {loading ? 'Entrando...' : 'Entrar na Comunidade'}
+                </button>
+
+                <div className="divider">ou</div>
+
+                <div className="social-login">
+                    <button type="button" onClick={() => handleSocialLogin('Google')}>
+                        Google
+                    </button>
+                    <button type="button" onClick={() => handleSocialLogin('Twitter')}>
+                        Twitter
+                    </button>
+                </div>
+
+                <button type="button" onClick={handleVoltar} className="back-button">
+                    Voltar ao Início
+                </button>
+            </form>
+
+            <div className="flutuante">
+                <img src={iconeControle} alt="Ícone controle" height="100" />
+            </div>
+
+            <div className="flutuante">
+                <img src={camera} alt="Câmera" height="80" />
             </div>
         </div>
     );
