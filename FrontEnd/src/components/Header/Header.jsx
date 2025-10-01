@@ -5,10 +5,10 @@ import Pesquisa from '../../assets/images/pesquisa.svg'
 import habuge from '../../assets/images/habuge.svg'
 import './Header.scss'
 
-const Header = () => {
+const Header = ({User}) => {
     const [showInput, setShowInput] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
-    let [usuario, setUsuario] = useState("Lucas Viana");
+    let [usuario, setUsuario] = useState(User);
     const inputRef = useRef(null);
 
     function pesquisa() {

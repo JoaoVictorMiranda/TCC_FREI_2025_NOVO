@@ -9,7 +9,7 @@ function Home() {
   return (
     <>
       <div className="container_home">
-        <Header />
+        <Header User={"BOM DIA"} />
 
 
       <Footer />

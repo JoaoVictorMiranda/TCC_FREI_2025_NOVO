@@ -42,7 +42,7 @@ const Login = () => {
 
     return (
         <div className="login-container">
-            <Header />
+            <Header User={"Lucas Viana"} />
             
             <form onSubmit={handleSubmit} className="login-form">
                 <h1>CultBridge</h1>
