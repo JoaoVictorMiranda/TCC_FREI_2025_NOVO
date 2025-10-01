@@ -1,461 +1,187 @@
-// =============================================
-// PALETA MODERNA TECH - COMUNIDADE DE FILMES
-// =============================================
-
-// Cores principais
-$azul-profundo: #0F1B2D;
-$ciano-neon: #00D4FF;
-$roxo-energetico: #6E44FF;
-$branco-puro: #FFFFFF;
-
-// Cores auxiliares
-$azul-hover: #1E2B45;
-$cinza-texto: #A0AEC0;
-$cinza-borda: #2D3748;
-$sombra-suave: rgba(0, 0, 0, 0.3);
-
-// Mixins
-@mixin flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-@mixin floating-animation {
-  animation: float 8s ease-in-out infinite;
-}
-
-@mixin glass-effect {
-  background: rgba($azul-profundo, 0.85);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba($ciano-neon, 0.1);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-@mixin input-style {
-  background: rgba($branco-puro, 0.05);
-  border: 2px solid $cinza-borda;
-  border-radius: 12px;
-  padding: 16px 20px;
-  color: $branco-puro;
-  font-size: 16px;
-  font-weight: 400;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  width: 100%;
-  
-  &::placeholder {
-    color: $cinza-texto;
-    font-weight: 300;
-  }
-  
-  &:focus {
-    outline: none;
-    border-color: $ciano-neon;
-    background: rgba($branco-puro, 0.08);
-    box-shadow: 0 0 0 4px rgba($ciano-neon, 0.1);
-    transform: translateY(-1px);
-  }
-  
-  &:hover {
-    border-color: lighten($cinza-borda, 10%);
-  }
-}
-
-@mixin button-primary {
-  background: linear-gradient(135deg, $ciano-neon 0%, $roxo-energetico 100%);
-  color: $azul-profundo;
-  border: none;
-  border-radius: 12px;
-  padding: 16px 24px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s;
-  }
-  
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 
-      0 12px 24px rgba(0, 212, 255, 0.3),
-      0 8px 16px rgba(110, 68, 255, 0.3);
-    
-    &::before {
-      left: 100%;
-    }
-  }
-  
-  &:active {
-    transform: translateY(0);
-  }
-}
-
-@mixin button-secondary {
-  background: transparent;
-  color: $cinza-texto;
-  border: 2px solid $cinza-borda;
-  border-radius: 12px;
-  padding: 14px 24px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    border-color: $ciano-neon;
-    color: $branco-puro;
-    background: rgba($ciano-neon, 0.05);
-    transform: translateY(-1px);
-  }
-}
-
-// =============================================
-// ESTILOS PRINCIPAIS
-// =============================================
-
+// Login.scss
 .login-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0A1128 0%, $azul-profundo 50%, #1A2B45 100%);
-  position: relative;
-  overflow: hidden;
-  @include flex-center;
+  background: #0F1B2D;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
-  
-  // Efeito de partículas sutil
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      radial-gradient(circle at 20% 30%, rgba($ciano-neon, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 80% 70%, rgba($roxo-energetico, 0.05) 0%, transparent 50%);
-    pointer-events: none;
-  }
-  
-  // Formulário principal
+  position: relative;
+
   .login-form {
-    @include glass-effect;
-    border-radius: 24px;
-    padding: 60px 50px;
+    background: #1E2B45;
+    border-radius: 12px;
+    padding: 40px 30px;
     width: 100%;
-    max-width: 480px;
-    position: relative;
-    z-index: 10;
-    
+    max-width: 400px;
+    margin: 80px auto;
+    border: 1px solid #2D3748;
+
     h1 {
       text-align: center;
-      margin-bottom: 40px;
-      font-size: 36px;
-      font-weight: 700;
-      background: linear-gradient(135deg, $ciano-neon 0%, $roxo-energetico 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      position: relative;
-      
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: -15px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 80px;
-        height: 3px;
-        background: linear-gradient(90deg, $ciano-neon, $roxo-energetico);
-        border-radius: 2px;
-      }
+      color: #FFFFFF;
+      margin-bottom: 30px;
+      font-size: 28px;
+      font-weight: 600;
     }
-    
-    // Grupo de inputs
+
     .input-group {
-      margin-bottom: 24px;
-      
+      margin-bottom: 20px;
+
       label {
         display: block;
-        color: $cinza-texto;
+        color: #A0AEC0;
         font-size: 14px;
-        font-weight: 500;
         margin-bottom: 8px;
-        margin-left: 4px;
       }
-      
+
       input {
-        @include input-style;
-      }
-    }
-    
-    // Links de ajuda
-    .help-links {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 32px;
-      
-      a {
-        color: $cinza-texto;
-        text-decoration: none;
+        width: 100%;
+        padding: 12px 16px;
+        background: #2D3748;
+        border: 1px solid #4A5568;
+        border-radius: 8px;
+        color: #FFFFFF;
         font-size: 14px;
-        transition: color 0.3s ease;
-        
-        &:hover {
-          color: $ciano-neon;
+
+        &:focus {
+          outline: none;
+          border-color: #00D4FF;
+        }
+
+        &::placeholder {
+          color: #718096;
         }
       }
     }
-    
-    // Botões
+
+    .help-links {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 25px;
+
+      a {
+        color: #00D4FF;
+        text-decoration: none;
+        font-size: 14px;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
     .login-button {
-      @include button-primary;
-      margin-bottom: 16px;
+      width: 100%;
+      padding: 14px;
+      background: #00D4FF;
+      color: #0F1B2D;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 15px;
+
+      &:hover {
+        background: #00B8E6;
+      }
+
+      &:disabled {
+        background: #4A5568;
+        cursor: not-allowed;
+      }
     }
-    
-    .back-button {
-      @include button-secondary;
-    }
-    
-    // Divisor
+
     .divider {
       text-align: center;
-      margin: 24px 0;
-      color: $cinza-texto;
+      color: #A0AEC0;
+      margin: 20px 0;
       font-size: 14px;
       position: relative;
-      
+
       &::before,
       &::after {
         content: '';
         position: absolute;
         top: 50%;
-        width: 30%;
+        width: 45%;
         height: 1px;
-        background: linear-gradient(90deg, transparent, $cinza-borda, transparent);
+        background: #4A5568;
       }
-      
-      &::before { left: 0; }
-      &::after { right: 0; }
+
+      &::before {
+        left: 0;
+      }
+
+      &::after {
+        right: 0;
+      }
     }
-    
-    // Redes sociais
+
     .social-login {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
       gap: 12px;
-      margin-top: 20px;
-      
+      margin-bottom: 20px;
+
       button {
-        @include button-secondary;
+        flex: 1;
         padding: 12px;
-        font-size: 14px;
-        
-        &:first-child:hover {
-          border-color: #4285F4;
-          color: #4285F4;
-        }
-        
-        &:last-child:hover {
-          border-color: #333;
-          color: #333;
+        background: transparent;
+        border: 1px solid #4A5568;
+        border-radius: 8px;
+        color: #A0AEC0;
+        cursor: pointer;
+
+        &:hover {
+          border-color: #00D4FF;
+          color: #00D4FF;
         }
       }
     }
+
+    .back-button {
+      width: 100%;
+      padding: 12px;
+      background: transparent;
+      border: 1px solid #4A5568;
+      border-radius: 8px;
+      color: #A0AEC0;
+      cursor: pointer;
+
+      &:hover {
+        border-color: #00D4FF;
+        color: #00D4FF;
+      }
+    }
   }
-  
-  // Elementos flutuantes
+
   .flutuante {
-    position: absolute;
-    z-index: 5;
-    @include floating-animation;
-    pointer-events: none;
-    
-    // Ícone controle (canto superior direito)
-    &:first-of-type {
-      top: 10%;
-      right: 10%;
-      animation-delay: 0s;
-      
-      img {
-        filter: 
-          drop-shadow(0 8px 20px rgba($ciano-neon, 0.3))
-          brightness(1.2);
-        opacity: 0.8;
-      }
-    }
-    
-    // Câmera (canto inferior esquerdo)
-    &:last-of-type {
-      bottom: 10%;
-      left: 10%;
-      animation-delay: 4s;
-      
-      img {
-        filter: 
-          drop-shadow(0 8px 20px rgba($roxo-energetico, 0.3))
-          brightness(1.1);
-        opacity: 0.8;
-      }
-    }
+    display: none;
   }
 }
 
-// =============================================
-// ANIMAÇÕES
-// =============================================
-
-@keyframes float {
-  0%, 100% { 
-    transform: translateY(0px) rotate(0deg) scale(1);
-  }
-  33% { 
-    transform: translateY(-15px) rotate(1deg) scale(1.02);
-  }
-  66% { 
-    transform: translateY(10px) rotate(-1deg) scale(0.98);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.8; }
-}
-
-// =============================================
-// RESPONSIVIDADE
-// =============================================
-
+// Responsividade
 @media (max-width: 768px) {
   .login-container {
-    padding: 16px;
-    
-    .login-form {
-      padding: 40px 30px;
-      
-      h1 {
-        font-size: 28px;
-        margin-bottom: 30px;
-        
-        &::after {
-          width: 60px;
-        }
-      }
-      
-      .social-login {
-        grid-template-columns: 1fr;
-      }
-    }
-    
-    .flutuante {
-      opacity: 0.6;
-      
-      &:first-of-type {
-        top: 5%;
-        right: 5%;
-        
-        img {
-          height: 80px;
-        }
-      }
-      
-      &:last-of-type {
-        bottom: 5%;
-        left: 5%;
-        
-        img {
-          height: 60px;
-        }
-      }
-    }
-  }
-}
+    padding: 10px;
 
-@media (max-width: 480px) {
-  .login-container {
     .login-form {
-      padding: 32px 24px;
-      border-radius: 20px;
-      
+      margin: 60px auto;
+      padding: 30px 20px;
+
       h1 {
         font-size: 24px;
-        
-        &::after {
-          width: 40px;
-          bottom: -10px;
-        }
       }
-      
+
       .help-links {
         flex-direction: column;
-        gap: 8px;
+        gap: 10px;
         text-align: center;
       }
-    }
-    
-    .flutuante {
-      display: none;
-    }
-  }
-}
 
-// =============================================
-// ESTADOS ESPECIAIS
-// =============================================
-
-.loading {
-  .login-button {
-    position: relative;
-    color: transparent;
-    
-    &::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 20px;
-      height: 20px;
-      margin: -10px 0 0 -10px;
-      border: 2px solid $azul-profundo;
-      border-top-color: transparent;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
+      .social-login {
+        flex-direction: column;
+      }
     }
   }
-}
-
-.error {
-  .input-group input {
-    border-color: #FF6B6B;
-    box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
-  }
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-// =============================================
-// UTILITÁRIOS
-// =============================================
-
-.text-gradient {
-  background: linear-gradient(135deg, $ciano-neon, $roxo-energetico);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.shadow-glow {
-  box-shadow: 0 0 20px rgba($ciano-neon, 0.3);
 }

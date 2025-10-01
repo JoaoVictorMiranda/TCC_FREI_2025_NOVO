@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './Login.scss';
-import iconeControle from '../../assets/iconecontrole.svg';
-import camera from '../../assets/camera.svg';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -41,9 +41,11 @@ const Login = () => {
     };
 
     return (
-        <div className={`login-container ${loading ? 'loading' : ''}`}>
+        <div className="login-container">
+            <Header />
+            
             <form onSubmit={handleSubmit} className="login-form">
-                <h1>CineCommunity</h1>
+                <h1>CultBridge</h1>
 
                 <div className="input-group">
                     <label htmlFor="email">Email</label>
@@ -96,13 +98,7 @@ const Login = () => {
                 </button>
             </form>
 
-            <div className="flutuante">
-                <img src={iconeControle} alt="Ícone controle" height="100" />
-            </div>
-
-            <div className="flutuante">
-                <img src={camera} alt="Câmera" height="80" />
-            </div>
+            <Footer />
         </div>
     );
 };
