@@ -5,14 +5,14 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-import Foguinho from '../../assets/images/foguinho.png'
+import Foguinho from '../../assets/images/Foguinho.png'
 import Scarface from '../../assets/images/Scarface.png'
 import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
 
 import './index.scss'
 
-function Home() {
+function Home() { 
 
   return (
     <>
