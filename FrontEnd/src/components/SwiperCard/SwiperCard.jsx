@@ -1,9 +1,14 @@
 import React from 'react'
 import Foguinho from '../../assets/images/Foguinho.png'
+import { FaStar } from 'react-icons/fa';
 
 const imageURL = import.meta.env.VITE_IMG;
 
+
+
 const SwiperCard = ({ movie, showLink = true }) => {
+    const popularidade = movie.popularity
+
     return (
         <div>
             <div className="movie_render">
@@ -14,10 +19,10 @@ const SwiperCard = ({ movie, showLink = true }) => {
                 <div className="alinhador">
                     <div className="lado_esquerdo">
                         <img src={Foguinho} alt="Ícone de popularidade" />
-                        <h3>17K</h3>
+                        <h3>{movie.popularity}</h3>
                     </div>
                     <div className="lado_direito">
-                        <img src={Foguinho} alt="Ícone de avaliação" />
+                        <FaStar />
                         <h3>{movie.vote_average}</h3>
                     </div>
                 </div>
