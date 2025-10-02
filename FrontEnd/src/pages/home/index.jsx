@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
@@ -12,7 +12,26 @@ import Footer from '../../components/Footer/Footer'
 
 import './index.scss'
 
-function Home() { 
+const moviesURL = import.meta.env.VITE_API;
+const apiKey = import.meta.env.VITE_API_KEY;
+const imageURL = import.meta.env.VITE_IMG;
+
+
+function Home() {
+
+  const [topMovies, setTopMovies] = useState([]);
+
+  const getTopRatedMovies = async (url) => {
+    const res = await fetch(url);
+    const data = await res.json();
+    setTopMovies(data.results);
+  };
+  useEffect(() => {
+    const topRatedUrl = `${moviesURL}top_rated?${apiKey}&language=pt-BR`;
+    getTopRatedMovies(topRatedUrl);
+  }, []);
+
+
 
   return (
     <>
@@ -47,6 +66,7 @@ function Home() {
                 <SwiperSlide>
                   <div className="movie_render">
                     <img src={Scarface} alt="" />
+
                     <div className="alinhador">
                       <div className="lado_esquerdo">
                         <img src={Foguinho} alt="" />
@@ -126,7 +146,7 @@ function Home() {
 
         <div className="container_reviews">
           <div className="reviews_title">
-            <h1>ANÁLISES EM ALTA</h1>
+            {topMovies.length > 0 && topMovies.map((movie) => <h1>{movie.title}</h1>)}
           </div>
         </div>
 
