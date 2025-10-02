@@ -79,6 +79,18 @@ function Home() {
           <div className="reviews_title">
             <h1>Últimas Reviews</h1>
           </div>
+          {/* Ainda vou modelar o banco certinho pra evitar problemas entre post e avaliação de filmes */}
+          {/* Vou criar em componente esse card mais tarde to passando mal então talvez não termine hoje */}
+          <div className="container_reviews">
+            <div className="Card_post">
+              <h2>João Victor</h2>
+              <h3>Harry potter e o calice de fogo</h3>
+              <p>01/10/2025</p>
+              <p>Nota: 9,3</p>
+              <p>Reassisti esta pérola e achei maravilhoso como sempre mesmo sendo muito diferente do livro a cena do harry chorando no corpo do cedrico ainda pega no coração de quem assiste</p>
+              <button type='button' onClick={() => alert("CURTIDO")}>Curtir</button>
+            </div>
+          </div>
         </div>
 
         <Footer />
