@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
-import './NotFound.scss' // Mude para .scss
+import './index.scss' // Mude para .scss
 
 const NotFound = () => {
   const handleGoHome = () => {

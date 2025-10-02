@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import './Login.scss';
+import './index.scss';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 

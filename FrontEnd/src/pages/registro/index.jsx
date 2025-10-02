@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router';
-import './registro.scss';
+import './index.scss';
 import api from '../../api.js'; // ajuste o caminho se necessário
 
 const Registrar = () => {
