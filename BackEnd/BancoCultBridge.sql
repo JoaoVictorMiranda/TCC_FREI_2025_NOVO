@@ -11,12 +11,15 @@ senha varchar(50),
 criado_em datetime
 );
 
-CREATE TABLE post (
+CREATE TABLE post_avaliacao (
     id_post int PRIMARY KEY AUTO_INCREMENT,
     titulo VARCHAR(200),
     descricao VARCHAR(200),
     id_user int,
     curtidas int,
+    nota int,
+    curtidas int,
+    criado_em datetime,
     FOREIGN KEY (id_user) REFERENCES usuarios(id_user)
 );
 
