@@ -27,7 +27,6 @@ const Header = ({User}) => {
     }
     let [haburguer, setHaburguer] = useState(Barras);
 
-
     function trocarBarras() {
         if (haburguer == Barras) {
             setHaburguer(habuge)
@@ -42,9 +41,7 @@ const Header = ({User}) => {
                 <nav className='container_nav' >
                     <ul>
                         <li><Link to={'/'} >INICIO</Link></li>
-                        <li><Link>LISTAS</Link></li>
-                        <li><Link>EXPLORAR</Link></li>
-                        <li><Link>JOGOS</Link></li>
+                        <li><Link>COMUNIDADE</Link></li>
                         <li><Link>FILMES</Link></li>
                         <li> <Link>SÉRIES</Link></li>
                     </ul>

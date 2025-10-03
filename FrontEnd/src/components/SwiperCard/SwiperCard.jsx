@@ -9,7 +9,7 @@ const SwiperCard = ({ movie, showLink = true }) => {
     return (
         <div>
             <div className="movie_render">
-                <img
+                <img id='Posteres'
                     src={imageURL + movie.poster_path}
                     alt={movie.title}
                 />
