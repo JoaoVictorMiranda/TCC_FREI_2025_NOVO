@@ -119,10 +119,12 @@
     .container_reviews {
         display: flex;
         width: 100%;
+        padding: 2vh;
         align-items: center;
-        justify-content: center;
         flex-direction: column;
-        height: 100vh;
+        justify-content: center;
+        min-height: 50vh;
+        gap: 2vh;
         background-color: white;
 
         .container_reviews_content {
@@ -149,21 +151,129 @@
 
             .review {
                 display: flex;
-                background-color: green;
-                width: 100%;
+                width: 70%;
                 height: 22vh;
                 flex-direction: row;
+                align-self: center;
 
                 .lado_esquerdo {
                     display: flex;
-                    background-color: pink;
+                    width: 25%;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
                 }
 
                 .lado_direito {
                     display: flex;
-                    background-color: pink;
+                    width: 75%;
+
+                    .camada1 {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        width: 100%;
+                        height: 5vh;
+
+                        .perfil {
+                            display: flex;
+                            width: 70%;
+                            justify-self: left;
+                            align-self: baseline;
+                            height: 5vh;
+                            align-items: center;
+                            padding-left: 2vh;
+                            gap: 1vh;
+                        }
+
+                        h3 {
+                            min-width: 45%;
+                        }
+
+                        img {
+                            width: 17%;
+                            height: 100%;
+                            cursor: pointer;
+                        }
+
+                        .review_content {
+                            display: flex;
+                            width: 100%;
+                            text-align: justify;
+                            padding-left: 2vh;
+                            padding-right: 2vh;
+                        }
+
+                        #Estrela {
+                            width: 9% !important;
+                            height: 50%;
+                        }
+                    }
+
+                    .interacao {
+                        display: flex;
+                        width: 100%;
+
+                        .lado_esquerdo {
+                            display: flex;
+                            padding-left: 2vh;
+                            width: 25%;
+                            height: 4.3vh;
+                            gap: 1vh;
+                            align-items: center;
+                        }
+
+                        .lado_central {
+                            display: flex;
+                            width: 16%;
+                            gap: 1vh;
+                            align-items: center;
+                            padding: 1vh;
+                            height: 4.3vh;
+                        }
+
+                        .lado_direito {
+                            display: flex;
+                            padding-left: 2vh;
+                            width: 25%;
+                            height: 4.3vh;
+                            gap: 1vh;
+                            align-items: center;
+                            width: 50%;
+                        }
+                    }
                 }
             }
         }
+
+        .botao_carregar {
+            display: flex;
+            justify-content: center;
+            width: 60%;
+            height: 5vh;
+            padding: 5vh;
+
+            button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 0.3vh #F3A712 solid;
+                outline: none;
+                border-radius: 5vh;
+                background-color: #F3A712;
+                width: 30%;
+                height: 4.5vh;
+                cursor: pointer;
+                font-size: 2vh;
+                transition: all 0.5s;
+            }
+
+            button:hover {
+                background-color: transparent;
+            }
+        }
+
     }
 }
