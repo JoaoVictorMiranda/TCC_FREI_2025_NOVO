@@ -9,21 +9,28 @@ const endpoints = Router();
 
 
 endpoints.post('/post', auth, async (req, res) => {
-    let titulo = req.body.titulo;
-    let descricao = req.body.descricao;
+    let dados = req.body;
     let idUser = req.user.id_user;
 
-    let post = await repo.criarPost(titulo, descricao, idUser);
+    let post = await repo.criarPost(dados, idUser);
     res.send({ novoPost: post });
 })
 
 
 endpoints.get('/post', auth, async (req, res) => {
-    let info = await repo.listarPost();
+    let info = await repo.listarPostPorFilme();
 
     res.send(info)
 
 })
 
+
+endpoints.get('/post/:id_filme', auth, async (req, res) => {
+   let id_filme = req.params.id_filme; 
+    let info = await repo.listarPostPorIdFilme(id_filme);
+
+    res.send(info)
+
+})
 
 export default endpoints

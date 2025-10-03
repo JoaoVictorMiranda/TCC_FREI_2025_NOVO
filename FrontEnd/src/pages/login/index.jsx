@@ -28,7 +28,7 @@ const Login = () => {
         setTimeout(() => {
             console.log('Login realizado:', formData);
             setLoading(false);
-            navigate('/community');
+            navigate('/perfil');
         }, 2000);
     };
 
@@ -74,8 +74,7 @@ const Login = () => {
                 </div>
 
                 <div className="help-links">
-                    <Link to="/forgot-password">Esqueceu a senha?</Link>
-                    <Link to="/register">Criar conta</Link>
+                    <Link to="/registrar">Criar conta</Link>
                 </div>
 
                 <button type="submit" className="login-button" disabled={loading}>

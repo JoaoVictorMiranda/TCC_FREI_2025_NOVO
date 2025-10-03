@@ -7,7 +7,6 @@ const imageURL = import.meta.env.VITE_IMG;
 
 
 const SwiperCard = ({ movie, showLink = true }) => {
-    const popularidade = movie.popularity
 
     return (
         <div>
