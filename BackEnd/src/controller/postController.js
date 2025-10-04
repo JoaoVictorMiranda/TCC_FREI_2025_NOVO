@@ -26,10 +26,20 @@ endpoints.get('/post', auth, async (req, res) => {
 
 
 endpoints.get('/post/:id_filme', auth, async (req, res) => {
-   let id_filme = req.params.id_filme; 
+    let id_filme = req.params.id_filme;
     let info = await repo.listarPostPorIdFilme(id_filme);
 
     res.send(info)
+
+})
+
+
+endpoints.post('/post/curtir/:id_post', auth, async (req, res) => {
+    let idPost = req.params.id_post;
+    let idUser = req.user.id_user;
+
+    let info = await repo.curtirPost(idUser, idPost);
+    res.send(info);
 
 })
 

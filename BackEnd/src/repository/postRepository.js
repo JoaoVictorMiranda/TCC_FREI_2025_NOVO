@@ -49,21 +49,51 @@ criado_em datetime
 
 export async function listarPostPorFilme() {
     const comando = `
-SELECT usuarios.nome, post_avaliacao.titulo, post_avaliacao.criado_em, post_avaliacao.avaliacao, post_avaliacao.nota, post_avaliacao.curtidas FROM post_avaliacao
-INNER JOIN usuarios ON usuarios.id_user = post_avaliacao.id_user;
+SELECT usuarios.nome, post_avaliacao.titulo, post_avaliacao.criado_em, post_avaliacao.avaliacao, post_avaliacao.nota, post_avaliacao.id_filme,
+       COUNT(curtidas.id_curtida) AS curtidas
+FROM post_avaliacao
+INNER JOIN usuarios ON usuarios.id_user = post_avaliacao.id_user
+LEFT JOIN curtidas ON curtidas.id_post = post_avaliacao.id_post
+GROUP BY post_avaliacao.id_post;
     `
     let [info] = await connection.query(comando)
     return info;
 }
 
 
+
 export async function listarPostPorIdFilme(id_filme) {
     const comando = `
-SELECT usuarios.nome, post_avaliacao.titulo, post_avaliacao.criado_em, post_avaliacao.avaliacao, post_avaliacao.nota, post_avaliacao.curtidas FROM post_avaliacao
+SELECT post_avaliacao.id_post, usuarios.nome, post_avaliacao.titulo, post_avaliacao.criado_em, post_avaliacao.avaliacao, post_avaliacao.nota, post_avaliacao.id_filme,
+       COUNT(curtidas.id_curtida) AS curtidas
+FROM post_avaliacao
 INNER JOIN usuarios ON usuarios.id_user = post_avaliacao.id_user
-    WHERE post_avaliacao.id_filme = ?
-;
+LEFT JOIN curtidas ON curtidas.id_post = post_avaliacao.id_post
+WHERE post_avaliacao.id_filme = ?
+GROUP BY post_avaliacao.id_post;
     `
     let [info] = await connection.query(comando, [id_filme])
     return info;
 }
+
+
+
+export async function curtirPost(idUser, idPost) {
+    const comando = `
+        INSERT INTO curtidas (id_user, id_post)
+        VALUES (?, ?);
+    `;
+    let [info] = await connection.query(comando, [idUser, idPost]);
+    return info.insertId; // Retorna o ID da curtida criada
+}
+
+
+
+
+/*CREATE TABLE curtidas(
+    id_curtida int primary key auto_increment,
+    id_user int,
+    id_post int UNIQUE,
+    FOREIGN KEY (id_user) REFERENCES usuarios(id_user),
+    FOREIGN KEY (id_post) REFERENCES post_avaliacao(id_post)
+); */
