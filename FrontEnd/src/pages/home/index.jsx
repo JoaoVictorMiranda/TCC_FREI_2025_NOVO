@@ -23,12 +23,16 @@ import './index.scss'
 import SwiperCard from '../../components/SwiperCard/SwiperCard';
 
 const moviesURL = import.meta.env.VITE_API;
+const moviesURLtop_rated = import.meta.env.VITE_API_TOP_RATED;
+const moviesURLpopulares = import.meta.env.VITE_API_POPULAR;
 const apiKey = import.meta.env.VITE_API_KEY;
 
 function Home() {
   const [topMovies, setTopMovies] = useState([]);
   const navigate = useNavigate();
   const [pagina, setPagina] = useState(1);
+  const [URLpages, setURLpages] = useState(moviesURLtop_rated);
+
 
 
 
@@ -40,9 +44,9 @@ function Home() {
   };
 
   useEffect(() => {
-    const topRatedUrl = `${moviesURL}top_rated?${apiKey}&language=pt-BR&page=${pagina}`;
+    const topRatedUrl = `${URLpages}?${apiKey}&language=pt-BR&page=${pagina}`;
     getTopRatedMovies(topRatedUrl);
-  }, [pagina]);
+  }, [pagina, URLpages]);
 
   const hasEnoughSlidesForLoop = topMovies.length >= 8;
 
@@ -62,6 +66,20 @@ function Home() {
                 <h3>Esses filmes estão bombando!</h3>
               </div>
             </div>
+            <ul className="menu-categorias">
+              <li
+                className="menu-item"
+                onClick={() => setURLpages(moviesURLtop_rated)}
+              >
+                Melhores ranqueados
+              </li>
+              <li
+                className="menu-item"
+                onClick={() => setURLpages(moviesURLpopulares)}
+              >
+                Populares
+              </li>
+            </ul>
 
             <div className="carrossel">
               <Swiper
