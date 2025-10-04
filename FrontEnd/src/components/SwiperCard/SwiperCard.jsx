@@ -16,12 +16,12 @@ const SwiperCard = ({ movie, showLink = true }) => {
                 <div className="alinhador">
                     <div className="lado_esquerdo">
                         <FaUser />
-                        <h3>{movie.popularity}</h3>
+                        <h3>{movie.popularity.toFixed(1)}</h3>
 
                     </div>
                     <div className="lado_direito">
                         <FaStar />
-                        <h3>{movie.vote_average}</h3>
+                        <h3>{movie.vote_average.toFixed(1)}</h3>
                     </div>
                 </div>
             </div>

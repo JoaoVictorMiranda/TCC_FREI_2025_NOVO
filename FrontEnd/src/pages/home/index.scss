@@ -122,6 +122,18 @@
 
     }
 
+    .lista_paginas {
+        display: flex;
+        gap: 3rem;
+        list-style: none;
+        padding: 1rem;
+    }
+
+    .lista_paginas>li:hover {
+        color: #F3A712;
+        cursor: pointer;
+    }
+
     .container_reviews {
         display: flex;
         width: 100%;

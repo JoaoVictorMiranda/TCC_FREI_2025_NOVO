@@ -28,6 +28,10 @@ const apiKey = import.meta.env.VITE_API_KEY;
 function Home() {
   const [topMovies, setTopMovies] = useState([]);
   const navigate = useNavigate();
+  const [pagina, setPagina] = useState(1);
+
+
+
 
   const getTopRatedMovies = async (url) => {
     const res = await fetch(url);
@@ -36,9 +40,9 @@ function Home() {
   };
 
   useEffect(() => {
-    const topRatedUrl = `${moviesURL}top_rated?${apiKey}&language=pt-BR`;
+    const topRatedUrl = `${moviesURL}top_rated?${apiKey}&language=pt-BR&page=${pagina}`;
     getTopRatedMovies(topRatedUrl);
-  }, []);
+  }, [pagina]);
 
   const hasEnoughSlidesForLoop = topMovies.length >= 8;
 
@@ -82,10 +86,14 @@ function Home() {
               </Swiper>
             </div>
           </div>
+          <ul className='lista_paginas'>
+            <li onClick={() => setPagina(1)}>1</li>
+            <li onClick={() => setPagina(2)}>2</li>
+            <li onClick={() => setPagina(3)}>3</li>
+            <li onClick={() => setPagina(4)}>4</li>
+          </ul>
         </div>
 
-        {/* Ainda vou modelar o banco certinho pra evitar problemas entre post e avaliação de filmes */}
-        {/* Vou criar em componente esse card mais tarde to passando mal então talvez não termine hoje */}
 
         <div className="container_reviews">
           <div className="container_reviews_content">
