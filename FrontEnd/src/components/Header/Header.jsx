@@ -41,9 +41,9 @@ const Header = ({User}) => {
                 <nav className='container_nav' >
                     <ul>
                         <li><Link to={'/'} >INICIO</Link></li>
-                        <li><Link>COMUNIDADE</Link></li>
                         <li><Link>FILMES</Link></li>
                         <li> <Link>SÉRIES</Link></li>
+                        <li><Link>COMUNIDADE</Link></li>
                     </ul>
                 </nav>
             </div>

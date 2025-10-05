@@ -20,7 +20,9 @@ import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
 
 import './index.scss'
+import HomeCultBridge from '../../components/HomeCultBridge';
 import SwiperCard from '../../components/SwiperCard/SwiperCard';
+import HomeCultBridgeRecommendation from '../../components/HomeCultBridgeRecommendation'
 
 const moviesURL = import.meta.env.VITE_API;
 const apiKey = import.meta.env.VITE_API_KEY;
@@ -46,6 +48,8 @@ function Home() {
     <>
       <div className="container_home">
         <Header User={"BOM DIA"} />
+
+        <HomeCultBridge />
 
         <div className="container_highlights">
           <div className="highlights_content">
@@ -86,6 +90,8 @@ function Home() {
 
         {/* Ainda vou modelar o banco certinho pra evitar problemas entre post e avaliação de filmes */}
         {/* Vou criar em componente esse card mais tarde to passando mal então talvez não termine hoje */}
+
+        <HomeCultBridgeRecommendation />
 
         <div className="container_reviews">
           <div className="container_reviews_content">
