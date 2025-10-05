@@ -25,11 +25,19 @@ import SwiperCard from '../../components/SwiperCard/SwiperCard';
 import HomeCultBridgeRecommendation from '../../components/HomeCultBridgeRecommendation'
 
 const moviesURL = import.meta.env.VITE_API;
+const moviesURLtop_rated = import.meta.env.VITE_API_TOP_RATED;
+const moviesURLpopulares = import.meta.env.VITE_API_POPULAR;
 const apiKey = import.meta.env.VITE_API_KEY;
 
 function Home() {
   const [topMovies, setTopMovies] = useState([]);
   const navigate = useNavigate();
+  const [pagina, setPagina] = useState(1);
+  const [URLpages, setURLpages] = useState(moviesURLtop_rated);
+
+
+
+
 
   const getTopRatedMovies = async (url) => {
     const res = await fetch(url);
@@ -38,9 +46,9 @@ function Home() {
   };
 
   useEffect(() => {
-    const topRatedUrl = `${moviesURL}top_rated?${apiKey}&language=pt-BR`;
+    const topRatedUrl = `${URLpages}?${apiKey}&language=pt-BR&page=${pagina}`;
     getTopRatedMovies(topRatedUrl);
-  }, []);
+  }, [pagina, URLpages]);
 
   const hasEnoughSlidesForLoop = topMovies.length >= 8;
 
@@ -62,6 +70,20 @@ function Home() {
                 <h3>Esses filmes estão bombando!</h3>
               </div>
             </div>
+            <ul className="menu-categorias">
+              <li
+                className="menu-item"
+                onClick={() => setURLpages(moviesURLtop_rated)}
+              >
+                Melhores ranqueados
+              </li>
+              <li
+                className="menu-item"
+                onClick={() => setURLpages(moviesURLpopulares)}
+              >
+                Populares
+              </li>
+            </ul>
 
             <div className="carrossel">
               <Swiper
@@ -86,10 +108,14 @@ function Home() {
               </Swiper>
             </div>
           </div>
+          <ul className='lista_paginas'>
+            <li onClick={() => setPagina(1)}>1</li>
+            <li onClick={() => setPagina(2)}>2</li>
+            <li onClick={() => setPagina(3)}>3</li>
+            <li onClick={() => setPagina(4)}>4</li>
+          </ul>
         </div>
 
-        {/* Ainda vou modelar o banco certinho pra evitar problemas entre post e avaliação de filmes */}
-        {/* Vou criar em componente esse card mais tarde to passando mal então talvez não termine hoje */}
 
         <HomeCultBridgeRecommendation />
 
