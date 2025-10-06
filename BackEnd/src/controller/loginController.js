@@ -14,7 +14,7 @@ endpoints.post('/user/cadastro', async (req, res) => {
     })
 })
 
-endpoints.post('/user', async (req, res) => {
+endpoints.post('/usuario', async (req, res) => {
     let email = req.body.email;
     let senha = req.body.senha;
 
@@ -32,7 +32,7 @@ endpoints.post('/user', async (req, res) => {
     }
 
 })
-
+endpoints.post
 
 
 

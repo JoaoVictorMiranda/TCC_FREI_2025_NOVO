@@ -3,33 +3,37 @@ USE cultbridge;
 
 
 CREATE TABLE usuarios(
- id_user int primary key auto_increment, 
-nome varchar(300),
-nascimento DATE,
-email varchar(200),
-senha varchar(50),
-criado_em datetime
+    id_user INT PRIMARY KEY AUTO_INCREMENT, 
+    nome VARCHAR(300) NOT NULL,
+    nascimento DATE,
+    email VARCHAR(200) NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    criado_em DATETIME
 );
+
 
 CREATE TABLE post_avaliacao (
-    id_post int PRIMARY KEY AUTO_INCREMENT,
-    titulo VARCHAR(200),
-    descricao VARCHAR(200),
-    id_user int,
-    curtidas int,
-    nota int,
-    curtidas int,
-    criado_em datetime,
+    id_post INT PRIMARY KEY AUTO_INCREMENT,
+    titulo VARCHAR(200) NOT NULL,
+    id_filme VARCHAR(200),
+    avaliacao VARCHAR(300) NOT NULL,
+    id_user INT,
+    nota INT,
+    criado_em DATETIME,
     FOREIGN KEY (id_user) REFERENCES usuarios(id_user)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
-
-CREATE TABLE avaliacao_filme(
-    id_comentario int primary key auto_increment,
-    id_usuario int,
-    id_filme varchar(100),
-    avaliacao varchar(300),
-    nota int,
-    curtidas int,
+CREATE TABLE curtidas(
+    id_curtida INT PRIMARY KEY AUTO_INCREMENT,
+    id_user INT,
+    id_post INT,
     FOREIGN KEY (id_user) REFERENCES usuarios(id_user)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (id_post) REFERENCES post_avaliacao(id_post)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    UNIQUE (id_user, id_post)
 );
