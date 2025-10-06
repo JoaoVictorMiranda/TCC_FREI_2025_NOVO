@@ -7,7 +7,7 @@
         display: flex;
         width: 100%;
         flex-direction: column;
-        height: 60vh;
+        height: 65vh;
         background-color: #AA2522;
         align-items: center;
         justify-content: center;
@@ -15,7 +15,7 @@
         .highlights_content {
             display: flex;
             width: 60%;
-            height: 60vh;
+            height: 65vh;
             padding-top: 3vh;
             flex-direction: column;
 
@@ -39,6 +39,35 @@
                     color: white;
                 }
             }
+
+            .menu-categorias {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                border-bottom: 1px solid #ccc;
+            }
+
+            .menu-item {
+                cursor: pointer;
+                padding: 0.5rem 1rem;
+                font-family: Arial, Helvetica, sans-serif;
+                font-weight: 700;
+                color: #000000;
+                font-size: 20px;
+            }
+
+            .menu-item:hover {
+                color: #F3A712;
+                border-bottom: 2px solid #F3A712;
+            }
+
+            .menu-item:active {
+                transform: scale(0.98);
+            }
+
         }
 
         .carrossel {
@@ -46,7 +75,7 @@
             align-self: center;
             justify-content: center;
             width: 100%;
-            height: 80%;
+            height: 100%;
 
             .swiper-slide {
                 display: flex;
@@ -59,23 +88,28 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                height: 42vh;
                 flex-direction: column;
 
-                img {
-                    width: 80%;
-                    height: 50%;
+                #Posteres {
+                    width: 100%;
+                    box-shadow: 2px 2px 6px black;
+                    height: 100%;
                 }
 
                 .alinhador {
                     display: flex;
                     flex-direction: row;
                     margin-top: 1vh;
+                    align-items: center;
+                    justify-content: center;
                     gap: 2vh;
 
                     .lado_esquerdo {
                         display: flex;
                         align-items: center;
                         justify-content: flex-end;
+                        width: 50%;
                         gap: 1vh;
                     }
 
@@ -87,6 +121,7 @@
                     .lado_direito {
                         display: flex;
                         gap: 1vh;
+                        width: 50%;
                         align-items: center;
                     }
                 }
@@ -116,14 +151,176 @@
 
     }
 
+    .lista_paginas {
+        display: flex;
+        gap: 3rem;
+        list-style: none;
+        padding: 1rem;
+    }
+
+    .lista_paginas>li:hover {
+        color: #F3A712;
+        cursor: pointer;
+    }
+
     .container_reviews {
         display: flex;
         width: 100%;
-        height: 50vh;
+        padding: 2vh;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 50vh;
+        gap: 2vh;
+        background-color: white;
 
-        .reviews_title {
+        .container_reviews_content {
             display: flex;
+            flex-direction: column;
+            width: 60%;
 
+            .reviews_title {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 10vh;
+                flex-direction: column;
+            }
+
+            .bloco_vermelho {
+                display: flex;
+                width: 20%;
+                height: 10%;
+                border-radius: 0.5vh;
+                background-color: #AA2522;
+            }
+
+            .review {
+                display: flex;
+                width: 70%;
+                height: 30vh;
+                flex-direction: row;
+                align-self: center;
+
+                .lado_esquerdo {
+                    display: flex;
+                    width: 25%;
+
+                    img {
+                        min-width: 100%;
+                        min-height: 100%;
+                    }
+                }
+
+                .lado_direito {
+                    display: flex;
+                    width: 75%;
+
+                    .camada1 {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        width: 100%;
+                        height: 5vh;
+
+                        .perfil {
+                            display: flex;
+                            width: 70%;
+                            justify-self: left;
+                            align-self: baseline;
+                            height: 5vh;
+                            align-items: center;
+                            padding-left: 2vh;
+                            gap: 1vh;
+                        }
+
+                        h3 {
+                            min-width: 45%;
+                        }
+
+                        img {
+                            width: 15%;
+                            height: 100%;
+                            cursor: pointer;
+                        }
+
+                        .review_content {
+                            display: flex;
+                            width: 100%;
+                            text-align: justify;
+                            padding-left: 2vh;
+                            padding-right: 2vh;
+                        }
+
+                        #Estrela {
+                            width: 9% !important;
+                            height: 50%;
+                        }
+                    }
+
+                    .interacao {
+                        display: flex;
+                        width: 100%;
+
+                        .lado_esquerdo {
+                            display: flex;
+                            padding-left: 2vh;
+                            width: 25%;
+                            height: 4.3vh;
+                            gap: 1vh;
+                            align-items: center;
+                        }
+
+                        .lado_central {
+                            display: flex;
+                            width: 16%;
+                            gap: 1vh;
+                            align-items: center;
+                            padding: 1vh;
+                            height: 4.3vh;
+                        }
+
+                        .lado_direito {
+                            display: flex;
+                            padding-left: 2vh;
+                            width: 25%;
+                            height: 4.3vh;
+                            gap: 1vh;
+                            align-items: center;
+                            width: 50%;
+                        }
+                    }
+                }
+            }
         }
+
+        .botao_carregar {
+            display: flex;
+            justify-content: center;
+            width: 60%;
+            height: 5vh;
+            padding: 5vh;
+
+            button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 0.3vh #F3A712 solid;
+                outline: none;
+                border-radius: 5vh;
+                background-color: #F3A712;
+                width: 30%;
+                height: 4.5vh;
+                cursor: pointer;
+                font-size: 2vh;
+                transition: all 0.5s;
+            }
+
+            button:hover {
+                background-color: transparent;
+            }
+        }
+
     }
 }

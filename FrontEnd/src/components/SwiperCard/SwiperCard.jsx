@@ -1,24 +1,23 @@
 import React from 'react'
-import Foguinho from '../../assets/images/Foguinho.png'
+import { FaUser } from "react-icons/fa";
 import { FaStar } from 'react-icons/fa';
 
 const imageURL = import.meta.env.VITE_IMG;
-
-
 
 const SwiperCard = ({ movie, showLink = true }) => {
 
     return (
         <div>
             <div className="movie_render">
-                <img
+                <img id='Posteres'
                     src={imageURL + movie.poster_path}
                     alt={movie.title}
                 />
                 <div className="alinhador">
                     <div className="lado_esquerdo">
-                        <img src={Foguinho} alt="Ícone de popularidade" />
+                        <FaUser />
                         <h3>{movie.popularity.toFixed(1)}</h3>
+
                     </div>
                     <div className="lado_direito">
                         <FaStar />

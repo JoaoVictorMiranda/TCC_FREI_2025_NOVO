@@ -7,14 +7,25 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+import { FaStar } from 'react-icons/fa';
+import { CiHeart } from "react-icons/ci";
+import { FaCommentDots } from "react-icons/fa";
+import { MdOutlineDateRange } from "react-icons/md";
+
+import Scarface from '../../assets/images/Scarface.png'
+import Chigurh from '../../assets/images/Chigurh.png'
+import Coracao from '../../assets/images/heart.png'
+
 import Foguinho from '../../assets/images/Foguinho.png'
 import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
 
 import './index.scss'
+import HomeCultBridge from '../../components/HomeCultBridge';
 import SwiperCard from '../../components/SwiperCard/SwiperCard';
-import CommentCard from '../../components/CommentCard/CommentCard';
+import HomeCultBridgeRecommendation from '../../components/HomeCultBridgeRecommendation'
 
+const moviesURL = import.meta.env.VITE_API;
 const moviesURLtop_rated = import.meta.env.VITE_API_TOP_RATED;
 const moviesURLpopulares = import.meta.env.VITE_API_POPULAR;
 const apiKey = import.meta.env.VITE_API_KEY;
@@ -25,6 +36,12 @@ function Home() {
   const [commentsError, setCommentsError] = useState(null);
   const [loadingComments, setLoadingComments] = useState(false);
   const navigate = useNavigate();
+  const [pagina, setPagina] = useState(1);
+  const [URLpages, setURLpages] = useState(moviesURLtop_rated);
+
+
+
+
 
   // Buscar comentários
   const getComments = async () => {
@@ -75,20 +92,18 @@ function Home() {
   };
 
   useEffect(() => {
-    // Filmes
-    const topRatedUrl = `${moviesURLtop_rated}?${apiKey}&language=pt-BR`;
+    const topRatedUrl = `${URLpages}?${apiKey}&language=pt-BR&page=${pagina}`;
     getTopRatedMovies(topRatedUrl);
-    
-    // Comentários
-    getComments();
-  }, []);
+  }, [pagina, URLpages]);
 
   const hasEnoughSlidesForLoop = topMovies.length >= 8;
 
   return (
     <>
       <div className="container_home">
-        <Header User={"BOM DIA"} />
+        <Header  />
+
+        <HomeCultBridge />
 
         {/* SEÇÃO DE FILMES */}
         <div className="container_highlights">
@@ -102,6 +117,20 @@ function Home() {
                 <h3>Esses filmes estão bombando!</h3>
               </div>
             </div>
+            <ul className="menu-categorias">
+              <li
+                className="menu-item"
+                onClick={() => setURLpages(moviesURLtop_rated)}
+              >
+                Melhores ranqueados
+              </li>
+              <li
+                className="menu-item"
+                onClick={() => setURLpages(moviesURLpopulares)}
+              >
+                Populares
+              </li>
+            </ul>
 
             <div className="carrossel">
               <Swiper
@@ -124,21 +153,58 @@ function Home() {
               </Swiper>
             </div>
           </div>
+          <ul className='lista_paginas'>
+            <li onClick={() => setPagina(1)}>1</li>
+            <li onClick={() => setPagina(2)}>2</li>
+            <li onClick={() => setPagina(3)}>3</li>
+            <li onClick={() => setPagina(4)}>4</li>
+          </ul>
         </div>
 
-        {/* SEÇÃO DE REVIEWS */}
+
+        <HomeCultBridgeRecommendation />
+
         <div className="container_reviews">
-          <div className="reviews_title">
-            <h1>Últimas Reviews</h1>
-          </div>
-          
-          {/* Loading */}
-          {loadingComments && <div>Carregando comentários...</div>}
-          
-          {/* Mensagem de erro */}
-          {commentsError && (
-            <div className="error-message">
-              {commentsError}
+          <div className="container_reviews_content">
+            <div className="reviews_title">
+              <h1>ANÁLISES EM ALTA</h1>
+              <div className="bloco_vermelho" />
+            </div>
+
+            <div className="review">
+              <div className="lado_esquerdo">
+                <img src={Scarface} alt="" />
+              </div>
+              <div className="lado_direito">
+                <div className="camada1">
+                  <div className="perfil">
+                    <img src={Chigurh} alt="" />
+                    <h3>Lucas Viana</h3>
+                    <FaStar />
+
+                    <h4>9.5</h4>
+                  </div>
+                  <div className="review_content">
+                    <h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, ex dolore saepe fugit corrupti consequuntur similique vel quasi dolores enim provident reiciendis veritatis totam recusandae quisquam, aliquid labore, explicabo sed!</h4>
+                  </div>
+                  <div className="interacao">
+                    <div className="lado_esquerdo">
+                      <div className="icone">
+                        < CiHeart />
+                      </div>
+                      <h3>17K</h3>
+                    </div>
+                    <div className="lado_central">
+                      < FaCommentDots />
+                      <h3>17K</h3>
+                    </div>
+                    <div className="lado_direito">
+                      < MdOutlineDateRange />
+                      <h3>2025-01-25</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
           
@@ -153,27 +219,10 @@ function Home() {
             <button type='button' onClick={() => alert("CURTIDO")}>Curtir</button>
           </div>
 
-          {/* Componente CommentCard de exemplo */}
-          <CommentCard 
-            nome={"Lucas"} 
-            titulo={"Titulo bom de site"} 
-            data={"03/10/2025"} 
-            avaliacao={"AAAAAAA"} 
-            likes={"25"} 
-          />
+          <div className="botao_carregar">
+            <button>VER MAIS</button>
+          </div>
 
-          {/* Comentários da API (só mostra se tiver dados) */}
-          {topComments.length > 0 && topComments.map((comment) => (
-            <CommentCard 
-              key={comment.id_post}
-              nome={comment.nome || comment.usuario?.nome || 'Usuário'}
-              titulo={comment.titulo}
-              data={new Date(comment.criado_em).toLocaleDateString('pt-BR')}
-              nota={comment.nota}
-              avaliacao={comment.avaliacao}
-              likes={comment.curtidas || comment.likes}
-            />
-          ))}
         </div>
 
         <Footer />
