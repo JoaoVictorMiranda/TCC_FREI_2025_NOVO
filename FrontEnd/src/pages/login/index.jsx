@@ -9,7 +9,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState();
-    const [ senha, setSenha] = useState();
+    const [senha, setSenha] = useState();
 
 
 
@@ -17,19 +17,19 @@ const Login = () => {
         e.preventDefault();
 
 
-        api.post('/user', {
+        api.post('/usuario', {
             email: email,
             senha: senha
         })
-        .then(response => {
-          console.log(response.data);
-          const token = response.data.token
-          localStorage.setItem("token", token )
-          navigate('/perfil')
-        })
-        .catch(error => {
-          console.error('Deu merda:', error);
-        });
+            .then(response => {
+                console.log(response.data);
+                const token = response.data.token
+                localStorage.setItem("token", token)
+                navigate('/perfil')
+            })
+            .catch(error => {
+                console.error('Deu merda:', error);
+            });
 
 
 
@@ -43,7 +43,7 @@ const Login = () => {
     return (
         <div className="login-container">
             <Header />
-            
+
             <form onSubmit={handleSubmit} className="login-form">
                 <h1>CultBridge</h1>
 

@@ -3,12 +3,14 @@ import { jwtDecode } from 'jwt-decode';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import { useNavigate } from 'react-router';
+import api from '../../api';
 
 const Perfil = () => {
     const [nome, setNome] = useState('');
     const [idade, setIdade] = useState('');
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
+    const [post, setPost] = useState([]);
 
     useEffect(() => {
         if (token) {
@@ -30,6 +32,21 @@ const Perfil = () => {
         }
     }, [token]);
 
+    function carregarPost() {
+
+        if (!token) return console.error('Token não encontrado');
+
+        api.post('/post/user', {}, {
+            headers: { 'x-access-token': token }
+        })
+            .then(response => {
+                console.log('Dados do usuário:', response.data);
+                setPost(response.data)
+            })
+            .catch(error => console.error(error));
+    }
+
+
 
     function calcularIdade(dataISO) {
         const hoje = new Date();
@@ -44,10 +61,10 @@ const Perfil = () => {
     }
 
 
-    function Deslogar(){
+    function Deslogar() {
         localStorage.removeItem("token")
         navigate('/login')
-        
+
     }
 
 
@@ -58,9 +75,25 @@ const Perfil = () => {
             <p>{nome}</p>
             <h1>Idade: </h1>
             <p>{idade}</p>
+            <div className="container_posts">
+                {post.length === 0 && <p>Nenhum post encontrado</p>}
+
+                {post.map((post) => (
+                    <div key={post.id_post} className="Card_post">
+                        <h2>{post.nome}</h2> {/* usuário que postou */}
+                        <h3>{post.titulo}</h3> {/* título do post */}
+                        <p>Filme: {post.id_filme}</p>
+                        <p>Nota: {post.nota}</p>
+                        <p>Data: {post.criado_em}</p>
+                        <p>Curtidas: {post.curtidas}</p>
+                        <button type='button' onClick={() => alert("CURTIDO")}>Curtir</button>
+                    </div>
+                ))}
+            </div>
 
 
             <button onClick={Deslogar} > Deslogar</button>
+            <button onClick={carregarPost} >CarregarPosts</button>
 
 
 

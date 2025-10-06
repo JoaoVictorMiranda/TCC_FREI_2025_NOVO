@@ -32,7 +32,6 @@ endpoints.post('/usuario', async (req, res) => {
     }
 
 })
-endpoints.post
 
 
 

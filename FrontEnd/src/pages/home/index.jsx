@@ -48,10 +48,10 @@ function Home() {
     try {
       setLoadingComments(true);
       setCommentsError(null);
-      
+
       const token = localStorage.getItem('token');
       console.log('🔑 Token:', token ? 'Encontrado' : 'Não encontrado');
-      
+
       if (!token) {
         setCommentsError('Faça login para ver os comentários');
         return;
@@ -62,13 +62,13 @@ function Home() {
           Authorization: `x-access-token ${token}`
         }
       });
-      
+
       console.log('✅ Comentários carregados:', response.data);
       setTopComments(response.data);
-      
+
     } catch (error) {
       console.error('❌ Erro ao buscar comentários:', error);
-      
+
       if (error.response?.status === 401) {
         setCommentsError('Acesso não autorizado. Token inválido ou expirado.');
         localStorage.removeItem('token'); // Limpa token inválido
@@ -101,7 +101,7 @@ function Home() {
   return (
     <>
       <div className="container_home">
-        <Header  />
+        <Header />
 
         <HomeCultBridge />
 
@@ -206,8 +206,8 @@ function Home() {
                 </div>
               </div>
             </div>
-          )}
-          
+          </div>
+
           {/* Comentário estático de exemplo (sempre visível) */}
           <div className="Card_post">
             <h2>João Victor</h2>

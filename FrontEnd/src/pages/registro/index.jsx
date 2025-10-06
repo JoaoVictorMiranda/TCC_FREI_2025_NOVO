@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import './index.scss';
-import api from '../../api.js'; // ajuste o caminho se necessário
+import api from '../../api.js';
 import Header from '../../components/Header/Header.jsx';
 import Footer from '../../components/Footer/Footer.jsx';
 
 const Registrar = () => {
     const [nome, setNome] = useState('');
-    const [nascimento, setNascimento] = useState(''); // Novo campo
+    const [nascimento, setNascimento] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,13 +18,25 @@ const Registrar = () => {
         try {
             const response = await api.post('/user/cadastro', {
                 nome: nome,
-                nascimento: nascimento, // Enviando a data de nascimento
+                nascimento: nascimento,
                 email: email,
                 senha: senha
             });
 
             console.log('Cadastro realizado com sucesso:', response.data);
-            // Aqui você pode redirecionar o usuário ou mostrar mensagem
+            alert("Cadastro feito seja muito bem vindo meu amigo ficamos feliz em te receber")
+            api.post('/usuario', {
+                email: email,
+                senha: senha
+            })
+                .then(response => {
+                    console.log(response.data);
+                    const token = response.data.token
+                    localStorage.setItem("token", token)
+                    navigate('/perfil')
+                })
+
+
         } catch (error) {
             console.error('Erro ao cadastrar:', error.response?.data || error.message);
         }

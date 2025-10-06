@@ -2,6 +2,9 @@ CREATE DATABASE cultbridge;
 USE cultbridge;
 
 
+
+
+## banco atualizado com foto de perfil ##
 CREATE TABLE usuarios(
     id_user INT PRIMARY KEY AUTO_INCREMENT, 
     nome VARCHAR(300) NOT NULL,
@@ -10,6 +13,11 @@ CREATE TABLE usuarios(
     senha VARCHAR(255) NOT NULL,
     criado_em DATETIME
 );
+
+
+ALTER TABLE usuarios 
+    add column fotoPerfil VARCHAR(500);
+
 
 
 CREATE TABLE post_avaliacao (
@@ -37,3 +45,6 @@ CREATE TABLE curtidas(
         ON UPDATE CASCADE,
     UNIQUE (id_user, id_post)
 );
+
+ALTER TABLE usuarios 
+    add column fotoPerfil VARCHAR(500);
