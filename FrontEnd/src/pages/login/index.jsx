@@ -3,46 +3,46 @@ import { useNavigate, Link } from 'react-router-dom';
 import './index.scss';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
+import api from '../../api';
 
 const Login = () => {
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        email: '',
-        password: ''
-    });
-    const [loading, setLoading] = useState(false);
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
+    const [email, setEmail] = useState();
+    const [ senha, setSenha] = useState();
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
 
-        // Simulação de login
-        setTimeout(() => {
-            console.log('Login realizado:', formData);
-            setLoading(false);
-            navigate('/community');
-        }, 2000);
+
+        api.post('/user', {
+            email: email,
+            senha: senha
+        })
+        .then(response => {
+          console.log(response.data);
+          const token = response.data.token
+          localStorage.setItem("token", token )
+          navigate('/perfil')
+        })
+        .catch(error => {
+          console.error('Deu merda:', error);
+        });
+
+
+
     };
 
     const handleVoltar = () => {
         navigate('/');
     };
 
-    const handleSocialLogin = (provider) => {
-        console.log(`Login com ${provider}`);
-    };
 
     return (
         <div className="login-container">
-            <Header User={"Lucas Viana"} />
+            <Header />
             
             <form onSubmit={handleSubmit} className="login-form">
                 <h1>CultBridge</h1>
@@ -54,8 +54,7 @@ const Login = () => {
                         id="email"
                         name="email"
                         placeholder="seu@email.com"
-                        value={formData.email}
-                        onChange={handleInputChange}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                 </div>
@@ -67,19 +66,18 @@ const Login = () => {
                         id="password"
                         name="password"
                         placeholder="Sua senha"
-                        value={formData.password}
-                        onChange={handleInputChange}
+                        onChange={(e) => setSenha(e.target.value)}
                         required
                     />
                 </div>
 
                 <div className="help-links">
                     <Link to="/forgot-password">Esqueceu a senha?</Link>
-                    <Link to="/register">Criar conta</Link>
+                    <Link to="/registrar">Criar conta</Link>
                 </div>
 
-                <button type="submit" className="login-button" disabled={loading}>
-                    {loading ? 'Entrando...' : 'Entrar na Comunidade'}
+                <button type="submit" className="login-button" >
+                    Login
                 </button>
 
                 <div className="divider">ou</div>
@@ -87,9 +85,6 @@ const Login = () => {
                 <div className="social-login">
                     <button type="button" onClick={() => handleSocialLogin('Google')}>
                         Google
-                    </button>
-                    <button type="button" onClick={() => handleSocialLogin('Twitter')}>
-                        Twitter
                     </button>
                 </div>
 

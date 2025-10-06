@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router';
 import './index.scss';
 import api from '../../api.js'; // ajuste o caminho se necessário
+import Header from '../../components/Header/Header.jsx';
+import Footer from '../../components/Footer/Footer.jsx';
 
 const Registrar = () => {
     const [nome, setNome] = useState('');
@@ -29,6 +31,7 @@ const Registrar = () => {
 
     return (
         <div className='container_registro'>
+            <Header />
             <h1>Crie Sua Conta:</h1>
             <div className="registro">
                 <form onSubmit={handleSubmit}>
@@ -79,6 +82,7 @@ const Registrar = () => {
                 </form>
                 <p>Já tem login? <Link to="/login">Entrar</Link></p>
             </div>
+            <Footer />
         </div>
     );
 };

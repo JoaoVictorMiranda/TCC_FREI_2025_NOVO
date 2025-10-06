@@ -55,7 +55,7 @@ function Home() {
   return (
     <>
       <div className="container_home">
-        <Header User={"BOM DIA"} />
+        <Header  />
 
         <HomeCultBridge />
 
