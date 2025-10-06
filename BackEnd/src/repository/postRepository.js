@@ -3,10 +3,11 @@ import { connection } from "./connection.js"
 
 export async function criarPost(dados, idUser) {
     const comando = `
-        INSERT INTO post_avaliacao (titulo,id_filme, avaliacao, id_user, curtidas, nota, criado_em)
-        VALUES
-        (?,?,?,?,0,?,?);
-    `;
+    INSERT INTO post_avaliacao (titulo, id_filme, avaliacao, id_user, nota, criado_em)
+    VALUES
+    (?,?,?,?,?,?);
+`;
+
     let hoje = new Date();
 
     let [info] = await connection.query(comando, [
@@ -75,6 +76,38 @@ GROUP BY post_avaliacao.id_post;
     let [info] = await connection.query(comando, [id_filme])
     return info;
 }
+export async function listarPostPorUsuario(idUser) {
+    const comando = `
+SELECT 
+    post_avaliacao.id_post, 
+    usuarios.nome, 
+    post_avaliacao.titulo, 
+    post_avaliacao.criado_em, 
+    post_avaliacao.avaliacao, 
+    post_avaliacao.nota, 
+    post_avaliacao.id_filme,
+    COUNT(curtidas.id_curtida) AS curtidas
+FROM post_avaliacao
+INNER JOIN usuarios 
+    ON usuarios.id_user = post_avaliacao.id_user
+LEFT JOIN curtidas 
+    ON curtidas.id_post = post_avaliacao.id_post
+WHERE usuarios.id_user = ?
+GROUP BY 
+    post_avaliacao.id_post, 
+    usuarios.nome, 
+    post_avaliacao.titulo, 
+    post_avaliacao.criado_em, 
+    post_avaliacao.avaliacao, 
+    post_avaliacao.nota, 
+    post_avaliacao.id_filme
+ORDER BY post_avaliacao.criado_em DESC;
+    `
+
+    let [info] = await connection.query(comando, [idUser]);
+    return info;
+}
+
 
 
 
@@ -86,6 +119,8 @@ export async function curtirPost(idUser, idPost) {
     let [info] = await connection.query(comando, [idUser, idPost]);
     return info.insertId; // Retorna o ID da curtida criada
 }
+
+
 
 
 

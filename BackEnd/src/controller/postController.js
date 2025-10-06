@@ -25,6 +25,15 @@ endpoints.get('/post', auth, async (req, res) => {
 })
 
 
+endpoints.post('/post/user', auth, async (req, res) => {
+    let idUser = req.user.id_user;
+
+    let info = await repo.listarPostPorUsuario(idUser);
+    res.send(info)
+
+})
+
+
 endpoints.get('/post/:id_filme', auth, async (req, res) => {
     let id_filme = req.params.id_filme;
     let info = await repo.listarPostPorIdFilme(id_filme);
