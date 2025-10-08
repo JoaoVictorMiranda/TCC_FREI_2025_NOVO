@@ -17,8 +17,8 @@ import Chigurh from '../../assets/images/Chigurh.png'
 import Coracao from '../../assets/images/heart.png'
 
 import Foguinho from '../../assets/images/Foguinho.png'
-import Header from '../../components/Header/Header'
-import Footer from '../../components/Footer/Footer'
+import Header from '../../components/Header/index.jsx'
+import Footer from '../../components/Footer/index.jsx'
 
 import './index.scss'
 import HomeCultBridge from '../../components/HomeCultBridge';
@@ -38,10 +38,6 @@ function Home() {
   const navigate = useNavigate();
   const [pagina, setPagina] = useState(1);
   const [URLpages, setURLpages] = useState(moviesURLtop_rated);
-
-
-
-
 
   // Buscar comentários
   const getComments = async () => {

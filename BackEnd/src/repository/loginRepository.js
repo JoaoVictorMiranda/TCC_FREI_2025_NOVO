@@ -17,9 +17,6 @@ export async function inserirUsuario(dados) {
     return registros.insertId;
 }
 
-
-
-
 export async function loginUsuario(email, senha) {
     const comando = `
     SELECT id_user,
@@ -36,4 +33,3 @@ export async function loginUsuario(email, senha) {
     ])
     return info[0];
 }
-

@@ -10,8 +10,5 @@ export default function adicionarRotas(api) {
     api.use(postController)
     api.use(perfilController)
     api.use(favoritosController)
-
-
-
     api.use('/public/storage', express.static('public/storage'))
 }

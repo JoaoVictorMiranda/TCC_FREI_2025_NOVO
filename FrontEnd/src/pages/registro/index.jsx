@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import './index.scss';
 import api from '../../api.js';
-import Header from '../../components/Header/Header.jsx';
-import Footer from '../../components/Footer/Footer.jsx';
+import Header from '../../components/Header/index.jsx';
+import Footer from '../../components/Footer/index.jsx';
 
 const Registrar = () => {
     const [nome, setNome] = useState('');

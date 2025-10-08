@@ -7,7 +7,7 @@
         display: flex;
         width: 100%;
         flex-direction: column;
-        height: 65vh;
+        height: 70vh;
         background-color: #AA2522;
         align-items: center;
         justify-content: center;
@@ -57,11 +57,11 @@
                 font-weight: 700;
                 color: #000000;
                 font-size: 20px;
+                transition: all 0.5s;
             }
 
             .menu-item:hover {
                 color: #F3A712;
-                border-bottom: 2px solid #F3A712;
             }
 
             .menu-item:active {
@@ -76,27 +76,26 @@
             justify-content: center;
             width: 100%;
             height: 100%;
-
+            
             .swiper-slide {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                cursor: grab;
             }
-
+            
             .movie_render {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                height: 42vh;
+                height: 42.5vh;
                 flex-direction: column;
-
+                
                 #Posteres {
                     width: 100%;
                     box-shadow: 2px 2px 6px black;
                     height: 100%;
                 }
-
+                
                 .alinhador {
                     display: flex;
                     flex-direction: row;

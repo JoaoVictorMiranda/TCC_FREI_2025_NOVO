@@ -5,6 +5,7 @@ import Login from "./pages/login"
 import Registrar from "./pages/registro"
 import Perfil from "./pages/perfil"
 import NotFound from "./pages/notfound"
+import MoviePage  from './pages/Movie'
 
 const Navegacao = () => {
   return (
@@ -14,6 +15,7 @@ const Navegacao = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/registrar" element={<Registrar />} />
         <Route path="/perfil" element={<Perfil />} />
+        <Route path='/movie/:id' element={<MoviePage/>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
