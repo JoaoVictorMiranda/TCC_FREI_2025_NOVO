@@ -48,3 +48,19 @@ CREATE TABLE curtidas(
 
 ALTER TABLE usuarios 
     add column fotoPerfil VARCHAR(500);
+
+
+CREATE TABLE assistidos (
+	id_assistido int primary key auto_increment,
+    id_usuario int,
+    id_filme int,
+    foreign key (id_usuario) REFERENCES usuarios(id_user)
+);
+
+
+CREATE TABLE favoritos (
+	id_favorito int primary key auto_increment,
+    id_usuario int,
+    id_filme int,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_user)
+);
