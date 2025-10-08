@@ -3,8 +3,8 @@ import mysql from 'mysql2/promise'
 
 const connection = await mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: '25012006', // trocar depois para 1234 dnv, só testando uma coisa
+    user: 'jonas',
+    password: '1234', // trocar depois para 1234 dnv, só testando uma coisa
     database: 'cultbridge'
 
 })
@@ -18,6 +18,14 @@ CODIGOS DO BANCO DE QUEM FOR MEXER
     user: 'jonas',
     password: '1234',
     database: 'cultbridge'
+
+
+
+
+        host: 'localhost',
+    user: 'root',
+    password: '25012006', // trocar depois para 1234 dnv, só testando uma coisa 
+    database: 'cultbridge'  //Só pra não perder o numero
 
 */
 
