@@ -2,6 +2,15 @@ CREATE DATABASE cultbridge;
 USE cultbridge;
 
 
+CREATE TABLE ADMIN(
+id_admin int primary key auto_increment,
+nome varchar(200),
+email varchar(200) UNIQUE,
+senha varchar(255),
+criado_em datetime,
+isAdmin boolean default true
+);
+
 
 
 ## banco atualizado com foto de perfil ##
@@ -74,9 +83,31 @@ CREATE TABLE favoritos (
 CREATE TABLE chat(
 id_chat int primary key auto_increment,
 id_user int,
-user_msg varchar(1000),
+user_msg text,
 criado_em datetime,
 FOREIGN KEY (id_user) REFERENCES usuarios(id_user)
+);
+
+
+CREATE TABLE grupos (
+    id_grupo INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100),
+    descricao TEXT,
+    id_criador INT,
+    criado_em DATETIME,
+    FOREIGN KEY (id_criador) REFERENCES usuarios(id_user)
+);
+
+
+
+CREATE TABLE grupo_mensagens (
+    id_msg INT PRIMARY KEY AUTO_INCREMENT,
+    id_grupo INT,
+    id_user INT,
+    mensagem TEXT,
+    criado_em DATETIME,
+    FOREIGN KEY (id_grupo) REFERENCES grupos(id_grupo),
+    FOREIGN KEY (id_user) REFERENCES usuarios(id_user)
 );
 
 

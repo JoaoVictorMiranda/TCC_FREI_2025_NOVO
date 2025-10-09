@@ -2,6 +2,12 @@ import jwt from 'jsonwebtoken'
 
 const KEY = 'cultbridge'
 
+export function generateTokenadmin(userInfo) {
+  if (!userInfo.role)
+    userInfo.idAdmin = '1';
+
+  return jwt.sign(userInfo, KEY)
+}
 
 export function generateToken(userInfo) {
   if (!userInfo.role)
