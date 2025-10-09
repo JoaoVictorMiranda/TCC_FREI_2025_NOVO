@@ -3,8 +3,8 @@ import mysql from 'mysql2/promise'
 
 const connection = await mysql.createConnection({
     host: 'localhost',
-    user: 'jonas',
-    password: '1234', // trocar depois para 1234 dnv, só testando uma coisa
+    user: 'root',
+    password: '1234', 
     database: 'cultbridge'
 
 })

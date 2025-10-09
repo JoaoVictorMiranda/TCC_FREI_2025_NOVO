@@ -14,6 +14,12 @@ CREATE TABLE usuarios(
     criado_em DATETIME
 );
 
+ALTER TABLE usuarios 
+MODIFY senha VARCHAR(255);
+
+
+
+
 
 ALTER TABLE usuarios 
     add column fotoPerfil VARCHAR(500);
@@ -63,4 +69,31 @@ CREATE TABLE favoritos (
     id_usuario int,
     id_filme int,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_user)
+);
+
+CREATE TABLE chat(
+id_chat int primary key auto_increment,
+id_user int,
+user_msg varchar(1000),
+criado_em datetime,
+FOREIGN KEY (id_user) REFERENCES usuarios(id_user)
+);
+
+
+
+
+
+
+
+
+CREATE TABLE tmdb_cache (
+    id_cache INT PRIMARY KEY AUTO_INCREMENT,
+    tmdb_id INT NOT NULL,
+    tipo ENUM('movie', 'tv') NOT NULL,
+    titulo VARCHAR(300),
+    poster_path VARCHAR(200),
+    ano_lancamento INT,
+    data_cache DATETIME DEFAULT CURRENT_TIMESTAMP,
+    dados_completos JSON, -- Armazena toda a resposta da API se necessário
+    UNIQUE KEY (tmdb_id, tipo)
 );
