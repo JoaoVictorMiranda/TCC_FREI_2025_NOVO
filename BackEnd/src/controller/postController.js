@@ -43,13 +43,12 @@ endpoints.get('/post/:id_filme', auth, async (req, res) => {
 })
 
 
-endpoints.post('/post/curtir/:id_post', auth, async (req, res) => {
-    let idPost = req.params.id_post;
+endpoints.post('/post/curtir', auth, async (req, res) => {
+    let idPost = req.body.id_post;
     let idUser = req.user.id_user;
 
     let info = await repo.curtirPost(idUser, idPost);
     res.send(info);
-
 })
 
 export default endpoints

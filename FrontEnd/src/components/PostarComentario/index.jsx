@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import api from '../../api.js'
 import './index.scss'
 
-const PostarComentario = ({idFilme}) => {
+const PostarComentario = ({ idFilme }) => {
         const [titulo, setTitulo] = useState('');
         const [avaliacao, setAvaliacao] = useState('');
         const [nota, setNota] = useState('');
         const [posts, setPosts] = useState([]);
         const token = localStorage.getItem("token");
         const id_filme = idFilme;
+
         async function EnviarComentario() {
                 if (!titulo || !avaliacao || !nota) {
                         alert('Erro ao enviar seu post!');
@@ -16,8 +17,6 @@ const PostarComentario = ({idFilme}) => {
                 }
 
                 try {
-
-
                         await api.post('/EnviarComentario', {
                                 "titulo": titulo,
                                 "id_filme": id_filme,
@@ -26,7 +25,6 @@ const PostarComentario = ({idFilme}) => {
                         }, {
                                 headers: { 'x-access-token': token }
                         })
-                        
                 }
 
                 catch (err) {
@@ -36,20 +34,51 @@ const PostarComentario = ({idFilme}) => {
         }
 
 
-     async   function carregarComentarios(){
+        async function carregarComentarios() {
                 try {
-                        const response = await api.get(`/post/${id_filme}`, {
+                        const resp = await api.get(`/post/${id_filme}`, {
                                 headers: { 'x-access-token': token }
                         })
-                        setPosts(response.data)
+                        setPosts(resp.data)
 
-                } catch (error) {
-                        console.log(error)
+                } catch
+
+                (err) {
+                        console.log(err)
                 }
         }
+
+        async function CurtirComentario(pos) {
+                const token = localStorage.getItem("token");
+                const id_post = posts[pos].id_post;
+
+                try {
+                        await api.post(`/post/curtir`, {
+                                "id_post": id_post
+                        },
+                                {
+                                        headers: { 'x-access-token': token }
+                                }
+                        )
+
+                        alert('Curtido!')
+                        await carregarComentarios();
+                }
+
+                catch (err) {
+                        alert('Erro ao curtir!');
+                        console.log(err);
+                        return;
+                }
+        }
+
+        useEffect(() => {
+                CurtirComentario();
+        }, [id_filme]);
+
         carregarComentarios();
         return (
-                <div  className='AlinhadorGeralComentario'>
+                <div className='AlinhadorGeralComentario'>
                         <label htmlFor="titulo">Titulo</label>
                         <input type="text" placeholder='Titulo' name='titulo' value={titulo} onChange={e => setTitulo(e.target.value)} />
                         <label htmlFor="avaliacao">avaliacao</label>
@@ -59,8 +88,8 @@ const PostarComentario = ({idFilme}) => {
                         <button onClick={EnviarComentario}>ENVIAR</button>
                         <div className="container_posts">
 
-                                {posts.map((post) => (
-                                        <div key={post.id_post} className="Card_post">
+                                {posts.map((post, pos) => (
+                                        <div key={pos} className="Card_post">
                                                 <h2>{post.nome}</h2> {/* usuário que postou */}
                                                 <h3>{post.titulo}</h3>
                                                 <p>{post.avaliacao}</p> {/* título do post */}
@@ -68,7 +97,7 @@ const PostarComentario = ({idFilme}) => {
                                                 <p>Nota: {post.nota}</p>
                                                 <p>Data: {post.criado_em}</p>
                                                 <p>Curtidas: {post.curtidas}</p>
-                                                <button type='button' onClick={() => alert("CURTIDO")}>Curtir</button>
+                                                <button type='button' onClick={() => CurtirComentario(pos)}>Curtir</button>
                                         </div>
                                 ))}
                         </div>

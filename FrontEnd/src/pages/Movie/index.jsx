@@ -9,7 +9,6 @@ import './index.scss'
 const imageURL = import.meta.env.VITE_IMG;
 const apiKey = import.meta.env.VITE_API_KEY;
 
-
 export default function index() {
     const { id } = useParams();
     const [movie, setMovie] = useState(null);
