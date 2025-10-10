@@ -8,7 +8,7 @@ const auth = getAuthentication();
 const endpoints = Router();
 
 
-endpoints.post('/post', auth, async (req, res) => {
+endpoints.post('/EnviarComentario', auth, async (req, res) => {
     let dados = req.body;
     let idUser = req.user.id_user;
 
