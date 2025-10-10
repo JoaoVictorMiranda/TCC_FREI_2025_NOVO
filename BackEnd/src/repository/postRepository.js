@@ -76,6 +76,9 @@ GROUP BY post_avaliacao.id_post;
     let [info] = await connection.query(comando, [id_filme])
     return info;
 }
+
+
+
 export async function listarPostPorUsuario(idUser) {
     const comando = `
 SELECT 
