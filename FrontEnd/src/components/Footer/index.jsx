@@ -31,12 +31,18 @@ const Footer = () => {
         </div>
 
         <div className="container_direito">
-          <div> 
+          <div>
             <h3>Navegar</h3>
             <ul>
-              <li>Home</li>
-              <li>Em Alta</li>
-              <li>Filmes</li>
+              <a onClick={handleBackToTop}>
+                <li>Home</li>
+              </a>
+              <a href='#DestaquesCinema'>
+                <li>Em Alta</li>
+              </a>
+              <a href="#RecomendacoesFilmesSeries">
+                <li>Filmes</li>
+              </a>
             </ul>
           </div>
           <div>
@@ -50,7 +56,7 @@ const Footer = () => {
 
         <div className="container_direitos">
           <p>© Cultbridge. Todos os direitos reservados.</p>
-        </div> 
+        </div>
       </div>
     </div>
   )

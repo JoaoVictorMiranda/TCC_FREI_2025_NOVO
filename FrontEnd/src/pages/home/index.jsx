@@ -102,7 +102,8 @@ function Home() {
         <HomeCultBridge />
 
         {/* SEÇÃO DE FILMES */}
-        <div className="container_highlights">
+        <div className="container_highlights"
+          id="DestaquesCinema">
           <div className="highlights_content">
             <div className="highlights_title">
               <div className="lado_esquerdo">
@@ -128,7 +129,8 @@ function Home() {
               </li>
             </ul>
 
-            <div className="carrossel">
+            <div className="carrossel"
+            >
               <Swiper
                 modules={[Navigation, Pagination, Autoplay]}
                 spaceBetween={20}
@@ -158,7 +160,10 @@ function Home() {
         </div>
 
 
-        <HomeCultBridgeRecommendation />
+        <div className="Recomendacoes"
+          id="RecomendacoesFilmesSeries">
+          <HomeCultBridgeRecommendation />
+        </div>
 
         <div className="container_reviews">
           <div className="container_reviews_content">

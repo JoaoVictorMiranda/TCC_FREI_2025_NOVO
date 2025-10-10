@@ -6,7 +6,7 @@
   position: relative;
   font-family: 'Segoe UI', system-ui, sans-serif;
   width: 100%;
-  
+
   .footer_content {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -18,7 +18,7 @@
 
     .container_esquerda {
       grid-column: 1;
-      
+
       .container_links {
         h2 {
           color: #ffffff;
@@ -27,7 +27,7 @@
           margin-bottom: 1rem;
           letter-spacing: -0.5px;
         }
-        
+
         p {
           color: #ced0d1;
           line-height: 1.6;
@@ -35,12 +35,12 @@
           max-width: 300px;
           font-size: 0.95rem;
         }
-        
+
         .icons {
           display: flex;
           gap: 1rem;
           margin-bottom: 2rem;
-          
+
           div {
             width: 40px;
             height: 40px;
@@ -52,12 +52,12 @@
             justify-content: center;
             transition: all 0.3s ease;
             cursor: pointer;
-            
+
             &:hover {
               border-color: #5A0001;
               transform: translateY(-2px);
             }
-            
+
             img {
               width: 20px;
               height: 20px;
@@ -65,7 +65,7 @@
             }
           }
         }
-        
+
         button {
           background-color: transparent;
           border: 1px solid #5A0001;
@@ -75,7 +75,7 @@
           cursor: pointer;
           font-size: 0.9rem;
           transition: all 0.3s ease;
-          
+
           &:hover {
             background-color: #5A0001;
             color: white;
@@ -83,32 +83,37 @@
         }
       }
     }
-  
+
     .container_direito {
       grid-column: 2;
       display: flex;
       gap: 3rem;
       justify-self: end;
-      
+
       div {
+
+        a {
+          text-decoration: none;
+        }
+
         h3 {
           color: #ffffff;
           font-size: 1.1rem;
           font-weight: 600;
           margin-bottom: 1rem;
         }
-        
+
         ul {
           list-style: none;
           padding: 0;
-          
+
           li {
             color: #ced0d1;
             margin-bottom: 0.7rem;
             cursor: pointer;
             transition: color 0.3s ease;
             font-size: 0.9rem;
-            
+
             &:hover {
               color: #0066ff;
             }
@@ -116,14 +121,14 @@
         }
       }
     }
-  
+
     .container_direitos {
       grid-column: 1 / -1;
       text-align: center;
       padding-top: 2rem;
       border-top: 1px solid #5A0001;
       margin-top: 1rem;
-      
+
       p {
         color: #ffffff;
         font-size: 0.85rem;
@@ -137,30 +142,30 @@
 @media (max-width: 768px) {
   .container_footer {
     padding: 2rem 0 1rem;
-    
+
     .footer_content {
       grid-template-columns: 1fr;
       grid-template-rows: auto auto auto;
       padding: 0 1rem;
       gap: 1.5rem;
-      
+
       .container_esquerda {
         grid-column: 1;
-        
+
         .container_links {
           p {
             max-width: none;
           }
         }
       }
-      
+
       .container_direito {
         grid-column: 1;
         justify-self: start;
         flex-direction: column;
         gap: 1.5rem;
       }
-      
+
       .container_direitos {
         grid-column: 1;
       }
@@ -172,16 +177,16 @@
   .container_footer {
     .footer_content {
       padding: 0 0.5rem;
-      
+
       .container_esquerda {
         .container_links {
           .icons {
             gap: 0.5rem;
-            
+
             div {
               width: 35px;
               height: 35px;
-              
+
               img {
                 width: 16px;
                 height: 16px;
