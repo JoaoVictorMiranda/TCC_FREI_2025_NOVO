@@ -1,87 +1,73 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { Link } from "react-router";
-import Barras from '../../assets/images/barras.svg'
-import Pesquisa from '../../assets/images/pesquisa.svg'
-import habuge from '../../assets/images/habuge.svg'
-import { jwtDecode } from 'jwt-decode';
-import './index.scss'
+import { useState, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Header = () => {
-    const [nome, setNome] = useState('');
-    const token = localStorage.getItem('token');
-    useEffect(() => {
-        if (token) {
-            try {
-                const decoded = jwtDecode(token);
+import Barras from '../../assets/images/barras.svg';
+import Pesquisa from '../../assets/images/pesquisa.svg';
+import habuge from '../../assets/images/habuge.svg';
 
-                const nomeUsuario = decoded.nome || decoded.user?.nome || '';
-                setNome(nomeUsuario);
-            } catch (error) {
-                console.error('Token inválido ou expirado:', error);
-            }
-        }
-    }, [token]);
+import './index.scss';
 
-    const [showInput, setShowInput] = useState(false);
-    const [isFocused, setIsFocused] = useState(false);
+export default function Header() {
+    const navigate = useNavigate();
+    const [mostrarCampo, setMostrarCampo] = useState(false);
+    const [iconeMenu, setIconeMenu] = useState(Barras);
+    const [textoBusca, setTextoBusca] = useState('');
     const inputRef = useRef(null);
 
-    function pesquisa() {
-        setShowInput(true);
-        setTimeout(() => {
-            inputRef.current?.focus();
-        }, 50);
+    function alternarMenu() {
+        setIconeMenu(iconeMenu === Barras ? habuge : Barras);
     }
 
-    function puxarUsuario() {
-
+    function abrirBusca() {
+        setMostrarCampo(true);
+        setTimeout(() => inputRef.current?.focus(), 50);
     }
-    let [haburguer, setHaburguer] = useState(Barras);
 
-    function trocarBarras() {
-        if (haburguer == Barras) {
-            setHaburguer(habuge)
-        } else if (haburguer == habuge) {
-            setHaburguer(Barras)
+    function buscarFilme(evento) {
+        if (evento.key === 'Enter' && textoBusca.trim()) {
+            navigate(`/buscainformacoes?query=${encodeURIComponent(textoBusca)}`);
         }
     }
+
     return (
-        <div className='container_header' onLoad={puxarUsuario}>
-            <div> <img src={haburguer} onClick={trocarBarras} height={50} className='hamburguer' /> </div>
+        <header className="container_header">
             <div>
-                <nav className='container_nav' >
-                    <ul>
-                        <li><Link to={'/'} >INICIO</Link></li>
-                        <li><Link>FILMES</Link></li>
-                        <li> <Link>SÉRIES</Link></li>
-                        <li><Link>COMUNIDADE</Link></li>
-                    </ul>
-                </nav>
+                <img
+                    src={iconeMenu}
+                    onClick={alternarMenu}
+                    height={50}
+                    className="hamburguer"
+                />
             </div>
-            <div className='header_login'>
-                {isFocused && <div className="overlay" onClick={() => setIsFocused(false)}></div>}
-                <img src={Pesquisa} className='pesquisa' onClick={pesquisa} />
-                <Link to={nome ? '/perfil' : '/login'} ><h3>{nome ? nome : 'Logar'}</h3></Link>
+
+            <nav className="container_nav">
+                <ul>
+                    <li><Link to="/">INÍCIO</Link></li>
+                    <li><Link>FILMES</Link></li>
+                    <li><Link>SÉRIES</Link></li>
+                    <li><Link>COMUNIDADE</Link></li>
+                </ul>
+            </nav>
+
+            <div className="header_login">
+                <img
+                    src={Pesquisa}
+                    className="pesquisa"
+                    onClick={abrirBusca}
+                />
                 <div className="caixa_pesquisa">
                     <input
-                        type="text"
-                        id='pesquisa'
                         ref={inputRef}
-                        className={`input_pesquisa ${showInput ? '' : 'sumido'}`}
-                        onFocus={() => setIsFocused(true)}
-                        onBlur={() => {
-                            setIsFocused(false);
-                            setShowInput(false); // Esconder o input quando perder foco
-                        }}
+                        type="text"
+                        value={textoBusca}
+                        onChange={(e) => setTextoBusca(e.target.value)}
+                        onKeyDown={buscarFilme}
+                        placeholder="Buscar filme..."
+                        className={`input_pesquisa ${mostrarCampo ? '' : 'sumido'}`}
+                        onBlur={() => setMostrarCampo(false)}
                     />
                 </div>
-                <div className="foto_perfil">
-
-                </div>
-
             </div>
-        </div>
-    )
+        </header>
+    );
 }
-
-export default Header

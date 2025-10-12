@@ -8,6 +8,7 @@ import NotFound from "./pages/notfound"
 import MoviePage from './pages/Movie'
 import ConfigurarPerfil from "./pages/configurarPerfil"
 import LoginAdmin from "./pages/loginAdmin"
+import Buscar from './pages/BuscaInformacoes'
 
 const Navegacao = () => {
   return (
@@ -20,6 +21,8 @@ const Navegacao = () => {
         <Route path="/login/adminlo0gin" element={<LoginAdmin />} />
         <Route path='/movie/:id' element={<MoviePage />} />
         <Route path='/perfil/configurar' element={<ConfigurarPerfil />} />
+        <Route path='/buscainformacoes' element={<Buscar/>}/>
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
