@@ -22,7 +22,18 @@ export async function criarPost(dados, idUser) {
     return info.insertId
 }
 
+export async function VerSeCurtiu(id_user) {
+    const comando = `
+    SELECT id_user
+    FROM curtidas
+    WHERE id_user = ?
+    `
 
+    const info = await connection.query(comando, [
+        id_user
+    ])
+    return info;
+}
 
 /*CREATE TABLE post_avaliacao (
     id_post int PRIMARY KEY AUTO_INCREMENT,
@@ -76,8 +87,6 @@ GROUP BY post_avaliacao.id_post;
     let [info] = await connection.query(comando, [id_filme])
     return info;
 }
-
-
 
 export async function listarPostPorUsuario(idUser) {
     const comando = `

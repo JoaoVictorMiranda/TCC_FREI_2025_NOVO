@@ -1,3 +1,5 @@
+import { FaHeart } from "react-icons/fa";
+
 import React, { useEffect, useState } from 'react'
 import api from '../../api.js'
 import './index.scss'
@@ -7,6 +9,7 @@ const PostarComentario = ({ idFilme }) => {
         const [avaliacao, setAvaliacao] = useState('');
         const [nota, setNota] = useState('');
         const [posts, setPosts] = useState([]);
+        const [curtido, setCurtido] = useState(false);
         const token = localStorage.getItem("token");
         const id_filme = idFilme;
 
@@ -61,22 +64,22 @@ const PostarComentario = ({ idFilme }) => {
                                 }
                         )
 
-                        alert('Curtido!')
                         await carregarComentarios();
                 }
 
                 catch (err) {
-                        alert('Erro ao curtir!');
+                        alert('Não pode curtir uma avaliação já curtida!');
                         console.log(err);
                         return;
                 }
+
         }
 
         useEffect(() => {
                 CurtirComentario();
-        }, [id_filme]);
+                carregarComentarios();
+        }, []);
 
-        carregarComentarios();
         return (
                 <div className='AlinhadorGeralComentario'>
                         <label htmlFor="titulo">Titulo</label>
@@ -96,8 +99,10 @@ const PostarComentario = ({ idFilme }) => {
                                                 <p>Filme: {post.id_filme}</p>
                                                 <p>Nota: {post.nota}</p>
                                                 <p>Data: {post.criado_em}</p>
-                                                <p>Curtidas: {post.curtidas}</p>
-                                                <button type='button' onClick={() => CurtirComentario(pos)}>Curtir</button>
+                                                <div className="Like">
+                                                        <FaHeart id={VerificarCurtido()} onClick={() => CurtirComentario(pos)}></FaHeart>
+                                                        <p>{post.curtidas}</p>
+                                                </div>
                                         </div>
                                 ))}
                         </div>

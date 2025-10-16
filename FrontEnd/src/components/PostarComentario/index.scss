@@ -35,4 +35,21 @@
         cursor: pointer;
         margin-top: 5vh;
     }
+
+    #heart-none {
+        display: flex;
+        cursor: pointer;
+        background-color: pink;
+        color: purple;
+    }
+
+    #heart-curtido {
+        color: red;
+    }
+
+    .Like {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
 }
