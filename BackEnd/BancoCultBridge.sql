@@ -1,7 +1,6 @@
 CREATE DATABASE cultbridge;
 USE cultbridge;
 
-
 CREATE TABLE ADMIN(
 id_admin int primary key auto_increment,
 nome varchar(200),
@@ -11,42 +10,37 @@ criado_em datetime,
 isAdmin boolean default true
 );
 
-
-
-## banco atualizado com foto de perfil ##
 CREATE TABLE usuarios(
-    id_user INT PRIMARY KEY AUTO_INCREMENT, 
-    nome VARCHAR(300) NOT NULL,
-    nascimento DATE,
-    email VARCHAR(200) NOT NULL,
-    senha VARCHAR(255) NOT NULL,
-    criado_em DATETIME
+ id_user int primary key auto_increment, 
+nome varchar(300),
+nascimento DATE,
+email varchar(200) UNIQUE ,
+senha varchar(255),
+chat_acesso boolean default false,
+foto_perfil varchar(500),
+criado_em datetime
 );
 
-ALTER TABLE usuarios 
-MODIFY senha VARCHAR(255);
+SELECT * FROM usuarios;
 
-
-
-
-
-ALTER TABLE usuarios 
-    add column fotoPerfil VARCHAR(500);
-
+    
 
 
 CREATE TABLE post_avaliacao (
-    id_post INT PRIMARY KEY AUTO_INCREMENT,
-    titulo VARCHAR(200) NOT NULL,
+    id_post int PRIMARY KEY AUTO_INCREMENT,
+    titulo VARCHAR(200),
     id_filme VARCHAR(200),
-    avaliacao VARCHAR(300) NOT NULL,
-    id_user INT,
-    nota INT,
-    criado_em DATETIME,
+    avaliacao varchar(300),
+    id_user int,
+    curtidas int,
+    nota int,
+    criado_em datetime,
     FOREIGN KEY (id_user) REFERENCES usuarios(id_user)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
 );
+
+SELECT * FROM post_avaliacao;
+
+
 
 CREATE TABLE curtidas(
     id_curtida INT PRIMARY KEY AUTO_INCREMENT,
@@ -61,9 +55,6 @@ CREATE TABLE curtidas(
     UNIQUE (id_user, id_post)
 );
 
-ALTER TABLE usuarios 
-    add column fotoPerfil VARCHAR(500);
-
 
 CREATE TABLE assistidos (
 	id_assistido int primary key auto_increment,
@@ -72,6 +63,16 @@ CREATE TABLE assistidos (
     foreign key (id_usuario) REFERENCES usuarios(id_user)
 );
 
+CREATE TABLE assistir_tarde (
+	id_assistido int primary key auto_increment,
+    id_usuario int,
+    id_filme int,
+    foreign key (id_usuario) REFERENCES usuarios(id_user)
+);
+
+
+
+
 
 CREATE TABLE favoritos (
 	id_favorito int primary key auto_increment,
@@ -79,7 +80,9 @@ CREATE TABLE favoritos (
     id_filme int,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_user)
 );
-
+                SELECT favoritos.id_usuario, count(favoritos.id_usuario) AS TotalFavoritos FROM favoritos
+                GROUP BY favoritos.id_usuario;
+                
 CREATE TABLE chat(
 id_chat int primary key auto_increment,
 id_user int,
@@ -110,21 +113,68 @@ CREATE TABLE grupo_mensagens (
     FOREIGN KEY (id_user) REFERENCES usuarios(id_user)
 );
 
+SHOW TABLES;
 
 
 
+##CONTAR FAVORITOS
+SELECT favoritos.id_usuario, count(favoritos.id_usuario) AS TotalFavoritos FROM favoritos
+                GROUP BY favoritos.id_usuario;
+                
+                
+##LOGIN USUARIO
+SELECT id_user, nome, email, nascimento
+    FROM usuarios
+    WHERE email = ? 
+    and senha = MD5(?);
+    
+    
+##CURTIDOS
+    SELECT id_user
+    FROM curtidas
+    WHERE id_user = ?;
+    
+    ##Listar Post por filme
+    SELECT usuarios.nome, post_avaliacao.titulo, post_avaliacao.criado_em, post_avaliacao.avaliacao, post_avaliacao.nota, post_avaliacao.id_filme,
+       COUNT(curtidas.id_curtida) AS curtidas
+FROM post_avaliacao
+INNER JOIN usuarios ON usuarios.id_user = post_avaliacao.id_user
+LEFT JOIN curtidas ON curtidas.id_post = post_avaliacao.id_post
+GROUP BY post_avaliacao.id_post;
 
 
+## Filtrar por filme id
+SELECT post_avaliacao.id_post, usuarios.nome, post_avaliacao.titulo, post_avaliacao.criado_em, post_avaliacao.avaliacao, post_avaliacao.nota, post_avaliacao.id_filme,
+       COUNT(curtidas.id_curtida) AS curtidas
+FROM post_avaliacao
+INNER JOIN usuarios ON usuarios.id_user = post_avaliacao.id_user
+LEFT JOIN curtidas ON curtidas.id_post = post_avaliacao.id_post
+WHERE post_avaliacao.id_filme = ?
+GROUP BY post_avaliacao.id_post;
 
 
-CREATE TABLE tmdb_cache (
-    id_cache INT PRIMARY KEY AUTO_INCREMENT,
-    tmdb_id INT NOT NULL,
-    tipo ENUM('movie', 'tv') NOT NULL,
-    titulo VARCHAR(300),
-    poster_path VARCHAR(200),
-    ano_lancamento INT,
-    data_cache DATETIME DEFAULT CURRENT_TIMESTAMP,
-    dados_completos JSON, -- Armazena toda a resposta da API se necessário
-    UNIQUE KEY (tmdb_id, tipo)
-);
+##Listar Post por usuario
+SELECT 
+    post_avaliacao.id_post, 
+    usuarios.nome, 
+    post_avaliacao.titulo, 
+    post_avaliacao.criado_em, 
+    post_avaliacao.avaliacao, 
+    post_avaliacao.nota, 
+    post_avaliacao.id_filme,
+    COUNT(curtidas.id_curtida) AS curtidas
+FROM post_avaliacao
+INNER JOIN usuarios 
+    ON usuarios.id_user = post_avaliacao.id_user
+LEFT JOIN curtidas 
+    ON curtidas.id_post = post_avaliacao.id_post
+WHERE usuarios.id_user = ?
+GROUP BY 
+    post_avaliacao.id_post, 
+    usuarios.nome, 
+    post_avaliacao.titulo, 
+    post_avaliacao.criado_em, 
+    post_avaliacao.avaliacao, 
+    post_avaliacao.nota, 
+    post_avaliacao.id_filme
+ORDER BY post_avaliacao.criado_em DESC;
