@@ -8,6 +8,7 @@ import api from '../../api';
 const Perfil = () => {
     const [nome, setNome] = useState('');
     const [idade, setIdade] = useState('');
+    const [foto_perfil, setFoto_perfil] = useState(null)
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
     const [post, setPost] = useState([]);
@@ -20,6 +21,8 @@ const Perfil = () => {
 
                 const nomeUsuario = decoded.nome || decoded.user?.nome || '';
                 setNome(nomeUsuario);
+                const foto = decoded.foto_perfil;
+                setFoto_perfil(`http://localhost:5022/${foto}`)
 
                 const nascimento = decoded.nascimento;
                 if (nascimento) {
@@ -89,6 +92,9 @@ const Perfil = () => {
                         <button type='button' onClick={() => alert("CURTIDO")}>Curtir</button>
                     </div>
                 ))}
+            </div>
+            <div className="foto_perfil">
+                <img src={foto_perfil} alt="" />
             </div>
 
 

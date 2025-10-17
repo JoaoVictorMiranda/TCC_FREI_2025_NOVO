@@ -22,7 +22,8 @@ export async function loginUsuario(email, senha) {
     SELECT id_user,
     nome,
     email,
-    nascimento
+    nascimento,
+    foto_perfil
     FROM usuarios
     WHERE email = ? 
     and senha = MD5(?)
