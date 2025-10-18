@@ -12,6 +12,7 @@ const apiKey = import.meta.env.VITE_API_KEY;
 export default function index() {
     const { id } = useParams();
     const [movie, setMovie] = useState(null);
+    const [diretor, setDiretor] = useState('');
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -21,17 +22,31 @@ export default function index() {
         fetchMovie();
     }, [id]);
 
+    useEffect(() => {
+        const AcharDiretor = async () => {
+            const resp = await apiTMDB.get(`/movie/${id}/credits?${apiKey}&language=pt-BR`)
+
+            const elenco = resp.data.crew;
+            const diretor = elenco.find(p => p.job === 'Director')
+
+            setDiretor(diretor.name)
+        }
+        AcharDiretor();
+    }, [id])
+
     if (!movie) return <p>Carregando...</p>;
     return (
         <div>
             <Header />
             <div className='EspacoDetalhes'>
-            <div className="EspacoDetalhes">
-                <h1>Titulo: {movie.title}</h1>
-                <img src={imageURL + movie.poster_path} alt={movie.title} />
-                <p>Sinopse: {movie.overview}</p>
+                <div className="EspacoDetalhes">
+                    <h1>Titulo: {movie.title}</h1>
+                    <h1>Diretor: {diretor}</h1>
+                    <img src={imageURL + movie.poster_path} alt={movie.title} />
+                    <p>Sinopse: {movie.overview}</p>
+                    <img src={imageURL + movie.backdrop_path} alt="" />
+                </div>
             </div>
-        </div>
             <PostarComentario idFilme={id} />
             <Footer />
         </div>
