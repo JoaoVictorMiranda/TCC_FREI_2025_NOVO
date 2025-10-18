@@ -7,15 +7,11 @@ import api from '../../api';
 
 const Login = () => {
     const navigate = useNavigate();
-
     const [email, setEmail] = useState();
     const [senha, setSenha] = useState();
 
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-
 
         api.post('/usuario', {
             email: email,
@@ -28,17 +24,13 @@ const Login = () => {
                 navigate('/perfil')
             })
             .catch(error => {
-                console.error('Deu merda:', error);
+                console.error('Deu ruim hein:', error);
             });
-
-
-
     };
 
     const handleVoltar = () => {
         navigate('/');
     };
-
 
     return (
         <div className="login-container">

@@ -84,9 +84,9 @@ const PostarComentario = ({ idFilme }) => {
                 <div className='AlinhadorGeralComentario'>
                         <label htmlFor="titulo">Titulo</label>
                         <input type="text" placeholder='Titulo' name='titulo' value={titulo} onChange={e => setTitulo(e.target.value)} />
-                        <label htmlFor="avaliacao">avaliacao</label>
+                        <label htmlFor="avaliacao">Avaliacao</label>
                         <textarea name="avaliacao" id="avaliacao" value={avaliacao} onChange={e => setAvaliacao(e.target.value)}></textarea>
-                        <label htmlFor="nota">nota</label>
+                        <label htmlFor="nota">Nota</label>
                         <input type="number" name="nota" id="nota" value={nota} onChange={(e) => setNota(e.target.value)} />
                         <button onClick={EnviarComentario}>ENVIAR</button>
                         <div className="container_posts">

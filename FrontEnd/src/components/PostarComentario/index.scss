@@ -1,9 +1,13 @@
 .AlinhadorGeralComentario {
     display: flex;
-    width: 30%;
-    height: 80vh;
+    width: 100%;
+    min-height: 40vh;
+    justify-content: center;
     flex-direction: column;
     justify-self: center;
+    background-color: white;
+    padding-right: 40%;
+    padding-left: 40%;
 
     form {
         display: flex;
@@ -16,6 +20,8 @@
         height: 5vh;
         padding: 1vh;
         border-radius: 1vh;
+        border: black 0.1 solid;
+        outline: none;
     }
 
     input {
@@ -23,6 +29,8 @@
         height: 5vh;
         border-radius: 1vh;
         padding: 1vh;
+        border: black 0.1 solid;
+        outline: none;
     }
 
     button {

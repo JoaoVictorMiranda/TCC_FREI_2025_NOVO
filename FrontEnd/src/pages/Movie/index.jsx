@@ -44,7 +44,7 @@ export default function index() {
                     <h1>Diretor: {diretor}</h1>
                     <img src={imageURL + movie.poster_path} alt={movie.title} />
                     <p>Sinopse: {movie.overview}</p>
-                    <img src={imageURL + movie.backdrop_path} alt="" />
+                    <img id='BackgroungDoFilme' src={imageURL + movie.backdrop_path} alt="" />
                 </div>
             </div>
             <PostarComentario idFilme={id} />
