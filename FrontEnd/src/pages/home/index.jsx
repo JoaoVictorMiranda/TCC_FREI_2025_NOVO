@@ -151,14 +151,13 @@ function Home() {
               </Swiper>
             </div>
           </div>
-          <ul className='lista_paginas'>
-            <li onClick={() => setPagina(1)}>1</li>
-            <li onClick={() => setPagina(2)}>2</li>
-            <li onClick={() => setPagina(3)}>3</li>
-            <li onClick={() => setPagina(4)}>4</li>
-          </ul>
         </div>
-
+        {/* <ul className='lista_paginas'>
+          <li id='Bolinha' onClick={() => setPagina(1)}>1</li>
+          <li id='Bolinha' onClick={() => setPagina(2)}>2</li>
+          <li id='Bolinha' onClick={() => setPagina(3)}>3</li>
+          <li id='Bolinha' onClick={() => setPagina(4)}>4</li>
+        </ul> */}
 
         <div className="Recomendacoes"
           id="RecomendacoesFilmesSeries">

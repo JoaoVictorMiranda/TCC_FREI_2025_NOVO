@@ -2,15 +2,16 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    background-color: #000000;
 
     .container_highlights {
         display: flex;
         width: 100%;
         flex-direction: column;
-        height: 70vh;
+        height: 75vh;
         background-color: transparent;
         color: #000000;
-        background-image: url('../../assets/images/Group\ 85.png');
+        background: linear-gradient(to bottom, #5A0001, #000000);
         align-items: center;
         justify-content: center;
 
@@ -78,26 +79,26 @@
             justify-content: center;
             width: 100%;
             height: 100%;
-            
+
             .swiper-slide {
                 display: flex;
                 align-items: center;
                 justify-content: center;
             }
-            
+
             .movie_render {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 height: 42.5vh;
                 flex-direction: column;
-                
+
                 #Posteres {
                     width: 100%;
                     box-shadow: 2px 2px 6px black;
                     height: 100%;
                 }
-                
+
                 .alinhador {
                     display: flex;
                     flex-direction: row;
@@ -152,17 +153,43 @@
 
     }
 
-    .lista_paginas {
-        display: flex;
-        gap: 3rem;
-        list-style: none;
-        padding: 1rem;
-    }
+    // .lista_paginas {
+    //     display: flex;
+    //     background-color: red;
+    //     width: 20%;
+    //     height: 5vh;
+    //     align-self: center;
+    //     justify-self: center;
+    //     gap: 5vh;
+    //     align-items: center;
+    //     justify-content: center;
+    //     list-style: none;
+    //     font-size: 3vh;
 
-    .lista_paginas>li:hover {
-        color: #F3A712;
-        cursor: pointer;
-    }
+    //     ul {
+    //         align-items: center;
+    //         justify-content: center;
+    //     }
+
+    //     li {
+    //         align-items: center;
+    //         justify-content: center;
+    //     }
+
+    //     #Bolinha {
+    //         background-color: #F3A712;
+    //         width: 100%;
+    //         height: 100%;
+    //         text-align: center;
+    //         transition: all 0.5s;
+    //         border-radius: 50%;
+    //     }
+
+    //     #Bolinha:hover {
+    //         cursor: pointer;
+    //         transform: scale(1.1);
+    //     }
+    // }
 
     .container_reviews {
         display: flex;

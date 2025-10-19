@@ -1,3 +1,5 @@
+import scarface from '../../assets/images/Scarface.png'
+
 import './index.scss'
 
 export default function index() {
@@ -5,7 +7,48 @@ export default function index() {
         <div className='HomeAbaRecomendados'>
             <div className="reviews_title">
                 <h1>EXPLORAR</h1>
-                <div className="bloco_vermelho" />
+            </div>
+
+            <div className="BannersExibicao">
+                <div className="banner">
+                    <img src={scarface} alt="" />
+                </div>
+                <div className="banner">
+                    <img src={scarface} alt="" />
+                </div>
+                <div className="banner">
+                    <img src={scarface} alt="" />
+                </div>
+                <div className="banner">
+                    <img src={scarface} alt="" />
+                </div>
+                <div className="banner">
+                    <img src={scarface} alt="" />
+                </div>
+                <div className="banner">
+                    <img src={scarface} alt="" />
+                </div>
+            </div>
+
+            <div className="BannersExibicao">
+                <div className="banner">
+                    <img src={scarface} alt="" />
+                </div>
+                <div className="banner">
+                    <img src={scarface} alt="" />
+                </div>
+                <div className="banner">
+                    <img src={scarface} alt="" />
+                </div>
+                <div className="banner">
+                    <img src={scarface} alt="" />
+                </div>
+                <div className="banner">
+                    <img src={scarface} alt="" />
+                </div>
+                <div className="banner">
+                    <img src={scarface} alt="" />
+                </div>
             </div>
         </div>
     )

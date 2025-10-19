@@ -2,6 +2,8 @@ import { FaUser } from "react-icons/fa";
 import { FaStar } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
+import './SwiperCard.scss'
+
 const imageURL = import.meta.env.VITE_IMG;
 
 const SwiperCard = ({ movie }) => {
@@ -24,7 +26,7 @@ const SwiperCard = ({ movie }) => {
                     <h3>{movie.popularity.toFixed(1)}</h3>
                 </div>
                 <div className="lado_direito">
-                    <FaStar />
+                    <FaStar id="Estrelinha" />
                     <h3>{movie.vote_average.toFixed(1)}</h3>
                 </div>
             </div>
