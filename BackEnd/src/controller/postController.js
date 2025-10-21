@@ -42,10 +42,10 @@ endpoints.get('/post/:id_filme', auth, async (req, res) => {
 
 })
 
-endpoints.get('/VerSeCurtiu', auth, async (req,resp) => {
+endpoints.post('/VerSeCurtiu', auth, async (req,resp) => {
     const id = req.user.id_user;
 
-    const registro = await repo.VerSeCurtiu(id_user)
+    const registro = await repo.VerSeCurtiu(id)
     resp.send(registro);
 })
 

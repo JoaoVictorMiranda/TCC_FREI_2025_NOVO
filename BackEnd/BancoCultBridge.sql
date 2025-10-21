@@ -80,8 +80,7 @@ CREATE TABLE favoritos (
     id_filme int,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_user)
 );
-                SELECT favoritos.id_usuario, count(favoritos.id_usuario) AS TotalFavoritos FROM favoritos
-                GROUP BY favoritos.id_usuario;
+
                 
 CREATE TABLE chat(
 id_chat int primary key auto_increment,

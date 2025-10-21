@@ -28,6 +28,7 @@ const PostarComentario = ({ idFilme }) => {
                         }, {
                                 headers: { 'x-access-token': token }
                         })
+                        carregarComentarios();
                 }
 
                 catch (err) {
@@ -48,6 +49,20 @@ const PostarComentario = ({ idFilme }) => {
 
                 (err) {
                         console.log(err)
+                }
+        }
+
+        async function Verificar() {
+                const resp = await api.post('/VerSeCurtiu')
+
+                const token = localStorage.getItem("token");
+
+                if (resp.data.id_user == token) {
+                        setCurtido('Red')
+                }
+
+                else {
+                        setCurtido('Black')
                 }
         }
 
@@ -78,6 +93,7 @@ const PostarComentario = ({ idFilme }) => {
         useEffect(() => {
                 CurtirComentario();
                 carregarComentarios();
+                Verificar()
         }, []);
 
         return (
@@ -100,7 +116,7 @@ const PostarComentario = ({ idFilme }) => {
                                                 <p>Nota: {post.nota}</p>
                                                 <p>Data: {post.criado_em}</p>
                                                 <div className="Like">
-                                                        <FaHeart id={VerificarCurtido()} onClick={() => CurtirComentario(pos)}></FaHeart>
+                                                        <FaHeart style={{color: Verificar()}} onClick={() => CurtirComentario(pos)}></FaHeart>
                                                         <p>{post.curtidas}</p>
                                                 </div>
                                         </div>
