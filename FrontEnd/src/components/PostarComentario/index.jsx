@@ -19,15 +19,15 @@ const PostarComentario = ({ idFilme }) => {
                         return;
                 }
 
+                const comentario = {
+                        "titulo": titulo,
+                        "id_filme": id_filme,
+                        "avaliacao": avaliacao,
+                        "nota": nota
+                }
+
                 try {
-                        await api.post('/EnviarComentario', {
-                                "titulo": titulo,
-                                "id_filme": id_filme,
-                                "avaliacao": avaliacao,
-                                "nota": nota,
-                        }, {
-                                headers: { 'x-access-token': token }
-                        })
+                        await api.post('/EnviarComentario', comentario)
                         carregarComentarios();
                 }
 
@@ -67,17 +67,12 @@ const PostarComentario = ({ idFilme }) => {
         }
 
         async function CurtirComentario(pos) {
-                const token = localStorage.getItem("token");
                 const id_post = posts[pos].id_post;
 
+                const post = { "id_post": id_post }
+
                 try {
-                        await api.post(`/post/curtir`, {
-                                "id_post": id_post
-                        },
-                                {
-                                        headers: { 'x-access-token': token }
-                                }
-                        )
+                        await api.post(`/post/curtir`, post)
 
                         await carregarComentarios();
                 }
@@ -116,7 +111,7 @@ const PostarComentario = ({ idFilme }) => {
                                                 <p>Nota: {post.nota}</p>
                                                 <p>Data: {post.criado_em}</p>
                                                 <div className="Like">
-                                                        <FaHeart style={{color: Verificar()}} onClick={() => CurtirComentario(pos)}></FaHeart>
+                                                        <FaHeart style={{ color: Verificar }} onClick={() => CurtirComentario(pos)}></FaHeart>
                                                         <p>{post.curtidas}</p>
                                                 </div>
                                         </div>
