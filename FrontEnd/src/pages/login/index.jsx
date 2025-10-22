@@ -5,6 +5,9 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import api from '../../api';
 
+import googleColorIcon from '../../assets/images/googleColorIcon.png'
+
+
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState();
@@ -37,7 +40,9 @@ const Login = () => {
             <Header />
 
             <form onSubmit={handleSubmit} className="login-form">
-                <h1>CultBridge</h1>
+
+                <section className='left-side-login'>
+                <h1>Já tem uma <br /> conta?</h1>
 
                 <div className="input-group">
                     <label htmlFor="email">Email</label>
@@ -65,24 +70,33 @@ const Login = () => {
 
                 <div className="help-links">
                     <Link to="/forgot-password">Esqueceu a senha?</Link>
-                    <Link to="/registrar">Criar conta</Link>
                 </div>
 
                 <button type="submit" className="login-button" >
-                    Login
+                    Faça login
                 </button>
+
+                <div className='under-the-button-login'>
+                    <p>Novo por aqui?</p>
+                    <Link to="/registrar">Cadastre-se</Link>
+                    </div>
+
+                </section>
+
+                <section className='right-side-login'>
 
                 <div className="divider">ou</div>
 
                 <div className="social-login">
                     <button type="button" onClick={() => handleSocialLogin('Google')}>
-                        Google
+                       <img src={googleColorIcon} height={10} alt="" /> Google
                     </button>
                 </div>
 
                 <button type="button" onClick={handleVoltar} className="back-button">
                     Voltar ao Início
                 </button>
+                </section>
             </form>
 
             <Footer />
