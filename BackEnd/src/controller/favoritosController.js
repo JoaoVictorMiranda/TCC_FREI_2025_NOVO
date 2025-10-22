@@ -1,7 +1,6 @@
 import * as repo from '../repository/favoritosRepository.js'
 import { Router } from 'express'
 import { getAuthentication } from '../utils/jwt.js';
-import { connection } from '../repository/connection.js';
 
 
 const auth = getAuthentication();
