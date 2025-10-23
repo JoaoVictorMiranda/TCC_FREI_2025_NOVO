@@ -11,7 +11,7 @@ export default function index() {
                     <h1>CULTBRIDGE</h1>
                     <h3>ONDE AS SUAS IDEIAS ENCONTRAM SENTIDO</h3>
                     <div className="AlinhadorBotoes">
-                        <button id='Comecar'>CRIAR REGISTRO</button>
+                        <button id='Comecar'>CRIAR COMUNIDADE</button>
                         <button id='Navegar'>NAVEGAR</button>
                     </div>
                 </div>
