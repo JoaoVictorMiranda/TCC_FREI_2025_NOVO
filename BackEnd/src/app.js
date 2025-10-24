@@ -8,7 +8,7 @@ const api = express();
 // Configura o middleware CORS (Cross-Origin Resource Sharing)
 api.use(cors({
     // Define qual origem (URL do frontend) tem permissão para acessar a API
-    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
     // Permite o envio de credenciais (cookies, autenticação) nas requisições
     credentials: true
 }));
