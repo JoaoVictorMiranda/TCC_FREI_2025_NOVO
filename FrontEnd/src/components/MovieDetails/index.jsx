@@ -18,7 +18,11 @@ export default function MovieDetails() {
         fetchMovie();
     }, [id]);
 
-    if (!movie) return <p>Carregando...</p>;
+    if (!movie) return (
+        <div className='Carregando'>
+            <p>Carregando...</p>
+        </div>
+    )
 
     return (
         <div className='EspacoDetalhes'>
