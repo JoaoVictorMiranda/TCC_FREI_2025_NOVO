@@ -3,7 +3,7 @@ import './index.scss';
 import InstagramIcon from '../../assets/instagram.svg';
 import FacebookIcon from '../../assets/facebook.svg';
 import TikTokIcon from '../../assets/tiktok.svg';
-import LinkedinIcon from '../../assets/linkedin.svg';
+
 import YoutubeIcon from '../../assets/youtube.svg';
 
 const Footer = () => {
@@ -22,7 +22,7 @@ const Footer = () => {
               <div><img src={InstagramIcon} alt="Instagram" /></div>
               <div><img src={FacebookIcon} alt="Facebook" /></div>
               <div><img src={TikTokIcon} alt="TikTok" /></div>
-              <div><img src={LinkedinIcon} alt="LinkedIn" /></div>
+            
               <div><img src={YoutubeIcon} alt="YouTube" /></div>
             </div>
 
