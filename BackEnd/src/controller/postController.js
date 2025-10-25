@@ -16,7 +16,6 @@ endpoints.post('/EnviarComentario', auth, async (req, res) => {
     res.send({ novoPost: post });
 })
 
-
 endpoints.get('/post', auth, async (req, res) => {
     let info = await repo.listarPostPorFilme();
 

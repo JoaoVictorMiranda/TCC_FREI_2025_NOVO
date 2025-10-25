@@ -1,0 +1,64 @@
+.SessaoComentarios {
+    display: flex;
+    width: 100%;
+    height: auto;
+    background-color: black;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 10vh;
+    flex-direction: column;
+
+    .SessaoComentariosConteudo {
+        display: flex;
+        width: 60%;
+        height: auto;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: white;
+    }
+
+    .SessaoComentariosTitulo {
+        display: flex;
+        color: white;
+    }
+
+    .BlocoVermelho {
+        display: flex;
+        background-color: red;
+        width: 10%;
+        border-radius: 0.5vh;
+        height: 0.5vh;
+    }
+
+    .Comentarios {
+        display: flex;
+        width: 100%;
+        height: auto;
+        padding: 1vh;
+        gap: 1.5vh;
+    }
+
+    button {
+        width: 15%;
+        height: 4.5vh;
+        cursor: pointer;
+        border-radius: 1vh;
+        outline: none;
+        transition: all 0.5s;
+        font-size: 1.8vh;
+        font-weight: 700;
+        border: none;
+        background-color: #5A0001;
+        color: white;
+        margin-top: 5vh;
+    }
+
+    button:hover {
+        display: flex;
+        transform: scale(1.1);
+        align-items: center;
+        justify-content: center;
+        background-color: #410102;
+    }
+}
