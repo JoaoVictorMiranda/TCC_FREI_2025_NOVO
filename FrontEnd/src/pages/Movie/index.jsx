@@ -38,15 +38,32 @@ export default function index() {
     return (
         <div>
             <Header />
-            <div className='EspacoDetalhes'>
-                <div className="EspacoDetalhes">
-                    <h1>Titulo: {movie.title}</h1>
-                    <h1>Diretor: {diretor}</h1>
-                    <img src={imageURL + movie.poster_path} alt={movie.title} />
+
+            <div className="DetalhesDaObra">
+                <div className="AlinhadorDetalhes">
+                    <div className="DetalhesConteudo">
+                        <h1>{movie.title}</h1>
+                        <h3>{movie.release_date.split('-')[0]}</h3>
+                    </div>
+                    <div className="Trailer">
+                        <h2>ASSISTIR TRAILER</h2>
+                        <button>REGISTRAR</button>
+                    </div>
+                </div>
+
+            </div>
+            <div className="PosterSinopse">
+                <div className='EspacoDetalhes'>
+                    <div className="Diretor">
+                        <img id='BackgroungDoFilme' src={imageURL + movie.backdrop_path} alt="" />
+                        <h1>DIRIGIDO POR</h1>
+                        <h3>{diretor}</h3>
+                        <img src={imageURL + movie.poster_path} alt={movie.title} />
+                    </div>
                     <p>Sinopse: {movie.overview}</p>
-                    <img id='BackgroungDoFilme' src={imageURL + movie.backdrop_path} alt="" />
                 </div>
             </div>
+
             <PostarComentario idFilme={id} />
             <Footer />
         </div>
