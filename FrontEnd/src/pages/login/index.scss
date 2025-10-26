@@ -1,10 +1,17 @@
 // Login.scss
+  
 .login-container {
   min-height: 100vh;
-  background: #0F1B2D;
   display: flex;
   flex-direction: column;
   position: relative;
+
+  /* Overlay transparente para deixar o background mais claro ou opaco */
+  background: 
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url(../../assets/images/BackgroundFilmes.png);
+  background-size: cover;
+  background-position: center;
 
   .login-form {
     display: flex;
