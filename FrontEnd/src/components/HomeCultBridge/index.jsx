@@ -16,7 +16,7 @@ export default function index() {
                     </div>
                 </div>
                 <div className="lado_direito">
-                    <img src={pipoca} alt="" />
+                    <img width={270} src={pipoca} alt="" />
                 </div>
             </div>
         </div>
