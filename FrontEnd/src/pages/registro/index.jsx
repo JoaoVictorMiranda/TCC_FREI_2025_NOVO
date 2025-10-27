@@ -45,8 +45,10 @@ const Registrar = () => {
     return (
         <div className='container_registro'>
             <Header />
-            <h1>Crie Sua Conta:</h1>
             <div className="registro">
+
+                    <h1>Crie Sua Conta:</h1>
+
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="nome">Nome: </label>
                     <input
@@ -74,7 +76,7 @@ const Registrar = () => {
                         type="email"
                         id="email"
                         name="email"
-                        placeholder="Pedro@email.com"
+                        placeholder="seu@email.com"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
