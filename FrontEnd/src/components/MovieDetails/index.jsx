@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import apiTMDB from '../../apiTMDB.js';
 import './index.scss';
+import Carregando from '../Carregando/index.jsx';
 
 const imageURL = import.meta.env.VITE_IMG;
 const apiKey = import.meta.env.VITE_API_KEY;
@@ -18,11 +19,7 @@ export default function MovieDetails() {
         fetchMovie();
     }, [id]);
 
-    if (!movie) return (
-        <div className='Carregando'>
-            <p>Carregando...</p>
-        </div>
-    )
+    if (!movie) return <Carregando />
 
     return (
         <div className='EspacoDetalhes'>

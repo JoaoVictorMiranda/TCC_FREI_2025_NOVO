@@ -2,6 +2,7 @@ import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import PostarComentario from '../../components/PostarComentario'
 import CardDetalhes from '../../components/CardInfo/index.jsx';
+import Carregando from '../../components/Carregando/index.jsx';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import apiTMDB from '../../apiTMDB.js';
@@ -37,7 +38,7 @@ export default function index() {
         AcharDiretor();
     }, [id])
 
-    if (!movie) return <p>Carregando...</p>;
+    if (!movie) return <Carregando />;
     return (
         <div>
             <Header />
@@ -68,11 +69,11 @@ export default function index() {
                         </div>
                         <div className="Information">
                             <CardDetalhes
-                            Info={'Assistiram'}/>
+                                Info={'Assistiram'} />
                             <CardDetalhes
-                            Info={'Assistiram'}/>
+                                Info={'Assistiram'} />
                             <CardDetalhes
-                            Info={'Assistiram'}/>
+                                Info={'Assistiram'} />
                         </div>
                         <div className='Sinopse'>
                             <p>{movie.overview}</p>

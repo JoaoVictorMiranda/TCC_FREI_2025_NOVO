@@ -3,6 +3,9 @@ import apiTMDB from '../../apiTMDB.js'
 const imageURL = import.meta.env.VITE_IMG;
 const apiKey = import.meta.env.VITE_API_KEY;
 
+import api from '../../api.js'
+
+import Profile from '../../assets/images/profile.jpg'
 
 import CardComentario from '../CardComentario'
 
@@ -10,6 +13,7 @@ import './index.scss'
 
 export default function SessaoComentarios() {
     const [movie, setMovie] = useState(null)
+    const [arr, setArr] = useState([])
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -18,6 +22,13 @@ export default function SessaoComentarios() {
         }
         fetchMovie()
     }, [])
+
+    async function PuxarInfo() {
+        const resp = await api.get('/post/avaliacao')
+        setArr(resp.data)
+    }
+
+    PuxarInfo()
 
     return (
         <div className='SessaoComentarios'>
@@ -28,45 +39,19 @@ export default function SessaoComentarios() {
                 </div>
 
                 <div className="Comentarios">
-                    <CardComentario
-                        user={'Lucas Viana'}
-                        avaliacao={'Bad Movie'}
-                        criado_em={'2025-01-25'}
-                        nota={'5'}
-                        foto_perfil={'https://m.gettywallpapers.com/wp-content/uploads/2023/06/Pfp-Cool.jpg'}
-                        poster_filme={movie ? imageURL + movie.poster_path : ''}
-                        contagem_likes={'3'}
-                        contagem_resp={'2'} />
-                    <CardComentario
-                        user={'Lucas Viana'}
-                        avaliacao={'Bad Movie'}
-                        criado_em={'2025-01-25'}
-                        nota={'5'}
-                        foto_perfil={'https://m.gettywallpapers.com/wp-content/uploads/2023/06/Pfp-Cool.jpg'}
-                        poster_filme={movie ? imageURL + movie.poster_path : ''}
-                        contagem_likes={'3'}
-                        contagem_resp={'2'} />
-                </div>
-
-                <div className="Comentarios">
-                    <CardComentario
-                        user={'Lucas Viana'}
-                        avaliacao={'Bad Movie'}
-                        criado_em={'2025-01-25'}
-                        nota={'5'}
-                        foto_perfil={'https://m.gettywallpapers.com/wp-content/uploads/2023/06/Pfp-Cool.jpg'}
-                        poster_filme={movie ? imageURL + movie.poster_path : ''}
-                        contagem_likes={'3'}
-                        contagem_resp={'2'} />
-                    <CardComentario
-                        user={'Lucas Viana'}
-                        avaliacao={'Bad Movie'}
-                        criado_em={'2025-01-25'}
-                        nota={'5'}
-                        foto_perfil={'https://m.gettywallpapers.com/wp-content/uploads/2023/06/Pfp-Cool.jpg'}
-                        poster_filme={movie ? imageURL + movie.poster_path : ''}
-                        contagem_likes={'3'}
-                        contagem_resp={'2'} />
+                    {
+                        arr.map((info) => (
+                            <CardComentario
+                                key={info.id_user}
+                                id_user={info.id_user}
+                                profile={Profile}
+                                perfil={info.nome}
+                                analise={info.avaliacao}
+                                curtidas={info.curtidas}
+                                nota={info.nota}
+                            />
+                        ))
+                    }
                 </div>
 
             </div>

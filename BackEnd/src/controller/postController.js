@@ -23,13 +23,16 @@ endpoints.get('/post', auth, async (req, res) => {
 
 })
 
+endpoints.get('/post/avaliacao', auth, async (req,resp) => {
+    const resposta = await repo.PuxarInfoPost()
+    resp.send(resposta)
+})
 
 endpoints.post('/post/user', auth, async (req, res) => {
     let idUser = req.user.id_user;
 
     let info = await repo.listarPostPorUsuario(idUser);
     res.send(info)
-
 })
 
 

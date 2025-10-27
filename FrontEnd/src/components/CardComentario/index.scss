@@ -1,74 +1,52 @@
 .CardComentario {
     display: flex;
-    width: 50%;
-    height: 20vh;
+    width: 100%;
+    height: 15vh;
     background-color: white;
+    overflow: hidden;
     border-radius: 1vh;
     color: black;
-    overflow: hidden;
 
-    .LadoEsquerdo {
+    .FotoPerfil {
         display: flex;
-        width: 30%;
-        border-radius: 1vh 1vh 0vh 0vh;
-    }
-
-    .TituloCard {
-        display: flex;
+        width: 20%;
+        height: 8vh;
         align-items: center;
-        gap: 1.5vh;
+        justify-content: center;
 
         img {
             border-radius: 50%;
         }
     }
 
-    .Alinhador {
+    .AlinhadorComentario {
         display: flex;
-        width: 70%;
         flex-direction: column;
-        padding-bottom: 1vh;
-    }
-
-    .LadoDireito {
-        display: flex;
         width: 100%;
-        height: 17vh;
-        text-align: left;
-        flex-direction: column;
-        border-radius: 0vh 1vh 0vh 0vh;
-        justify-content: center;
+        height: 15vh;
         padding: 1vh;
-        flex-direction: column;
-    }
 
-    .Interacoes {
-        display: flex;
-        height: 3vh;
-        width: 100%;
-        flex-direction: row;
-
-        .Coracao {
+        .Perfil {
             display: flex;
+            width: 100%;
+            height: 3vh;
             align-items: center;
-            justify-content: center;
-            font-size: 3vh;
-            width: 20%;
-
-            h3 {
-                font-size: 2.4vh;
-            }
+            flex-direction: row;
+            gap: 1.5vh;
         }
 
-        .Comentarios {
+        .Analise {
             display: flex;
-            align-items: center;
-            width: 20%;
-            justify-content: center;
+            width: 100%;
+            height: 10vh;
+        }
 
-            h3 {
-                font-size: 2.4vh;
-            }
+        .Curtidas {
+            display: flex;
+            width: 100%;
+            height: 20%;
+            align-items: center;
         }
     }
+
 }

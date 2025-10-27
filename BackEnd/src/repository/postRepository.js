@@ -72,7 +72,17 @@ GROUP BY post_avaliacao.id_post;
     return info;
 }
 
-
+export async function PuxarInfoPost() {
+    let [resultados] = await connection.query(`
+        SELECT usuarios.nome, usuarios.id_user, avaliacao, post_avaliacao.nota, COUNT(curtidas.id_curtida) AS curtidas
+        FROM post_avaliacao
+        INNER JOIN usuarios ON usuarios.id_user = post_avaliacao.id_user
+        LEFT JOIN curtidas ON curtidas.id_post = post_avaliacao.id_post
+        GROUP BY post_avaliacao.id_post
+        ORDER BY post_avaliacao.criado_em DESC
+        `)
+    return resultados
+}
 
 export async function listarPostPorIdFilme(id_filme) {
     const comando = `
