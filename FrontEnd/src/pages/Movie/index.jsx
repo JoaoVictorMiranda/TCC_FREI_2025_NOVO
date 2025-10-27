@@ -62,27 +62,17 @@ export default function index() {
                         <img width={250} src={imageURL + movie.poster_path} alt={movie.title} />
                     </div>
                     <div className="DetalhesAlinhador">
-                        <div className="Alinhador">
-                            <div className="Diretor">
-                                <h1>DIRIGIDO POR</h1>
-                                <h3>{diretor}</h3>
-                            </div>
-                            <div className="Detalhes">
-                                <CardDetalhes
-                                    Quantidade={'17'}
-                                    Info={'ASSISTIRAM'}
-                                    Icon={<FaEye />} />
-
-                                <CardDetalhes
-                                    Quantidade={'17'}
-                                    Info={'ASSISTIRAM'}
-                                    Icon={<FaEye />} />
-
-                                <CardDetalhes
-                                    Quantidade={'17'}
-                                    Info={'ASSISTIRAM'}
-                                    Icon={<FaEye />} />
-                            </div>
+                        <div className="Diretor">
+                            <h1>DIRIGIDO POR</h1>
+                            <h3>{diretor}</h3>
+                        </div>
+                        <div className="Information">
+                            <CardDetalhes
+                            Info={'Assistiram'}/>
+                            <CardDetalhes
+                            Info={'Assistiram'}/>
+                            <CardDetalhes
+                            Info={'Assistiram'}/>
                         </div>
                         <div className='Sinopse'>
                             <p>{movie.overview}</p>

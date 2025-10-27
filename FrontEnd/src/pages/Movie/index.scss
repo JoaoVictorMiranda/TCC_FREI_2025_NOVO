@@ -70,11 +70,6 @@
         color: white;
     }
 
-    .Alinhador {
-        display: flex;
-        align-items: center;
-    }
-
     img {
         border-radius: 0.5vh;
         transition: all 0.5s;
@@ -97,16 +92,27 @@
     .DetalhesAlinhador {
         display: flex;
         height: 30vh;
-        padding: 1vh;
+        width: 100%;
         justify-content: center;
         flex-direction: column;
     }
 
     .Detalhes {
         display: flex;
-        padding: 1vh;
         gap: 1.5vh;
-        width: 30%;
+        width: 5%;
+        gap: 1vh;
+    }
+
+    .Diretor {
+        display: flex;
+        margin-bottom: 1vh;
+        flex-direction: column;
+    }
+
+    .Information {
+        display: flex;
+        gap: 1vh;
     }
 
     .Sinopse {
@@ -115,7 +121,5 @@
         text-align: justify;
         border-radius: 1vh;
         font-size: 2vh;
-        width: 100%;
     }
-
 }
