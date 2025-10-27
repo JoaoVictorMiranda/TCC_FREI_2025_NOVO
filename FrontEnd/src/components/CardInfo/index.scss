@@ -1,0 +1,22 @@
+.Card {
+    display: flex;
+    width: 20vh;
+    padding: 1vh;
+    height: 6vh;
+    gap: 1vh;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(128, 128, 128, 0.473);
+    border-radius: 1vh;
+
+    .Icon {
+        display: flex;
+        align-items: center;
+        margin-top: 0.7vh;
+    }
+
+    h3 {
+        font-size: 1.5vh;
+        text-align: center;
+    }
+}

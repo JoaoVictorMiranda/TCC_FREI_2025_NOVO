@@ -1,10 +1,13 @@
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import PostarComentario from '../../components/PostarComentario'
+import CardDetalhes from '../../components/CardInfo/index.jsx';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import apiTMDB from '../../apiTMDB.js';
 import './index.scss'
+
+import { FaEye } from "react-icons/fa";
 
 const imageURL = import.meta.env.VITE_IMG;
 const apiKey = import.meta.env.VITE_API_KEY;
@@ -53,14 +56,38 @@ export default function index() {
 
             </div>
             <div className="PosterSinopse">
+                <img id='BackgroungDoFilme' src={imageURL + movie.backdrop_path} alt="" />
                 <div className='EspacoDetalhes'>
-                    <div className="Diretor">
-                        <img id='BackgroungDoFilme' src={imageURL + movie.backdrop_path} alt="" />
-                        <h1>DIRIGIDO POR</h1>
-                        <h3>{diretor}</h3>
-                        <img src={imageURL + movie.poster_path} alt={movie.title} />
+                    <div className="PosterEsquerda">
+                        <img width={250} src={imageURL + movie.poster_path} alt={movie.title} />
                     </div>
-                    <p>Sinopse: {movie.overview}</p>
+                    <div className="DetalhesAlinhador">
+                        <div className="Alinhador">
+                            <div className="Diretor">
+                                <h1>DIRIGIDO POR</h1>
+                                <h3>{diretor}</h3>
+                            </div>
+                            <div className="Detalhes">
+                                <CardDetalhes
+                                    Quantidade={'17'}
+                                    Info={'ASSISTIRAM'}
+                                    Icon={<FaEye />} />
+
+                                <CardDetalhes
+                                    Quantidade={'17'}
+                                    Info={'ASSISTIRAM'}
+                                    Icon={<FaEye />} />
+
+                                <CardDetalhes
+                                    Quantidade={'17'}
+                                    Info={'ASSISTIRAM'}
+                                    Icon={<FaEye />} />
+                            </div>
+                        </div>
+                        <div className='Sinopse'>
+                            <p>{movie.overview}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 

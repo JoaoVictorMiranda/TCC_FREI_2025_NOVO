@@ -49,5 +49,73 @@
             background-color: #802523;
         }
 
+
     }
+
+}
+
+.PosterSinopse {
+    display: flex;
+    height: 50vh;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+
+    .EspacoDetalhes {
+        display: flex;
+        width: 60%;
+        align-items: center;
+        justify-content: left;
+        gap: 5vh;
+        color: white;
+    }
+
+    .Alinhador {
+        display: flex;
+        align-items: center;
+    }
+
+    img {
+        border-radius: 0.5vh;
+        transition: all 0.5s;
+    }
+
+    img:hover {
+        overflow: hidden;
+        transform: scale(1.05);
+    }
+
+    #BackgroungDoFilme {
+        display: flex;
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        z-index: -999;
+        filter: brightness(15%);
+    }
+
+    .DetalhesAlinhador {
+        display: flex;
+        height: 30vh;
+        padding: 1vh;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .Detalhes {
+        display: flex;
+        padding: 1vh;
+        gap: 1.5vh;
+        width: 30%;
+    }
+
+    .Sinopse {
+        display: flex;
+        margin-top: 2vh;
+        text-align: justify;
+        border-radius: 1vh;
+        font-size: 2vh;
+        width: 100%;
+    }
+
 }
