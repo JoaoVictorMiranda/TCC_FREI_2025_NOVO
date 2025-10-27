@@ -50,86 +50,86 @@ export default function index() {
             <h1 id='FilmesRecomendados'>Filmes Recomendados</h1>
             <div className="BannersExibicao">
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
             </div>
 
             <div className="BannersExibicao">
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
             </div>
 
             <h1 id='FilmesRecomendados'>Outras opções</h1>
             <div className="BannersExibicao">
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
             </div>
 
             <div className="BannersExibicao">
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
                 <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="" />
+                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
                 </div>
             </div>
 

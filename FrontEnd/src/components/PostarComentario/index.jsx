@@ -10,8 +10,14 @@ const PostarComentario = ({ idFilme }) => {
         const [nota, setNota] = useState('');
         const [posts, setPosts] = useState([]);
         const [curtido, setCurtido] = useState(false);
-        const token = localStorage.getItem("token");
+        const [token, setToken] = useState();
         const id_filme = idFilme;
+        useEffect(() => {
+                setToken(localStorage.getItem("token"))
+                CurtirComentario();
+                carregarComentarios();
+                Verificar()
+        }, []);
 
         async function EnviarComentario() {
                 if (!titulo || !avaliacao || !nota) {
@@ -40,9 +46,7 @@ const PostarComentario = ({ idFilme }) => {
 
         async function carregarComentarios() {
                 try {
-                        const resp = await api.get(`/post/${id_filme}`, {
-                                headers: { 'x-access-token': token }
-                        })
+                        const resp = await api.get(`/post/${id_filme}`)
                         setPosts(resp.data)
 
                 } catch
@@ -85,11 +89,7 @@ const PostarComentario = ({ idFilme }) => {
 
         }
 
-        useEffect(() => {
-                CurtirComentario();
-                carregarComentarios();
-                Verificar()
-        }, []);
+
 
         return (
                 <div className='AlinhadorGeralComentario'>
