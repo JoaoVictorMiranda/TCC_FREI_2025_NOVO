@@ -9,7 +9,7 @@ export default function BuscarFilme({ filme }) {
     return (
         <Link to={`/movie/${filme.id}`} className="BuscarFilmeCard">
             <div className="poster">
-                <img src={poster} alt={filme.title} />
+                <img width={140} src={poster} alt={filme.title} />
             </div>
             <div className="informacoes">
                 <h2>{filme.title}</h2>
