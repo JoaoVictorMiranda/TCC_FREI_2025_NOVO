@@ -4,6 +4,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useNavigate } from 'react-router';
 import api from '../../api';
+import './index.scss';
 
 const Perfil = () => {
     const [nome, setNome] = useState('');
@@ -73,37 +74,62 @@ const Perfil = () => {
 
     return (
         <div>
-            <Header />
-            <h1>Nome:</h1>
-            <p>{nome}</p>
-            <h1>Idade: </h1>
-            <p>{idade}</p>
-            <div className="container_posts">
-                {post.length === 0 && <p>Nenhum post encontrado</p>}
 
-                {post.map((post) => (
-                    <div key={post.id_post} className="Card_post">
-                        <h2>{post.nome}</h2> {/* usuário que postou */}
-                        <h3>{post.titulo}</h3> {/* título do post */}
-                        <p>Filme: {post.id_filme}</p>
-                        <p>Nota: {post.nota}</p>
-                        <p>Data: {post.criado_em}</p>
-                        <p>Curtidas: {post.curtidas}</p>
-                        <button type='button' onClick={() => alert("CURTIDO")}>Curtir</button>
-                    </div>
-                ))}
+        <div className="container_principal">
+                <Header />
+
+                <section className='container_infoUsuario'>
+
+                    <div className="info">
+                        <div className="foto_perfil">
+
+                       
+                            <img src={foto_perfil} alt="" />
+                        </div>
+                        
+                            <div className='nome_idade'>
+                                <h1>Nome:</h1>
+                                <p>{nome}</p>
+                                <h1>Idade: </h1>
+                                <p>{idade}</p>
+                        </div>
+
+                        <div className="seguidores_queroAssistir">
+
+                            <h1>Seguidores</h1>
+                            <p>0</p>
+                            <h1>Quero assistir</h1>
+                            <p>5</p>
+
+                        </div>
+                        </div>
+                    </section>
+
+
+                <div className="container_posts">
+                    {post.length === 0 && <p>Nenhum post encontrado</p>}
+
+                    {post.map((post) => (
+                        <div key={post.id_post} className="Card_post">
+                            <h2>{post.nome}</h2> {/* usuário que postou */}
+                            <h3>{post.titulo}</h3> {/* título do post */}
+                            <p>Filme: {post.id_filme}</p>
+                            <p>Nota: {post.nota}</p>
+                            <p>Data: {post.criado_em}</p>
+                            <p>Curtidas: {post.curtidas}</p>
+                            <button type='button' onClick={() => alert("CURTIDO")}>Curtir</button>
+                        </div>
+                    ))}
+                </div>
+
+
+                <button onClick={Deslogar} > Deslogar</button>
+                <button onClick={carregarPost} >CarregarPosts</button>
+
+
+
+                <Footer />
             </div>
-            <div className="foto_perfil">
-                <img src={foto_perfil} alt="" />
-            </div>
-
-
-            <button onClick={Deslogar} > Deslogar</button>
-            <button onClick={carregarPost} >CarregarPosts</button>
-
-
-
-            <Footer />
         </div>
     );
 };
