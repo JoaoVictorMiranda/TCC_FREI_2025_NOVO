@@ -25,10 +25,14 @@ export default function SessaoComentarios() {
 
     async function PuxarInfo() {
         const resp = await api.get('/post/avaliacao')
+        console.log(resp.data)
         setArr(resp.data)
     }
 
-    PuxarInfo()
+    useEffect(() => {
+        PuxarInfo()
+    }, [])
+
 
     return (
         <div className='SessaoComentarios'>
@@ -39,18 +43,21 @@ export default function SessaoComentarios() {
                 </div>
 
                 <div className="Comentarios">
+
                     {
-                        arr.map((info) => (
-                            <CardComentario
-                                key={info.id_user}
-                                id_user={info.id_user}
-                                profile={Profile}
-                                perfil={info.nome}
-                                analise={info.avaliacao}
-                                curtidas={info.curtidas}
-                                nota={info.nota}
-                            />
-                        ))
+                        arr.length > 0
+                            ? arr.map((info) => (
+                                <CardComentario
+                                    key={info.id_user}
+                                    id_user={info.id_user}
+                                    perfil={info.nome}
+                                    analise={info.avaliacao}
+                                    curtidas={info.curtidas}
+                                    nota={info.nota}
+                                />
+                            ))
+
+                            : <h1>'Nenhuma análise encontrada'</h1>
                     }
                 </div>
 

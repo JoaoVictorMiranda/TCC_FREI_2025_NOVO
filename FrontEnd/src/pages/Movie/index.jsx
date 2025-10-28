@@ -1,8 +1,8 @@
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
-import PostarComentario from '../../components/PostarComentario'
 import CardDetalhes from '../../components/CardInfo/index.jsx';
 import Carregando from '../../components/Carregando/index.jsx';
+import CardComentario from '../../components/CardComentario/index.jsx';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import apiTMDB from '../../apiTMDB.js';
@@ -19,6 +19,7 @@ export default function index() {
     const [movie, setMovie] = useState(null);
     const [diretor, setDiretor] = useState('');
     const [media, setMedia] = useState([]);
+    const [arr, setArr] = useState([]);
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -40,13 +41,21 @@ export default function index() {
         AcharDiretor();
     }, [id])
 
-    async function BuscarMedia() {
-        const resp = await api.get(`/post/media/${id}`)
-        console.log(resp.data.media[0].MediaCurtidas)
-        setMedia(resp.data.media[0].MediaCurtidas.split(".")[0])
-    }
+    useEffect(() => {
+        async function BuscarMedia() {
+            const resp = await api.get(`/post/media/${id}`)
+            console.log(resp.data.media[0].MediaCurtidas)
+            setMedia(resp.data.media[0].MediaCurtidas.split(".")[0])
+        }
+        BuscarMedia()
+        BuscarInfo()
+    }, [media])
 
-    BuscarMedia()
+    async function BuscarInfo() {
+        const resp = await api.get(`/post/${id}`)
+        console.log(resp.data.Info)
+        setArr(resp.data.Info)
+    }
 
     if (!movie) return <Carregando />;
 
@@ -94,7 +103,30 @@ export default function index() {
                 </div>
             </div>
 
-            <PostarComentario idFilme={id} />
+            {/* <CardComentario /> */}
+
+            <div className="SessaoComentarios">
+
+                <h1>ANÁLISES</h1>
+                <div className="BlocoVermelho" />
+                {
+                    arr.map((info) => (
+                        <div className="Comentarios">
+                            <CardComentario
+                                key={info.id_user}
+                                id_user={info.id_user}
+                                perfil={info.nome}
+                                analise={info.avaliacao}
+                                curtidas={info.curtidas}
+                                nota={info.nota}
+                            />
+                        </div>
+                    ))
+                }
+            </div>
+
+            {/* <PostarComentario idFilme={id} /> */}
+            {/* <CardComentario /> */}
             <Footer />
         </div>
     )

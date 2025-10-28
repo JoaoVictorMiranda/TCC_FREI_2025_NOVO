@@ -23,16 +23,16 @@ endpoints.get('/post', auth, async (req, res) => {
 
 })
 
-endpoints.get('/post/avaliacao', auth, async (req,resp) => {
+endpoints.get('/post/avaliacao', auth, async (req, resp) => {
     const resposta = await repo.PuxarInfoPost()
     resp.send(resposta)
 })
 
-endpoints.get('/post/media/:id_filme', auth, async (req,resp) => {
+endpoints.get('/post/media/:id_filme', auth, async (req, resp) => {
     let id_filme = req.params.id_filme;
 
     const resposta = await repo.MediaCurtidas(id_filme)
-    resp.send({media: resposta})
+    resp.send({ media: resposta })
 })
 
 endpoints.post('/post/user', auth, async (req, res) => {
@@ -43,15 +43,15 @@ endpoints.post('/post/user', auth, async (req, res) => {
 })
 
 
-endpoints.get('/post/:id_filme', auth, async (req, res) => {
+endpoints.get('/post/:id_filme', auth, async (req, resp) => {
     let id_filme = req.params.id_filme;
-    let info = await repo.listarPostPorIdFilme(id_filme);
+    let resposta = await repo.listarPostPorIdFilme(id_filme);
 
-    res.send(info)
+    resp.send({ Info: resposta })
 
 })
 
-endpoints.post('/VerSeCurtiu', auth, async (req,resp) => {
+endpoints.post('/VerSeCurtiu', auth, async (req, resp) => {
     const id = req.user.id_user;
 
     const registro = await repo.VerSeCurtiu(id)

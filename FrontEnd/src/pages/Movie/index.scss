@@ -49,7 +49,6 @@
             background-color: #802523;
         }
 
-
     }
 
 }
@@ -115,11 +114,35 @@
         gap: 1vh;
     }
 
+
+
     .Sinopse {
         display: flex;
         margin-top: 2vh;
         text-align: justify;
         border-radius: 1vh;
         font-size: 2vh;
+    }
+}
+
+.SessaoComentarios {
+    display: flex;
+    width: 100%;
+    height: auto;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgb(0, 0, 0) 15%);
+    padding-top: 5vh;
+    color: white;
+
+    .BlocoVermelho {
+        display: flex;
+        background-color: red;
+        width: 10%;
+        border-radius: 0.5vh;
+        height: 0.5vh;
+    }
+    
+    .Comentarios {
+        display: flex;
+        width: 60%;
     }
 }
