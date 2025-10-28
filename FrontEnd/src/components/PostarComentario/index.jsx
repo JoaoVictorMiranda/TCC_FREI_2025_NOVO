@@ -109,7 +109,7 @@ const PostarComentario = ({ idFilme }) => {
                                                 <p>{post.avaliacao}</p> {/* título do post */}
                                                 <p>Filme: {post.id_filme}</p>
                                                 <p>Nota: {post.nota}</p>
-                                                <p>Data: {post.criado_em}</p>
+                                                <p>Data: {post.criado_em.split("T")[0]}</p>
                                                 <div className="Like">
                                                         <FaHeart style={{ color: Verificar }} onClick={() => CurtirComentario(pos)}></FaHeart>
                                                         <p>{post.curtidas}</p>
