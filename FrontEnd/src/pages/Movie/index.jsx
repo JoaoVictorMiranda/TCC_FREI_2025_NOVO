@@ -6,6 +6,7 @@ import Carregando from '../../components/Carregando/index.jsx';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import apiTMDB from '../../apiTMDB.js';
+import api from '../../api.js';
 import './index.scss'
 
 import { FaEye } from "react-icons/fa";
@@ -17,6 +18,7 @@ export default function index() {
     const { id } = useParams();
     const [movie, setMovie] = useState(null);
     const [diretor, setDiretor] = useState('');
+    const [media, setMedia] = useState([]);
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -38,7 +40,16 @@ export default function index() {
         AcharDiretor();
     }, [id])
 
+    async function BuscarMedia() {
+        const resp = await api.get(`/post/media/${id}`)
+        console.log(resp.data.media[0].MediaCurtidas)
+        setMedia(resp.data.media[0].MediaCurtidas.split(".")[0])
+    }
+
+    BuscarMedia()
+
     if (!movie) return <Carregando />;
+
     return (
         <div>
             <Header />
@@ -71,9 +82,10 @@ export default function index() {
                             <CardDetalhes
                                 Info={'Assistiram'} />
                             <CardDetalhes
-                                Info={'Assistiram'} />
+                                Quantidade={`${media ? media : '0'}`}
+                                Info={'Aproveitamento'} />
                             <CardDetalhes
-                                Info={'Assistiram'} />
+                                Info={'Querem Assistir'} />
                         </div>
                         <div className='Sinopse'>
                             <p>{movie.overview}</p>

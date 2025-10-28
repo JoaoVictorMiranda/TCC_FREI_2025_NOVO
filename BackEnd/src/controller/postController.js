@@ -28,6 +28,13 @@ endpoints.get('/post/avaliacao', auth, async (req,resp) => {
     resp.send(resposta)
 })
 
+endpoints.get('/post/media/:id_filme', auth, async (req,resp) => {
+    let id_filme = req.params.id_filme;
+
+    const resposta = await repo.MediaCurtidas(id_filme)
+    resp.send({media: resposta})
+})
+
 endpoints.post('/post/user', auth, async (req, res) => {
     let idUser = req.user.id_user;
 
