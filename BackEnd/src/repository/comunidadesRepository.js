@@ -11,7 +11,7 @@ export async function criarComunidades(dados, idCriador){
                 dados.nome,
                 dados.descricao,
                 idCriador,
-                dados.foto_capa
+                dados.foto_capa || null
         ]);
 
         return info.insertId;
@@ -22,6 +22,18 @@ export async function InsertMember(idComunity, idUser){
                 INSERT INTO comunidade_membros(id_comunidade, id_user, is_moderador)
                 VALUES
                 (?, ?, DEFAULT);
+        `;
+        let [info] = await connection.query(comando, [
+                idComunity,
+                idUser
+        ])
+        return info.insertId;
+}
+export async function InsertModerator(idComunity, idUser){
+        const comando = `
+                INSERT INTO comunidade_membros(id_comunidade, id_user, is_moderador)
+                VALUES
+                (?, ?, TRUE);
         `;
         let [info] = await connection.query(comando, [
                 idComunity,
