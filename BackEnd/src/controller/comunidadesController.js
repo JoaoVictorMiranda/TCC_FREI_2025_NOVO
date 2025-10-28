@@ -11,6 +11,7 @@ endpoints.post('/comunidade', auth, async (req, res) => {
         let idCriador = req.user.id_user;
 
         let NewId= await repo.criarComunidades(dados, idCriador);
+        let inserirCriador = repo.InsertModerator( NewId, idCriador) 
         res.send({NewId: NewId});
 });
 
