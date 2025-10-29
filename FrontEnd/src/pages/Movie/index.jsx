@@ -109,20 +109,27 @@ export default function index() {
 
                 <h1>ANÁLISES</h1>
                 <div className="BlocoVermelho" />
-                {
-                    arr.map((info) => (
-                        <div className="Comentarios">
-                            <CardComentario
-                                key={info.id_user}
-                                id_user={info.id_user}
-                                perfil={info.nome}
-                                analise={info.avaliacao}
-                                curtidas={info.curtidas}
-                                nota={info.nota}
-                            />
-                        </div>
-                    ))
-                }
+
+                <div className="OsComentarios">
+
+                    {
+                        arr.length ?
+                            arr.map((info) => (
+                                <div className="Comentarios">
+                                    <CardComentario
+                                        key={info.id_user}
+                                        id_user={info.id_user}
+                                        perfil={info.nome}
+                                        analise={info.avaliacao}
+                                        curtidas={info.curtidas}
+                                        nota={info.nota}
+                                    />
+                                </div>
+                            ))
+
+                            : <h1>Nenhuma análise encontrada</h1>
+                    }
+                </div>
             </div>
 
             {/* <PostarComentario idFilme={id} /> */}

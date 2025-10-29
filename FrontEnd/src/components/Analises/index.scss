@@ -31,13 +31,12 @@
         height: 0.5vh;
     }
 
-    .Comentarios {
+    .ComentariosIsolados {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        width: 100%;
         height: auto;
+        width: 100%;
         gap: 1.5vh;
-        padding-top: 1.5vh;
     }
 
     button {

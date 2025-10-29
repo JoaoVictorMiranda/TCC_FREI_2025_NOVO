@@ -1,12 +1,14 @@
 import { CiHeart } from "react-icons/ci";
 
+import foto_perfil from '../../assets/images/profile.jpg'
+
 import './index.scss'
 
 export default function CardComentario({ profile, perfil, nota, analise, curtidas }) {
     return (
         <div className="CardComentario" >
             <div className="FotoPerfil">
-                <img height={60} src={profile} alt="" />
+                <img height={60} src={foto_perfil} alt="" />
             </div>
             <div className="AlinhadorComentario">
                 <div className="Perfil">
@@ -17,7 +19,7 @@ export default function CardComentario({ profile, perfil, nota, analise, curtida
                     <h4>{analise}</h4>
                 </div>
                 <div className="Curtidas">
-                    <h3><CiHeart />{curtidas}</h3>
+                    <h4><CiHeart />{curtidas}</h4>
                 </div>
             </div>
         </div>

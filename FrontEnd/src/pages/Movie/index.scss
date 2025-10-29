@@ -114,8 +114,6 @@
         gap: 1vh;
     }
 
-
-
     .Sinopse {
         display: flex;
         margin-top: 2vh;
@@ -131,7 +129,15 @@
     height: auto;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgb(0, 0, 0) 15%);
     padding-top: 5vh;
-    color: white;
+    color: #EFECE3;
+
+    .OsComentarios {
+        display: flex;
+        flex-direction: column;
+        gap: 3vh;
+        width: 60%;
+        align-items: center;
+    }
 
     .BlocoVermelho {
         display: flex;
@@ -139,10 +145,11 @@
         width: 10%;
         border-radius: 0.5vh;
         height: 0.5vh;
+        margin-bottom: 5vh;
     }
-    
+
     .Comentarios {
         display: flex;
-        width: 60%;
+        width: 70%;
     }
 }
