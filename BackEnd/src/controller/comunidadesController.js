@@ -1,16 +1,18 @@
 import * as repo from '../repository/comunidadesRepository.js'
 import { Router } from 'express'
 import { getAuthentication } from '../utils/jwt.js';
+import multer from 'multer';
 
-
+const upload = multer({ dest: 'public/storage' })
 const auth = getAuthentication();
 const endpoints = Router();
 
-endpoints.post('/comunidade', auth, async (req, res) => {
+endpoints.post('/comunidade',upload.single('img'), auth, async (req, res) => {
         let dados = req.body;
         let idCriador = req.user.id_user;
+        let caminho = req.file ? req.file.path : null; 
 
-        let NewId= await repo.criarComunidades(dados, idCriador);
+        let NewId= await repo.criarComunidades(dados,caminho, idCriador);
         let inserirCriador = repo.InsertModerator( NewId, idCriador) 
         res.send({NewId: NewId});
 });
@@ -45,5 +47,17 @@ endpoints.post('/comunidade/post', auth,  async (req, res) => {
             });
         }
     });
+
+    endpoints.post('/comunidade/chat/:idComunidade', auth, async (req, res) => {
+        let idComunidade = req.params.idComunidade
+        let dados = req.body;
+        let idUser = req.user.id_user;
+
+        let registro = await repo.sendMessage( idComunidade,dados, idUser);
+        res.send({
+            NovoId: registro
+        })
+    })
+
 
 export default endpoints;

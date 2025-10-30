@@ -8,6 +8,7 @@ import './index.scss'
 export default function index() {
     const [movie, setMovie] = useState(null)
     const [diretor, setDiretor] = useState('')
+    // const [lista, setLista] = useState([])
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -29,6 +30,14 @@ export default function index() {
         AcharDiretor();
     }, [])
 
+    async function CarregarFilmesPorGenero() {
+        const resp = await apiTMDB.get(`/genre/movie/list?${apiKey}&language=pt-BR`)
+
+        console.log(resp.data)
+    }
+
+    CarregarFilmesPorGenero()
+
     return (
         <div className='HomeAbaRecomendados'>
             <div className="reviews_title">
@@ -49,88 +58,18 @@ export default function index() {
 
             <h1 id='FilmesRecomendados'>Filmes Recomendados</h1>
             <div className="BannersExibicao">
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-            </div>
+                {/* {
+                    lista.arr((filme) => {
+                        <div>
 
-            <div className="BannersExibicao">
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
+                        </div>
+                    })
+                } */}
             </div>
 
             <h1 id='FilmesRecomendados'>Outras opções</h1>
             <div className="BannersExibicao">
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-            </div>
-
-            <div className="BannersExibicao">
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
-                <div className="banner">
-                    <img src={movie ? imageURL + movie.poster_path : ''} alt="AAAA" />
-                </div>
+                
             </div>
 
         </div>
