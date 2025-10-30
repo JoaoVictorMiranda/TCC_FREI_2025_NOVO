@@ -10,6 +10,8 @@ import ConfigurarPerfil from "./pages/configurarPerfil"
 import LoginAdmin from "./pages/loginAdmin"
 import Buscar from './pages/BuscaInformacoes'
 import Grafico from './pages/ChartJS'
+import Comunidades from "./pages/comunidades"
+import ChatComunidade from "./pages/comunidade_chat"
 
 const Navegacao = () => {
   return (
@@ -24,6 +26,8 @@ const Navegacao = () => {
         <Route path='/perfil/configurar' element={<ConfigurarPerfil />} />
         <Route path='/buscainformacoes' element={<Buscar/>}/>
         <Route path="/adminChart" element={<Grafico/>}/>
+        <Route path="/comunidade" element={<Comunidades />} />
+        <Route path="/comunidade/:id" element={<ChatComunidade />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

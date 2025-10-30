@@ -69,7 +69,6 @@ export default function Header() {
                 <ul>
                     <li><Link to="/">INÍCIO</Link></li>
                     <li><Link to="/filmes">FILMES</Link></li>
-                    <li><Link to="/series">SÉRIES</Link></li>
                     <li><Link to="/comunidade">COMUNIDADE</Link></li>
                 </ul>
             </nav>
