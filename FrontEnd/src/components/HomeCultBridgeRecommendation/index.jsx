@@ -4,11 +4,13 @@ const imageURL = import.meta.env.VITE_IMG;
 const apiKey = import.meta.env.VITE_API_KEY;
 
 import './index.scss'
+import DefinirTopico from '../Topicos/index.jsx';
 
 export default function index() {
     const [movie, setMovie] = useState(null)
     const [diretor, setDiretor] = useState('')
-    // const [lista, setLista] = useState([])
+    const [recomendados, setRecomendados] = useState([])
+    const [outros, setOutros] = useState([])
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -28,48 +30,51 @@ export default function index() {
             setDiretor(diretor.name)
         }
         AcharDiretor();
+        OutrasOpcoes()
     }, [])
 
-    async function CarregarFilmesPorGenero() {
-        const resp = await apiTMDB.get(`/genre/movie/list?${apiKey}&language=pt-BR`)
+    async function ListaRecomendados() {
+        const resp = await apiTMDB.get(`/movie/now_playing?${apiKey}&language=pt-BR`)
 
-        console.log(resp.data)
+        const Poster = resp.data.results.slice(0, 20).map(filme => `https://image.tmdb.org/t/p/w500${filme.poster_path}`)
+        setRecomendados(Poster)
     }
 
-    CarregarFilmesPorGenero()
+    async function OutrasOpcoes() {
+        const resp = await apiTMDB.get(`movie/popular?${apiKey}&language=pt-BR`)
+        const Poster = resp.data.results.slice(0, 20).map(filme => `https://image.tmdb.org/t/p/w500${filme.poster_path}`)
+        setOutros(Poster)
+        console.log(Poster)
+    }
+
+
+    ListaRecomendados()
 
     return (
         <div className='HomeAbaRecomendados'>
-            <div className="reviews_title">
-                <h1>EXPLORAR</h1>
-                <div className='BlocoVermelho' />
-            </div>
-
-            <div className="FilmeDestaque">
-                <div className="LadoEsquerdo">
-                    <img width={250} src={movie ? imageURL + movie.poster_path : ''} alt="" />
-                </div>
-                <div className="LadoDireito">
-                    <h1>{movie ? movie.title : 'Carregando...'}</h1>
-                    <h3>Dirigido por {diretor}</h3>
-                    <button>Registrar</button>
-                </div>
-            </div>
+            <DefinirTopico
+                tema={'EXPLORAR'} />
 
             <h1 id='FilmesRecomendados'>Filmes Recomendados</h1>
             <div className="BannersExibicao">
-                {/* {
-                    lista.arr((filme) => {
-                        <div>
-
+                {
+                    recomendados.map((filme) => (
+                        <div key={filme}>
+                            <img src={filme} alt="" />
                         </div>
-                    })
-                } */}
+                    ))
+                }
             </div>
 
             <h1 id='FilmesRecomendados'>Outras opções</h1>
             <div className="BannersExibicao">
-                
+                {
+                    outros.map((filme) => (
+                        <div key={filme}>
+                            <img src={filme} alt="" />
+                        </div>
+                    ))
+                }
             </div>
 
         </div>

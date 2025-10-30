@@ -10,6 +10,7 @@ import Profile from '../../assets/images/profile.jpg'
 import CardComentario from '../CardComentario'
 
 import './index.scss'
+import DefinirTopico from '../Topicos/index.jsx';
 
 export default function SessaoComentarios() {
     const [movie, setMovie] = useState(null)
@@ -25,8 +26,7 @@ export default function SessaoComentarios() {
 
     async function PuxarInfo() {
         const resp = await api.get('/post/avaliacao')
-        console.log(resp.data)
-        setArr(resp.data)
+        setArr(resp.data.slice(0, 6))
     }
 
     useEffect(() => {
@@ -37,10 +37,8 @@ export default function SessaoComentarios() {
     return (
         <div className='SessaoComentarios'>
             <div className="SessaoComentariosConteudo">
-                <div className="SessaoComentariosTitulo">
-                    <h1>ANÁLISES</h1>
-                    <div className='BlocoVermelho' />
-                </div>
+                <DefinirTopico
+                tema={'ANÁLISES RECENTES'}/>
                 <div className="ComentariosIsolados">
                     {
                         arr.length
@@ -62,7 +60,6 @@ export default function SessaoComentarios() {
 
             </div>
 
-            <button>Carregar</button>
         </div>
     )
 }

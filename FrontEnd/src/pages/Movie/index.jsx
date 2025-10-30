@@ -11,6 +11,7 @@ import api from '../../api.js';
 import './index.scss'
 
 import { FaEye } from "react-icons/fa";
+import DefinirTopico from '../../components/Topicos/index.jsx';
 
 const imageURL = import.meta.env.VITE_IMG;
 const apiKey = import.meta.env.VITE_API_KEY;
@@ -128,8 +129,8 @@ export default function index() {
 
             <div className="SessaoComentarios">
 
-                <h1>ANÁLISES</h1>
-                <div className="BlocoVermelho" />
+                <DefinirTopico
+                tema={'ANÁLISES'}/>
 
                 <div className="OsComentarios">
 
