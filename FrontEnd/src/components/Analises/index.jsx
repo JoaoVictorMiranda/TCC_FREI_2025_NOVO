@@ -41,12 +41,11 @@ export default function SessaoComentarios() {
                     <h1>ANÁLISES</h1>
                     <div className='BlocoVermelho' />
                 </div>
-
-                <div className="Comentarios">
-
+                <div className="ComentariosIsolados">
                     {
-                        arr.length > 0
-                            ? arr.map((info) => (
+                        arr.length
+                            ?
+                            arr.map((info) => (
                                 <CardComentario
                                     key={info.id_user}
                                     id_user={info.id_user}
@@ -56,8 +55,8 @@ export default function SessaoComentarios() {
                                     nota={info.nota}
                                 />
                             ))
-
-                            : <h1>'Nenhuma análise encontrada'</h1>
+                            :
+                            <h1>Nenhuma análise encontrada</h1>
                     }
                 </div>
 
