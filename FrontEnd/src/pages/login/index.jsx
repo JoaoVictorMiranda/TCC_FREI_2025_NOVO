@@ -12,6 +12,10 @@ const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState();
     const [senha, setSenha] = useState();
+    const [erro, setErro] = useState();
+
+    const emailCorreto = email;
+    const senhaCorreta = senha;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,6 +32,7 @@ const Login = () => {
             })
             .catch(error => {
                 console.error('Deu ruim hein:', error);
+                alert("Email ou senha inválidos");
             });
     };
 

@@ -2,28 +2,56 @@ import React, { useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import api from '../../api';
 import './index.scss';
+import perfilFixo from '../../assets/images/usuario.png';
 
 const Perfil = () => {
     const [nome, setNome] = useState('');
     const [idade, setIdade] = useState('');
-    const [foto_perfil, setFoto_perfil] = useState(null)
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
     const [post, setPost] = useState([]);
+    // REMOVER: const [imagem, setImagem] = useState(perfilFixo); // ← Estado removido
+
+    const [fotoPerfil, setFotoPerfil] = useState(perfilFixo);
+
+    // FUNÇÃO PARA CONSTRUIR URL COMPLETA
+    const construirUrlFoto = (caminho) => {
+        if (!caminho) return perfilFixo;
+        if (caminho.startsWith('http')) return caminho;
+        return `http://localhost:5022/${caminho}`;
+    };
+
+    useEffect(() => {
+        const atualizarFoto = () => {
+            const novaFoto = localStorage.getItem("fotoPerfil");
+            if (novaFoto) {
+                setFotoPerfil(construirUrlFoto(novaFoto)); // ← AGORA CONSTRÓI URL COMPLETA
+            }
+        };
+
+        window.addEventListener("fotoPerfilAtualizada", atualizarFoto);
+        
+        return () => {
+            window.removeEventListener("fotoPerfilAtualizada", atualizarFoto);
+        };
+    }, []);
 
     useEffect(() => {
         if (token) {
             try {
                 const decoded = jwtDecode(token);
-
-
                 const nomeUsuario = decoded.nome || decoded.user?.nome || '';
                 setNome(nomeUsuario);
-                const foto = decoded.foto_perfil;
-                setFoto_perfil(`http://localhost:5022/${foto}`)
+
+                // USAR FUNÇÃO UNIFICADA PARA CONSTRUIR URL
+                const fotoDoToken = construirUrlFoto(decoded.foto_perfil);
+                
+                // Verificar se há foto no localStorage primeiro
+                const fotoLocal = localStorage.getItem("fotoPerfil");
+                setFotoPerfil(fotoLocal ? construirUrlFoto(fotoLocal) : fotoDoToken);
 
                 const nascimento = decoded.nascimento;
                 if (nascimento) {
@@ -36,8 +64,14 @@ const Perfil = () => {
         }
     }, [token]);
 
-    function carregarPost() {
+    // CARREGAR POSTS AUTOMATICAMENTE
+    useEffect(() => {
+        if (token) {
+            carregarPost();
+        }
+    }, [token]);
 
+    function carregarPost() {
         if (!token) return console.error('Token não encontrado');
 
         api.post('/post/user', {}, {
@@ -49,8 +83,6 @@ const Perfil = () => {
             })
             .catch(error => console.error(error));
     }
-
-
 
     function calcularIdade(dataISO) {
         const hoje = new Date();
@@ -64,55 +96,63 @@ const Perfil = () => {
         return idade;
     }
 
-
     function Deslogar() {
-        localStorage.removeItem("token")
-        navigate('/login')
-
+        localStorage.removeItem("token");
+        localStorage.removeItem("fotoPerfil"); // ← LIMPAR FOTO AO DESLOGAR
+        navigate('/login');
     }
-
 
     return (
         <div>
-
-        <div className="container_principal">
+            <div className="container_principal">
                 <Header />
 
                 <section className='container_infoUsuario'>
-
-                    <div className="info">
-                        <div className="foto_perfil">
-
-                       
-                            <img src={foto_perfil} alt="" />
+                    <div className="foto_perfil">
+                        <div style={{ textAlign: "center" }}>
+                            {/* SIMPLIFICAR - SEM VERIFICAÇÃO DESNECESSÁRIA */}
+                            <img
+                                src={fotoPerfil}
+                                alt="Foto de perfil"
+                                style={{
+                                    width: 150,
+                                    height: 150,
+                                    borderRadius: "50%",
+                                    objectFit: "cover",
+                                }}
+                                onError={(e) => {
+                                    // SE DER ERRO AO CARREGAR, USA FOTO PADRÃO
+                                    e.target.src = perfilFixo;
+                                }}
+                            />
                         </div>
-                        
-                            <div className='nome_idade'>
-                                <h1>Nome:</h1>
-                                <p>{nome}</p>
-                                <h1>Idade: </h1>
-                                <p>{idade}</p>
+                        <Link to="/perfil/configurar">Editar Foto</Link>
+                    </div>
+
+                    <div className="info">  
+                        <div className='nome_idade'>
+                            <h1>Nome:</h1>
+                            <p>{nome}</p>
+                            <h1>Idade: </h1>
+                            <p>{idade}</p>
                         </div>
 
                         <div className="seguidores_queroAssistir">
-
                             <h1>Seguidores</h1>
                             <p>0</p>
                             <h1>Quero assistir</h1>
                             <p>5</p>
-
                         </div>
-                        </div>
-                    </section>
-
+                    </div>
+                </section>
 
                 <div className="container_posts">
                     {post.length === 0 && <p>Nenhum post encontrado</p>}
 
                     {post.map((post) => (
                         <div key={post.id_post} className="Card_post">
-                            <h2>{post.nome}</h2> {/* usuário que postou */}
-                            <h3>{post.titulo}</h3> {/* título do post */}
+                            <h2>{post.nome}</h2>
+                            <h3>{post.titulo}</h3>
                             <p>Filme: {post.id_filme}</p>
                             <p>Nota: {post.nota}</p>
                             <p>Data: {post.criado_em}</p>
@@ -122,14 +162,10 @@ const Perfil = () => {
                     ))}
                 </div>
 
-
-                <button onClick={Deslogar} > Deslogar</button>
-                <button onClick={carregarPost} >CarregarPosts</button>
-
-
-
-                <Footer />
+                {/* REMOVER BOTÃO DE CARREGAR POSTS - AGORA É AUTOMÁTICO */}
+                <button onClick={Deslogar}>Deslogar</button>
             </div>
+            <Footer />
         </div>
     );
 };
