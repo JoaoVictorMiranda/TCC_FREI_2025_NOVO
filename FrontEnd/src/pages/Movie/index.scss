@@ -153,3 +153,20 @@
         width: 70%;
     }
 }
+
+.Modal {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1vh;
+    padding-left: 2vh;
+    padding-right: 2vh;
+
+    input {
+        width: 100%;
+        outline: none;
+        border: 0.1vh rgba(128, 128, 128, 0.322) solid;
+        padding: 1vh;
+        border-radius: 0.5vh;
+    }
+}
