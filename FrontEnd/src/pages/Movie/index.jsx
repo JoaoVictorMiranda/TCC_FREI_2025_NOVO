@@ -3,6 +3,7 @@ import Footer from '../../components/Footer'
 import CardDetalhes from '../../components/CardInfo/index.jsx';
 import Carregando from '../../components/Carregando/index.jsx';
 import CardComentario from '../../components/CardComentario/index.jsx';
+import ModalPostarComentario from '../../components/ModalPostarComentario/index.jsx';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import apiTMDB from '../../apiTMDB.js';
@@ -18,8 +19,12 @@ export default function index() {
     const { id } = useParams();
     const [movie, setMovie] = useState(null);
     const [diretor, setDiretor] = useState('');
+    const [modal, setModal] = useState(false)
     const [media, setMedia] = useState([]);
     const [arr, setArr] = useState([]);
+    const [titulo, setTitulo] = useState('');
+    const [avaliacao, setAvaliacao] = useState('');
+    const [nota, setNota] = useState('')
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -57,6 +62,22 @@ export default function index() {
         setArr(resp.data.Info)
     }
 
+    async function EnviarAvaliacao() {
+        const body = {
+            titulo: titulo,
+            id_filme: id,
+            avaliacao: avaliacao,
+            nota: nota
+        }
+
+        const resp = await api.post('/EnviarComentario', body)
+        console.log(resp.data)
+        setModal(false)
+        
+        await BuscarInfo()
+        await BuscarMedia()
+    }
+
     if (!movie) return <Carregando />;
 
     return (
@@ -71,7 +92,7 @@ export default function index() {
                     </div>
                     <div className="Trailer">
                         <h2>ASSISTIR TRAILER</h2>
-                        <button>REGISTRAR</button>
+                        <button onClick={() => setModal(true)}>REGISTRAR</button>
                     </div>
                 </div>
 
@@ -135,6 +156,25 @@ export default function index() {
             {/* <PostarComentario idFilme={id} /> */}
             {/* <CardComentario /> */}
             <Footer />
+
+            <ModalPostarComentario
+                abrir={modal}
+                setModal={() => setModal(!modal)}
+                fechar={() => setModal(false)}
+                tema={'Adicionar Análise'}
+                salvar={EnviarAvaliacao}
+                conteudo={
+                    <div className='Modal'>
+                        <label style={{ fontWeight: '500' }}>Titulo</label>
+                        <input type='text' value={titulo} onChange={e => setTitulo(e.target.value)} />
+                        <label style={{ fontWeight: '500' }}>Avaliação</label>
+                        <input type='text' value={avaliacao} onChange={e => setAvaliacao(e.target.value)} />
+                        <label style={{ fontWeight: '500' }}>Nota</label>
+                        <input type="text" value={nota} onChange={e => setNota(e.target.value)} />
+                    </div>
+                }
+            >
+            </ModalPostarComentario>
         </div>
     )
 }
