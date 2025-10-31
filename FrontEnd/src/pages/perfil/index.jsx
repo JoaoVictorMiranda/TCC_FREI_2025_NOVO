@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router-dom'; // Corrigido: 'react-router' para 'react-router-dom'
 import api from '../../api';
 import './index.scss';
 import perfilFixo from '../../assets/images/usuario.png';
+import Carregando from '../../components/Carregando';
 
 const Perfil = () => {
     const [nome, setNome] = useState('');
@@ -13,9 +14,8 @@ const Perfil = () => {
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
     const [post, setPost] = useState([]);
-    // REMOVER: const [imagem, setImagem] = useState(perfilFixo); // ← Estado removido
-
     const [fotoPerfil, setFotoPerfil] = useState(perfilFixo);
+    const [isLoading, setIsLoading] = useState(false); // Estado para controlar o carregamento
 
     // FUNÇÃO PARA CONSTRUIR URL COMPLETA
     const construirUrlFoto = (caminho) => {
@@ -28,7 +28,7 @@ const Perfil = () => {
         const atualizarFoto = () => {
             const novaFoto = localStorage.getItem("fotoPerfil");
             if (novaFoto) {
-                setFotoPerfil(construirUrlFoto(novaFoto)); // ← AGORA CONSTRÓI URL COMPLETA
+                setFotoPerfil(construirUrlFoto(novaFoto));
             }
         };
 
@@ -96,10 +96,16 @@ const Perfil = () => {
         return idade;
     }
 
-    function Deslogar() {
-        localStorage.removeItem("token");
-        localStorage.removeItem("fotoPerfil"); // ← LIMPAR FOTO AO DESLOGAR
-        navigate('/login');
+    function handleDeslogar() {
+        setIsLoading(true); // Ativa o carregamento
+        
+        // Simula o processo de logout com delay
+        setTimeout(() => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("fotoPerfil");
+            setIsLoading(false); // Desativa o carregamento
+            navigate('/login');
+        }, 1500); // 1.5 segundos de delay
     }
 
     return (
@@ -107,10 +113,13 @@ const Perfil = () => {
             <div className="container_principal">
                 <Header />
 
+                {/* Mostrar componente de carregamento quando isLoading for true */}
+                {isLoading && <Carregando />}
+
                 <section className='container_infoUsuario'>
+
                     <div className="foto_perfil">
-                        <div style={{ textAlign: "center" }}>
-                            {/* SIMPLIFICAR - SEM VERIFICAÇÃO DESNECESSÁRIA */}
+                        <div className='imagem' style={{ textAlign: "center" }}>
                             <img
                                 src={fotoPerfil}
                                 alt="Foto de perfil"
@@ -118,32 +127,44 @@ const Perfil = () => {
                                     width: 150,
                                     height: 150,
                                     borderRadius: "50%",
+                                    border: "1px solid black",
                                     objectFit: "cover",
                                 }}
                                 onError={(e) => {
-                                    // SE DER ERRO AO CARREGAR, USA FOTO PADRÃO
                                     e.target.src = perfilFixo;
                                 }}
                             />
                         </div>
-                        <Link to="/perfil/configurar">Editar Foto</Link>
+
+                        <div className="button-editar">
+                            <Link to="/perfil/configurar">Editar Foto</Link>
+                        </div>
                     </div>
 
-                    <div className="info">  
-                        <div className='nome_idade'>
+                    <div className="nome">
+                        <div className="only-name">
                             <h1>Nome:</h1>
                             <p>{nome}</p>
-                            <h1>Idade: </h1>
-                            <p>{idade}</p>
                         </div>
+                        
+                        <div className="infos"> 
+                            <div className="infosIndividuais">
+                                <h1>Idade: </h1>
+                                <p>{idade}</p>
+                            </div> 
 
-                        <div className="seguidores_queroAssistir">
-                            <h1>Seguidores</h1>
-                            <p>0</p>
-                            <h1>Quero assistir</h1>
-                            <p>5</p>
+                            <div className="infosIndividuais">
+                                <h1>Seguidores</h1>
+                                <p>0</p>
+                            </div> 
+                                
+                            <div className="infosIndividuais">
+                                <h1>Quero assistir</h1>
+                                <p>5</p>
+                            </div> 
                         </div>
                     </div>
+                    
                 </section>
 
                 <div className="container_posts">
@@ -162,10 +183,14 @@ const Perfil = () => {
                     ))}
                 </div>
 
-                {/* REMOVER BOTÃO DE CARREGAR POSTS - AGORA É AUTOMÁTICO */}
-                <button onClick={Deslogar}>Deslogar</button>
+                <div className="deslogar">
+                    <button onClick={handleDeslogar} disabled={isLoading}>
+                        {isLoading ? 'Saindo...' : 'Deslogar'}
+                    </button>
+                </div>
+
             </div>
-            <Footer />
+            <Footer />  
         </div>
     );
 };
