@@ -3,9 +3,9 @@ import {connection} from './connection.js';
 
 export async function criarComunidades(dados,caminho, idCriador){
         const comando = `
-                INSERT INTO comunidades ( nome, descricao, id_criador, foto_capa)
-                VALUES
-                (?,?,?,?);
+        INSERT INTO comunidades ( nome, descricao, id_criador, foto_capa)
+        VALUES
+        (?,?,?,?);
         `;
         let [info] = await connection.query(comando, [
                 dados.nome,
@@ -76,6 +76,34 @@ export async function CreatePost(data, idUser) {
         return info.insertId
     }
 
+
+
+    export async function listMessages(idSala){
+        const comando  = `
+            SELECT * FROM chat_mensagem
+            WHERE id_sala = ?;
+        `;
+        
+        let [info] = await connection.query(comando, [idSala]);
+        return info;
+    }
+    
+    export async function VerificarUser(idUser, idSala){
+        const comando = `
+            select id_user from comunidade_membros
+            where id_user = ? AND id_comunidade = ?;
+        `;
+        let[info] = await connection.query(comando, [idUser, idSala]);
+        
+        return info
+    }
+
+
+
+
+
+
+    
 /*
 CREATE TABLE comunidade_chat (
     id_mensagem INT PRIMARY KEY AUTO_INCREMENT,            -- ID único da mensagem
