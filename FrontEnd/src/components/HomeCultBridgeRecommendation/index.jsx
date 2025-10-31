@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import apiTMDB from '../../apiTMDB.js'
 const imageURL = import.meta.env.VITE_IMG;
 const apiKey = import.meta.env.VITE_API_KEY;
@@ -11,6 +12,7 @@ export default function index() {
     const [diretor, setDiretor] = useState('')
     const [recomendados, setRecomendados] = useState([])
     const [outros, setOutros] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -35,16 +37,14 @@ export default function index() {
 
     async function ListaRecomendados() {
         const resp = await apiTMDB.get(`/movie/now_playing?${apiKey}&language=pt-BR`)
-
-        const Poster = resp.data.results.slice(0, 20).map(filme => `https://image.tmdb.org/t/p/w500${filme.poster_path}`)
-        setRecomendados(Poster)
+        const filmes = resp.data.results.slice(0,20)
+        setRecomendados(filmes)
     }
 
     async function OutrasOpcoes() {
         const resp = await apiTMDB.get(`movie/popular?${apiKey}&language=pt-BR`)
-        const Poster = resp.data.results.slice(0, 20).map(filme => `https://image.tmdb.org/t/p/w500${filme.poster_path}`)
-        setOutros(Poster)
-        console.log(Poster)
+        const filmes = resp.data.results.slice(0,20)
+        setOutros(filmes)
     }
 
 
@@ -59,8 +59,9 @@ export default function index() {
             <div className="BannersExibicao">
                 {
                     recomendados.map((filme) => (
-                        <div key={filme}>
-                            <img src={filme} alt="" />
+                        <div key={filme.id}>
+                            <img src={`https://image.tmdb.org/t/p/w500${filme.poster_path}`} 
+                            onClick={() => navigate(`movie/${filme.id}`)}/>
                         </div>
                     ))
                 }
@@ -70,8 +71,9 @@ export default function index() {
             <div className="BannersExibicao">
                 {
                     outros.map((filme) => (
-                        <div key={filme}>
-                            <img src={filme} alt="" />
+                        <div key={filme.id}>
+                            <img src={`https://image.tmdb.org/t/p/w500${filme.poster_path}`}
+                            onClick={() => navigate(`movie/${filme.id}`)}/>
                         </div>
                     ))
                 }
