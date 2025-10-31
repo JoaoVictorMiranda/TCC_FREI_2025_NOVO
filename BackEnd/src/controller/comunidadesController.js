@@ -48,7 +48,7 @@ endpoints.post('/comunidade/post', auth,  async (req, res) => {
         }
     });
 
-    endpoints.post('/comunidade/chat/:idComunidade', auth, async (req, res) => {
+endpoints.post('/comunidade/chat/:idComunidade', auth, async (req, res) => {
         let idComunidade = req.params.idComunidade
         let dados = req.body;
         let idUser = req.user.id_user;
@@ -59,5 +59,31 @@ endpoints.post('/comunidade/post', auth,  async (req, res) => {
         })
     })
 
+endpoints.post('/comunidade/chat/list/:idSala', auth, async (req, res) => {
+        let idSala = req.params.idSala;
+        let registros = await repo.listMessages(idSala)
 
-export default endpoints;
+        res.send(registros)
+
+    })    
+
+
+
+
+endpoints.post('/comunidade/membros/:idSala', auth, async (req, res) => {
+    let idSala = req.params.idSala;
+    let idUser = req.user.id_user;
+
+    let info  = await repo.VerificarUser(idUser, idSala)
+
+    if(info.length === 0){
+        res.status(401).send({
+            acesso: "Acesso negado usuario não pertence a comunidade"
+        })
+    }else{
+        res.send({
+            acesso: "Acesso Permitido"
+        })
+    }
+})
+    export default endpoints;
