@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { Link, useNavigate } from 'react-router-dom'; // Corrigido: 'react-router' para 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
 import api from '../../api';
 import './index.scss';
 import perfilFixo from '../../assets/images/usuario.png';
@@ -15,72 +15,62 @@ const Perfil = () => {
     const navigate = useNavigate();
     const [post, setPost] = useState([]);
     const [fotoPerfil, setFotoPerfil] = useState(perfilFixo);
-    const [isLoading, setIsLoading] = useState(false); // Estado para controlar o carregamento
+    const [isLoading, setIsLoading] = useState(false);
+    const [openMenu, setOpenMenu] = useState(false);
+    const menuRef = useRef();
+    const [qtdMostrar, setQtdMostrar] = useState(5);
 
-    // FUNÇÃO PARA CONSTRUIR URL COMPLETA
     const construirUrlFoto = (caminho) => {
         if (!caminho) return perfilFixo;
+        if (caminho.startsWith('data:')) return caminho; // Base64
         if (caminho.startsWith('http')) return caminho;
         return `http://localhost:5022/${caminho}`;
     };
 
+    // Atualiza a foto ao receber evento e ao montar componente
     useEffect(() => {
         const atualizarFoto = () => {
-            const novaFoto = localStorage.getItem("fotoPerfil");
-            if (novaFoto) {
-                setFotoPerfil(construirUrlFoto(novaFoto));
+            if (!token) return;
+            try {
+                const decoded = jwtDecode(token);
+                const userId = decoded.id || decoded.user?.id || decoded.nome;
+                const novaFoto = localStorage.getItem(`fotoPerfil_${userId}`);
+                if (novaFoto) setFotoPerfil(construirUrlFoto(novaFoto));
+            } catch (error) {
+                console.error('Erro ao atualizar foto:', error);
             }
         };
 
         window.addEventListener("fotoPerfilAtualizada", atualizarFoto);
-        
-        return () => {
-            window.removeEventListener("fotoPerfilAtualizada", atualizarFoto);
-        };
-    }, []);
+
+        // roda imediatamente ao montar
+        atualizarFoto();
+
+        return () => window.removeEventListener("fotoPerfilAtualizada", atualizarFoto);
+    }, [token]);
 
     useEffect(() => {
-        if (token) {
-            try {
-                const decoded = jwtDecode(token);
-                const nomeUsuario = decoded.nome || decoded.user?.nome || '';
-                setNome(nomeUsuario);
+        if (!token) return;
+        try {
+            const decoded = jwtDecode(token);
+            const nomeUsuario = decoded.nome || decoded.user?.nome || '';
+            setNome(nomeUsuario);
 
-                // USAR FUNÇÃO UNIFICADA PARA CONSTRUIR URL
-                const fotoDoToken = construirUrlFoto(decoded.foto_perfil);
-                
-                // Verificar se há foto no localStorage primeiro
-                const fotoLocal = localStorage.getItem("fotoPerfil");
-                setFotoPerfil(fotoLocal ? construirUrlFoto(fotoLocal) : fotoDoToken);
-
-                const nascimento = decoded.nascimento;
-                if (nascimento) {
-                    const anos = calcularIdade(nascimento);
-                    setIdade(anos);
-                }
-            } catch (error) {
-                console.error('Token inválido ou expirado:', error);
-            }
+            const nascimento = decoded.nascimento;
+            if (nascimento) setIdade(calcularIdade(nascimento));
+        } catch (error) {
+            console.error('Token inválido ou expirado:', error);
         }
     }, [token]);
 
-    // CARREGAR POSTS AUTOMATICAMENTE
     useEffect(() => {
-        if (token) {
-            carregarPost();
-        }
+        if (token) carregarPost();
     }, [token]);
 
     function carregarPost() {
         if (!token) return console.error('Token não encontrado');
-
-        api.post('/post/user', {}, {
-            headers: { 'x-access-token': token }
-        })
-            .then(response => {
-                console.log('Dados do usuário:', response.data);
-                setPost(response.data)
-            })
+        api.post('/post/user', {}, { headers: { 'x-access-token': token } })
+            .then(response => setPost(response.data))
             .catch(error => console.error(error));
     }
 
@@ -89,36 +79,40 @@ const Perfil = () => {
         const nascimento = new Date(dataISO);
         let idade = hoje.getFullYear() - nascimento.getFullYear();
         const mes = hoje.getMonth() - nascimento.getMonth();
-
-        if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
-            idade--;
-        }
+        if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) idade--;
         return idade;
     }
 
     function handleDeslogar() {
-        setIsLoading(true); // Ativa o carregamento
-        
-        // Simula o processo de logout com delay
+        setIsLoading(true);
         setTimeout(() => {
             localStorage.removeItem("token");
-            localStorage.removeItem("fotoPerfil");
-            setIsLoading(false); // Desativa o carregamento
+            setIsLoading(false);
             navigate('/login');
-        }, 1500); // 1.5 segundos de delay
+        }, 1500);
     }
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setOpenMenu(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    const verPosts = () => setQtdMostrar(prev => Math.min(prev + 5, post.length));
+    const postsParaMostrar = post.slice(0, qtdMostrar);
 
     return (
         <div>
             <div className="container_principal">
                 <Header />
-
-                {/* Mostrar componente de carregamento quando isLoading for true */}
                 {isLoading && <Carregando />}
 
                 <section className='container_infoUsuario'>
-
-                    <div className="foto_perfil">
+                    <div className="foto_perfil" style={{ position: "relative" }}>
                         <div className='imagem' style={{ textAlign: "center" }}>
                             <img
                                 src={fotoPerfil}
@@ -129,16 +123,37 @@ const Perfil = () => {
                                     borderRadius: "50%",
                                     border: "1px solid black",
                                     objectFit: "cover",
+                                    cursor: "pointer"
                                 }}
-                                onError={(e) => {
-                                    e.target.src = perfilFixo;
-                                }}
+                                onClick={() => setOpenMenu(!openMenu)}
+                                onError={(e) => { e.target.src = perfilFixo; }}
                             />
                         </div>
 
-                        <div className="button-editar">
-                            <Link to="/perfil/configurar">Editar Foto</Link>
-                        </div>
+                        {openMenu && (
+                            <div className='menu'
+                                ref={menuRef}
+                                style={{
+                                    position: "absolute",
+                                    top: "160px",
+                                    left: "50%",
+                                    transform: "translateX(-50%)",
+                                    backgroundColor: "#fff",
+                                    border: "1px solid #ccc",
+                                    borderRadius: "8px",
+                                    boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+                                    padding: "10px",
+                                    zIndex: 10,
+                                    width: "150px",
+                                    textAlign: "center"
+                                }}
+                            >
+                                <Link to="/perfil/configurar" style={{ display: "block", margin: "5px 0" }}>Editar Foto</Link>
+                                <button onClick={handleDeslogar} disabled={isLoading} style={{ margin: "5px 0" }}>
+                                    {isLoading ? 'Saindo...' : 'Deslogar'}
+                                </button>
+                            </div>
+                        )}
                     </div>
 
                     <div className="nome">
@@ -146,51 +161,54 @@ const Perfil = () => {
                             <h1>Nome:</h1>
                             <p>{nome}</p>
                         </div>
-                        
-                        <div className="infos"> 
+
+                        <div className="infos">
                             <div className="infosIndividuais">
-                                <h1>Idade: </h1>
+                                <h1>Idade </h1>
                                 <p>{idade}</p>
-                            </div> 
+                            </div>
 
                             <div className="infosIndividuais">
                                 <h1>Seguidores</h1>
-                                <p>0</p>
-                            </div> 
-                                
+                                <p>600000</p>
+                            </div>
+
                             <div className="infosIndividuais">
                                 <h1>Quero assistir</h1>
                                 <p>5</p>
-                            </div> 
+                            </div>
                         </div>
                     </div>
-                    
                 </section>
 
-                <div className="container_posts">
-                    {post.length === 0 && <p>Nenhum post encontrado</p>}
-
-                    {post.map((post) => (
-                        <div key={post.id_post} className="Card_post">
-                            <h2>{post.nome}</h2>
-                            <h3>{post.titulo}</h3>
-                            <p>Filme: {post.id_filme}</p>
-                            <p>Nota: {post.nota}</p>
-                            <p>Data: {post.criado_em}</p>
-                            <p>Curtidas: {post.curtidas}</p>
-                            <button type='button' onClick={() => alert("CURTIDO")}>Curtir</button>
+                <div className={`container_posts ${post.length === 0 ? 'vazio' : ''}`}>
+                    {post.length === 0 ? (
+                        <div className="sem-posts">
+                            <p>Este usuário ainda não publicou nenhuma análise</p>
                         </div>
-                    ))}
+                    ) : (
+                        postsParaMostrar.map((post) => (
+                            <div key={post.id_post} className="Card_post">
+                                <h2>{post.nome}</h2>
+                                <h3>{post.titulo}</h3>
+                                <p>Filme: {post.id_filme}</p>
+                                <p>Nota: {post.nota}</p>
+                                <p>Data: {post.criado_em}</p>
+                                <p>Curtidas: {post.curtidas}</p>
+                                <button type='button' onClick={() => alert("CURTIDO")}>Curtir</button>
+                            </div>
+                        ))
+                    )}
                 </div>
 
-                <div className="deslogar">
-                    <button onClick={handleDeslogar} disabled={isLoading}>
-                        {isLoading ? 'Saindo...' : 'Deslogar'}
+                {post.length > 5 && qtdMostrar < post.length && (
+                    <button className="button-ver-posts" onClick={verPosts}>
+                        Ver todos os posts
                     </button>
-                </div>
+                )}
 
             </div>
-            <Footer />  
+            <Footer />
         </div>
     );
 };

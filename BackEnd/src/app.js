@@ -68,7 +68,7 @@ api.use((error, req, res, next) => {
 });
 
 // Define a porta do servidor - usa a variável de ambiente PORT ou 3000 como fallback
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5022;
 
 // Inicia o servidor na porta especificada
 api.listen(PORT, () => {

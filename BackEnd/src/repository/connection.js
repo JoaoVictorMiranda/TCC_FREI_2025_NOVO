@@ -1,4 +1,4 @@
-import mysql from 'mysql2/promise';
+/*import mysql from 'mysql2/promise';
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -10,5 +10,15 @@ const connection = await mysql.createConnection({
 
 })
 
-export { connection }
+export { connection }*/
 
+import mysql from 'mysql2/promise';
+
+const connection = await mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'lucas008',
+    database: 'cultbridge'
+});
+
+export { connection };

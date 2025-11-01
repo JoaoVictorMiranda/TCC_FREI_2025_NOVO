@@ -92,12 +92,6 @@ const Login = () => {
 
                 <div className="divider">ou</div>
 
-                <div className="social-login">
-                    <button type="button" onClick={() => handleSocialLogin('Google')}>
-                       <img src={googleColorIcon} height={10} alt="" /> Google
-                    </button>
-                </div>
-
                 <button type="button" onClick={handleVoltar} className="back-button">
                     Voltar ao Início
                 </button>
