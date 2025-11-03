@@ -1,20 +1,30 @@
 import { useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router';
 import './index.scss';
 
 export default function ConfigurarPerfil() {
   const [foto, setFoto] = useState(null);
+  const [fotoBase64, setFotoBase64] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFoto(URL.createObjectURL(file));
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFoto(URL.createObjectURL(file));
+        setFotoBase64(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!fotoBase64) return;
+    
     setLoading(true);
 
     setTimeout(() => {
@@ -22,16 +32,16 @@ export default function ConfigurarPerfil() {
       if (!token) return;
 
       const decoded = jwtDecode(token);
-      const userId = decoded.id || decoded.user?.id || decoded.nome; // identificador único
+      const userId = decoded.id || decoded.user?.id || decoded.nome;
 
-      // salva a foto associada ao usuário
-      localStorage.setItem(`fotoPerfil_${userId}`, foto);
+      localStorage.setItem(`fotoPerfil_${userId}`, fotoBase64);
 
-      // dispara evento para atualizar o Perfil
       window.dispatchEvent(new Event("fotoPerfilAtualizada"));
 
+      navigate('/perfil');
+
       setLoading(false);
-      alert('Foto enviada!');
+      alert('Foto atualizada com sucesso!');
     }, 1500);
   };
 
@@ -57,7 +67,7 @@ export default function ConfigurarPerfil() {
         <button
           className="button_configurarPerfil"
           type="submit"
-          disabled={loading || !foto}
+          disabled={loading || !fotoBase64}
         >
           {loading ? 'Enviando...' : 'Enviar'}
         </button>

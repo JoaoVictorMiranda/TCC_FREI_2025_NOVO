@@ -22,31 +22,33 @@ const Perfil = () => {
 
     const construirUrlFoto = (caminho) => {
         if (!caminho) return perfilFixo;
-        if (caminho.startsWith('data:')) return caminho; // Base64
+        if (caminho.startsWith('data:')) return caminho;
         if (caminho.startsWith('http')) return caminho;
         return `http://localhost:5022/${caminho}`;
     };
 
-    // Atualiza a foto ao receber evento e ao montar componente
     useEffect(() => {
-        const atualizarFoto = () => {
+        const carregarFotoUsuario = () => {
             if (!token) return;
             try {
                 const decoded = jwtDecode(token);
                 const userId = decoded.id || decoded.user?.id || decoded.nome;
-                const novaFoto = localStorage.getItem(`fotoPerfil_${userId}`);
-                if (novaFoto) setFotoPerfil(construirUrlFoto(novaFoto));
+                const fotoSalva = localStorage.getItem(`fotoPerfil_${userId}`);
+                if (fotoSalva) {
+                    setFotoPerfil(construirUrlFoto(fotoSalva));
+                } else {
+                    setFotoPerfil(perfilFixo);
+                }
             } catch (error) {
-                console.error('Erro ao atualizar foto:', error);
+                console.error('Erro ao carregar foto:', error);
+                setFotoPerfil(perfilFixo);
             }
         };
 
-        window.addEventListener("fotoPerfilAtualizada", atualizarFoto);
+        carregarFotoUsuario();
+        window.addEventListener("fotoPerfilAtualizada", carregarFotoUsuario);
 
-        // roda imediatamente ao montar
-        atualizarFoto();
-
-        return () => window.removeEventListener("fotoPerfilAtualizada", atualizarFoto);
+        return () => window.removeEventListener("fotoPerfilAtualizada", carregarFotoUsuario);
     }, [token]);
 
     useEffect(() => {
@@ -128,6 +130,17 @@ const Perfil = () => {
                                 onClick={() => setOpenMenu(!openMenu)}
                                 onError={(e) => { e.target.src = perfilFixo; }}
                             />
+
+                           <p style={{ 
+                                color: 'white', 
+                                textAlign: 'center', 
+                                marginBottom: '10px',
+                                cursor: 'pointer'
+                            }} 
+                            onClick={() => setOpenMenu(!openMenu)}>
+                                clique para editar
+                        </p>
+                        
                         </div>
 
                         {openMenu && (
