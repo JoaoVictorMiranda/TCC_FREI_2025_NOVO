@@ -1,0 +1,78 @@
+.ConteudoPaginaFilmes {
+    display: flex;
+    width: 100%;
+    height: auto;
+    background-color: black;
+    padding: 5vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .TituloPesquisarFilmesDinamicos {
+        display: flex;
+        width: 60%;
+        align-self: center;
+        align-items: center;
+        justify-content: center;
+        height: 4vh;
+        gap: 2vh;
+        flex-direction: row;
+
+        .BarraPesquisa {
+            display: flex;
+            width: 100%;
+
+            h3 {
+                display: flex;
+                align-self: center;
+                position: absolute;
+                margin-left: 5px;
+            }
+
+            input {
+                width: 100%;
+                outline: none;
+                color: white;
+                background-color: #1C1D1D;
+                border: none;
+                padding: 1vh;
+                padding-left: 3.2vh;
+                border-radius: 100vh;
+                height: 3vh;
+            }
+        }
+
+
+        button {
+            display: flex;
+            width: 20%;
+            border-radius: 1vh;
+            outline: none;
+            border: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s;
+            color: white;
+            font-weight: 500;
+            padding: 0.5vh;
+            cursor: pointer;
+            background-color: #AA2522;
+        }
+
+        button:hover {
+            background-color: #802523;
+        }
+    }
+
+    .ListaPaginaFilmes {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        padding-top: 2vh;
+        flex-direction: row;
+        padding-left: 2.3%;
+        gap: 1vh;
+        width: 60%;
+        align-items: center;
+        justify-content: center;
+    }
+}

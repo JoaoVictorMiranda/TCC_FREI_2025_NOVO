@@ -14,27 +14,6 @@ export default function index() {
     const [outros, setOutros] = useState([])
     const navigate = useNavigate()
 
-    useEffect(() => {
-        const fetchMovie = async () => {
-            const resp = await apiTMDB.get(`/movie/666?${apiKey}&language=pt-BR`)
-            setMovie(resp.data)
-        }
-        fetchMovie()
-    }, [])
-
-    useEffect(() => {
-        const AcharDiretor = async () => {
-            const resp = await apiTMDB.get(`/movie/666/credits?${apiKey}&language=pt-BR`)
-
-            const elenco = resp.data.crew;
-            const diretor = elenco.find(p => p.job === 'Director')
-
-            setDiretor(diretor.name)
-        }
-        AcharDiretor();
-        OutrasOpcoes()
-    }, [])
-
     async function ListaRecomendados() {
         const resp = await apiTMDB.get(`/movie/now_playing?${apiKey}&language=pt-BR`)
         const filmes = resp.data.results.slice(0,20)
@@ -49,6 +28,7 @@ export default function index() {
 
 
     ListaRecomendados()
+    OutrasOpcoes()
 
     return (
         <div className='HomeAbaRecomendados'>
