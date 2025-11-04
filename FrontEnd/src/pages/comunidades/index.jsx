@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import {useNavigate} from 'react-router';
 import api from '../../api';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer'
 
 const Comunidades = () => {
         let [nome, setNome] = useState();
@@ -49,6 +51,8 @@ const Comunidades = () => {
   return (
     <div>
 
+            <Header/>
+
         <h1>Criar Comunidades</h1>
 
 
@@ -67,6 +71,8 @@ const Comunidades = () => {
                 onChange={(e) => setImagem(e.target.files[0])} />
         <button type='submit'>Mandar</button>
         </form>
+
+        <Footer/>
 
     </div>
   )

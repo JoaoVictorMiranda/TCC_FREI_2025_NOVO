@@ -35,6 +35,13 @@ endpoints.get('/post/media/:id_filme', auth, async (req, resp) => {
     resp.send({ media: resposta })
 })
 
+endpoints.get('/post/count/:id_filme', auth, async (req,resp) => {
+    let id_filme = req.params.id_filme;
+
+    const resposta = await repo.ContagemComentarios(id_filme)
+    resp.send({contagem: resposta})
+})
+
 endpoints.post('/post/user', auth, async (req, res) => {
     let idUser = req.user.id_user;
 

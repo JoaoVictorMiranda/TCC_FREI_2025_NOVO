@@ -5,6 +5,8 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import api from '../../api';
 
+import { Toaster, toast } from 'react-hot-toast'
+
 import googleColorIcon from '../../assets/images/googleColorIcon.png'
 
 
@@ -30,10 +32,12 @@ const Login = () => {
                 localStorage.setItem("token", token)
                 navigate('/perfil')
                 window.location.reload()
+                toast.success('Logado com sucesso!')
             })
             .catch(error => {
+                toast.error("Erro ao logar.")
                 console.error('Deu ruim hein:', error);
-                alert("Email ou senha inválidos");
+                return
             });
     };
 
@@ -48,58 +52,63 @@ const Login = () => {
             <form onSubmit={handleSubmit} className="login-form">
 
                 <section className='left-side-login'>
-                <h1>Já tem uma <br /> conta?</h1>
+                    <h1>Já tem uma <br /> conta?</h1>
 
-                <div className="input-group">
-                    <label htmlFor="email">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="seu@email.com"
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
+                    <div className="input-group">
+                        <label htmlFor="email">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="seu@email.com"
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
 
-                <div className="input-group">
-                    <label htmlFor="password">Senha</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Sua senha"
-                        onChange={(e) => setSenha(e.target.value)}
-                        required
-                    />
-                </div>
+                    <div className="input-group">
+                        <label htmlFor="password">Senha</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Sua senha"
+                            onChange={(e) => setSenha(e.target.value)}
+                            required
+                        />
+                    </div>
 
-                <div className="help-links">
-                    <Link to="/forgot-password">Esqueceu a senha?</Link>
-                </div>
+                    <div className="help-links">
+                        <Link to="/forgot-password">Esqueceu a senha?</Link>
+                    </div>
 
-                <button type="submit" className="login-button" >
-                    Faça login
-                </button>
+                    <button type="submit" className="login-button" >
+                        Faça login
+                    </button>
 
-                <div className='under-the-button-login'>
-                    <p>Novo por aqui?</p>
-                    <Link to="/registrar">Cadastre-se</Link>
+                    <div className='under-the-button-login'>
+                        <p>Novo por aqui?</p>
+                        <Link to="/registrar">Cadastre-se</Link>
                     </div>
 
                 </section>
 
                 <section className='right-side-login'>
 
-                <div className="divider">ou</div>
+                    <div className="divider">ou</div>
 
-                <button type="button" onClick={handleVoltar} className="back-button">
-                    Voltar ao Início
-                </button>
+                    <button type="button" onClick={handleVoltar} className="back-button">
+                        Voltar ao Início
+                    </button>
                 </section>
             </form>
 
             <Footer />
+
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
         </div>
     );
 };
