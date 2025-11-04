@@ -13,6 +13,7 @@ import Grafico from './pages/ChartJS'
 import ExibirFilmes from './pages/Filmes'
 import Comunidades from "./pages/comunidades"
 import ChatComunidade from "./pages/comunidade_chat"
+import Desenvolvedores from "./pages/desenvolvedores"
 
 const Navegacao = () => {
   return (
@@ -25,11 +26,12 @@ const Navegacao = () => {
         <Route path="/login/adminlo0gin" element={<LoginAdmin />} />
         <Route path='/movie/:id' element={<MoviePage />} />
         <Route path='/perfil/configurar' element={<ConfigurarPerfil />} />
-        <Route path='/buscainformacoes' element={<Buscar/>}/>
-        <Route path="/adminChart" element={<Grafico/>}/>
-        <Route path='/filmes' element={<ExibirFilmes/>}/>
+        <Route path='/buscainformacoes' element={<Buscar />} />
+        <Route path="/adminChart" element={<Grafico />} />
+        <Route path='/filmes' element={<ExibirFilmes />} />
         <Route path="/comunidade" element={<Comunidades />} />
-        <Route path="/comunidade/:id" element={<ChatComunidade />} />
+        <Route path="/comunidade/:id" element={<ChatComunidade />}/>
+        <Route path="/desenvolvedores" element={<Desenvolvedores />}/>
 
         <Route path="*" element={<NotFound />} />
       </Routes>

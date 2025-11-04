@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router'
 import './index.scss';
 import InstagramIcon from '../../assets/instagram.svg';
 import FacebookIcon from '../../assets/facebook.svg';
@@ -22,7 +23,7 @@ const Footer = () => {
               <div><img src={InstagramIcon} alt="Instagram" /></div>
               <div><img src={FacebookIcon} alt="Facebook" /></div>
               <div><img src={TikTokIcon} alt="TikTok" /></div>
-            
+
               <div><img src={YoutubeIcon} alt="YouTube" /></div>
             </div>
 
@@ -48,7 +49,7 @@ const Footer = () => {
           <div>
             <h3>Legal</h3>
             <ul>
-              <li>Desenvolvedores</li>
+              <Link to={'/desenvolvedores'} ><li>Desenvolvedores</li></Link>
               <li>Contato</li>
             </ul>
           </div>
