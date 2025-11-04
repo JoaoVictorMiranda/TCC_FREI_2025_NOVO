@@ -34,6 +34,7 @@ const Registrar = () => {
                     const token = response.data.token
                     localStorage.setItem("token", token)
                     navigate('/perfil')
+                    window.location.reload()
                 })
 
 
