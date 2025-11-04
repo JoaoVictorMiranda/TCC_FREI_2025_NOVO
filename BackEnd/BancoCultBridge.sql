@@ -23,6 +23,21 @@ foto_perfil varchar(500),
 criado_em datetime
 );
 
+
+CREATE TABLE seguidores(
+    id_seguidores int primary key auto_increment,
+    id_user int,
+    id_seguidor int UNIQUE,
+    FOREIGN KEY (id_user) REFERENCES usuarios(id_user)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (id_seguidor) REFERENCES usuarios(id_user)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+
+
 SELECT * FROM usuarios;
 
     
@@ -203,5 +218,9 @@ SELECT * FROM comunidades;
 SELECT * FROM comunidade_membros;
 SELECT * FROM comunidade_posts;
 SELECT * FROM comunidade_chat;
+
+            select id_user from comunidade_membros
+            where id_user = 2 AND id_comunidade = 1;
+
 
 SHOW TABLES;

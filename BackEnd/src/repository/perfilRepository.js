@@ -21,3 +21,21 @@ export async function alterarFotoPerfil(idUser, caminhoImagem) {
         throw error;
     }
 }
+
+
+
+
+
+export async function seguirUsuario(idUser, idFollower){
+    const comando = `
+        INSERT INTO seguidores (id_user, id_seguidor);
+        VALUE
+        (?,?);
+    `;
+
+    let [info] = await connection.query(comando, [
+        idUser,
+        idFollower
+    ])
+    return info
+}
