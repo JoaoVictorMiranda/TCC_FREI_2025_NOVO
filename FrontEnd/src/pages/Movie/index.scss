@@ -74,7 +74,7 @@
         transition: all 0.5s;
     }
 
-                        
+
     #BackgroungDoFilme {
         display: flex;
         position: absolute;
@@ -160,9 +160,11 @@
 
     input {
         width: 100%;
+        height: 5vh;
+        font-size: 2vh;
         outline: none;
         border: 0.1vh rgba(128, 128, 128, 0.322) solid;
         padding: 1vh;
-        border-radius: 0.5vh;
+        border-radius: 0.8vh;
     }
 }

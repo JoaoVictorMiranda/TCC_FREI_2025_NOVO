@@ -74,7 +74,7 @@ export default function index() {
         const resp = await api.post('/EnviarComentario', body)
         console.log(resp.data)
         setModal(false)
-        
+
         await BuscarInfo()
         await BuscarMedia()
     }
@@ -130,7 +130,7 @@ export default function index() {
             <div className="SessaoComentarios">
 
                 <DefinirTopico
-                tema={'ANÁLISES'}/>
+                    tema={'ANÁLISES'} />
 
                 <div className="OsComentarios">
 
@@ -171,7 +171,16 @@ export default function index() {
                         <label style={{ fontWeight: '500' }}>Avaliação</label>
                         <input type='text' value={avaliacao} onChange={e => setAvaliacao(e.target.value)} />
                         <label style={{ fontWeight: '500' }}>Nota</label>
-                        <input type="text" value={nota} onChange={e => setNota(e.target.value)} />
+                        <input
+                            type="number"
+                            value={nota}
+                            onChange={e => {
+                                const valor = Number(e.target.value);
+                                if (valor > 5) setNota(5);
+                                else if (valor < 1) setNota(1);
+                                else setNota(valor);
+                            }}
+                        />
                     </div>
                 }
             >

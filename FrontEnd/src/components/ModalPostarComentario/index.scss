@@ -5,6 +5,7 @@
     left: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.452);
+    backdrop-filter: blur(1px);
     z-index: 999;
 
     .Alinhador {
@@ -24,8 +25,9 @@
         header {
             display: flex;
             align-items: center;
-            padding: 1vh;
+            padding: 2vh;
             width: 100%;
+            font-size: 2vh;
             height: 5vh;
             border-radius: 1vh 1vh 0vh 0vh;
             background-color: #A32522;
@@ -51,20 +53,22 @@
                 padding-bottom: 1vh;
                 gap: 1vh;
 
-                #Cancelar {
-                    background-color: gray;
+                #Cancelar:hover {
+                    background-color: #D4D4D4;
                 }
 
                 #Cancelar {
-                    background-color: rgb(94, 94, 94);
+                    background-color: #E5E5E5;
+                    color: black;
                 }
 
                 button {
                     display: flex;
-                    width: 20%;
+                    width: 30%;
                     align-items: center;
                     justify-content: center;
-                    height: 3vh;
+                    height: 4.5vh;
+                    margin-right: 1vh;
                     border-radius: 1vh;
                     outline: none;
                     color: white;
@@ -76,7 +80,7 @@
                 }
 
                 button:hover {
-                    background-color: #831c1a;
+                    background-color: #960101;
                 }
             }
 

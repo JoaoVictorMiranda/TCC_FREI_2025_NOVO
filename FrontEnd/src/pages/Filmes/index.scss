@@ -1,12 +1,11 @@
 .ConteudoPaginaFilmes {
     display: flex;
     width: 100%;
-    height: auto;
+    min-height: 105vh;
     background-color: black;
     padding: 5vh;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    padding: 5vh;
 
     .TituloPesquisarFilmesDinamicos {
         display: flex;
@@ -26,7 +25,8 @@
                 display: flex;
                 align-self: center;
                 position: absolute;
-                margin-left: 5px;
+                margin-left: 1vh;
+                font-size: 2.5vh;
             }
 
             input {
@@ -36,9 +36,10 @@
                 background-color: #1C1D1D;
                 border: none;
                 padding: 1vh;
-                padding-left: 3.2vh;
-                border-radius: 100vh;
-                height: 3vh;
+                padding-left: 4vh;
+                border-radius: 1vh;
+                height: 5vh;
+                font-size: 2vh;
             }
         }
 
@@ -48,6 +49,7 @@
             width: 20%;
             border-radius: 1vh;
             outline: none;
+            height: 5vh;
             border: none;
             align-items: center;
             justify-content: center;
@@ -64,15 +66,34 @@
         }
     }
 
-    .ListaPaginaFilmes {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        padding-top: 2vh;
-        flex-direction: row;
-        padding-left: 2.3%;
-        gap: 1vh;
-        width: 60%;
+    .CentralizadorPaginaFilmes {
+        display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
+        width: 100%;
+        height: auto;
+
+        .ListaPaginaFilmes {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            padding-top: 2vh;
+            flex-direction: row;
+            width: 60%;
+            align-items: center;
+            justify-self: center;
+            justify-content: center;
+            gap: 2vh;
+
+            img {
+                width: 100%;
+                height: 80%;
+            }
+
+            img:hover {
+                cursor: pointer;
+            }
+        }
     }
+
 }

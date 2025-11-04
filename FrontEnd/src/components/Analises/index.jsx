@@ -31,14 +31,14 @@ export default function SessaoComentarios() {
 
     useEffect(() => {
         PuxarInfo()
-    }, [])
+    }, [arr])
 
 
     return (
         <div className='SessaoComentarios'>
             <div className="SessaoComentariosConteudo">
                 <DefinirTopico
-                tema={'ANÁLISES RECENTES'}/>
+                    tema={'ANÁLISES RECENTES'} />
                 <div className="ComentariosIsolados">
                     {
                         arr.length
