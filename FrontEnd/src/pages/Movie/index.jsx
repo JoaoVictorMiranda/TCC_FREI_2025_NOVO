@@ -4,6 +4,7 @@ import CardDetalhes from '../../components/CardInfo/index.jsx';
 import Carregando from '../../components/Carregando/index.jsx';
 import CardComentario from '../../components/CardComentario/index.jsx';
 import ModalPostarComentario from '../../components/ModalPostarComentario/index.jsx';
+import { Toaster, toast } from 'react-hot-toast'
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import apiTMDB from '../../apiTMDB.js';
@@ -22,6 +23,7 @@ export default function index() {
     const [diretor, setDiretor] = useState('');
     const [modal, setModal] = useState(false)
     const [media, setMedia] = useState([]);
+    const [count, setCount] = useState([])
     const [arr, setArr] = useState([]);
     const [titulo, setTitulo] = useState('');
     const [avaliacao, setAvaliacao] = useState('');
@@ -50,12 +52,19 @@ export default function index() {
     useEffect(() => {
         async function BuscarMedia() {
             const resp = await api.get(`/post/media/${id}`)
-            console.log(resp.data.media[0].MediaCurtidas)
             setMedia(resp.data.media[0].MediaCurtidas.split(".")[0])
         }
         BuscarMedia()
         BuscarInfo()
     }, [media])
+
+    useEffect(() => {
+        async function BuscarQuantidadeAnalises() {
+            const resp = await api.get(`/post/count/${id}`)
+            setCount(resp.data.contagem[0].ContarAvaliacao)
+        }
+        BuscarQuantidadeAnalises()
+    }, [])
 
     async function BuscarInfo() {
         const resp = await api.get(`/post/${id}`)
@@ -64,19 +73,32 @@ export default function index() {
     }
 
     async function EnviarAvaliacao() {
-        const body = {
-            titulo: titulo,
-            id_filme: id,
-            avaliacao: avaliacao,
-            nota: nota
+        if (!titulo || !avaliacao || !nota) {
+            toast.error('Erro ao enviar análise!')
+            return
         }
 
-        const resp = await api.post('/EnviarComentario', body)
-        console.log(resp.data)
-        setModal(false)
+        try {
+            const body = {
+                titulo: titulo,
+                id_filme: id,
+                avaliacao: avaliacao,
+                nota: nota
+            }
 
-        await BuscarInfo()
-        await BuscarMedia()
+            toast.success('Análise Enviada com Sucesso!')
+
+            await api.post('/EnviarComentario', body)
+            setModal(false)
+            
+            await BuscarInfo()
+            await BuscarMedia()
+        }
+
+        catch (err) {
+            console.log(err)
+            return
+        }
     }
 
     if (!movie) return <Carregando />;
@@ -111,12 +133,14 @@ export default function index() {
                         </div>
                         <div className="Information">
                             <CardDetalhes
-                                Info={'Assistiram'} />
+                                Info={'Assistiram'}
+                                Quantidade={`${count ? count : '0'}`} />
                             <CardDetalhes
                                 Quantidade={`${media ? media : '0'}`}
                                 Info={'Aproveitamento'} />
                             <CardDetalhes
-                                Info={'Querem Assistir'} />
+                                Quantidade={`${count ? count : '0'}`}
+                                Info={'Análises'} />
                         </div>
                         <div className='Sinopse'>
                             <p>{movie.overview}</p>
@@ -185,6 +209,11 @@ export default function index() {
                 }
             >
             </ModalPostarComentario>
+
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
         </div>
     )
 }

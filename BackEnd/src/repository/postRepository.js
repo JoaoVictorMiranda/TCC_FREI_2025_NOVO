@@ -93,6 +93,15 @@ export async function MediaCurtidas(id_filme) {
     return resultados
 }
 
+export async function ContagemComentarios(id_filme) {
+    let [resultados] = await connection.query(`
+        SELECT COUNT(avaliacao) AS ContarAvaliacao
+        FROM post_avaliacao
+        WHERE id_filme = ?
+        `, [id_filme])
+    return resultados
+}
+
 export async function listarPostPorIdFilme(id_filme) {
     const comando = `
 SELECT post_avaliacao.id_post, usuarios.nome, post_avaliacao.titulo, post_avaliacao.criado_em, post_avaliacao.avaliacao, post_avaliacao.nota, post_avaliacao.id_filme,
