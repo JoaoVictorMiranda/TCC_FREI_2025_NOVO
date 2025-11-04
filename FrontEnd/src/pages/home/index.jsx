@@ -118,12 +118,14 @@ function Home() {
             <ul className="menu-categorias">
               <li
                 className="menu-item"
+                style={{fontWeight: '600'}}
                 onClick={() => setURLpages(moviesURLtop_rated)}
               >
-                Melhores ranqueados
+                Ranqueados
               </li>
               <li
                 className="menu-item"
+                style={{fontWeight: '600'}}
                 onClick={() => setURLpages(moviesURLpopulares)}
               >
                 Populares

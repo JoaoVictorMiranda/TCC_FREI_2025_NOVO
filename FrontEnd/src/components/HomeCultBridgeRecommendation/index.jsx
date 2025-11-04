@@ -16,12 +16,12 @@ export default function index() {
 
     async function ListaRecomendados() {
         const resp = await apiTMDB.get(`/movie/now_playing?${apiKey}&language=pt-BR`)
-        setRecomendados(resp.data.results.slice(0,20))
+        setRecomendados(resp.data.results.slice(0,8))
     }
 
     async function OutrasOpcoes() {
         const resp = await apiTMDB.get(`movie/popular?${apiKey}&language=pt-BR`)
-        setOutros(resp.data.results.slice(0,20))
+        setOutros(resp.data.results.slice(0,8))
     }
 
     ListaRecomendados()
