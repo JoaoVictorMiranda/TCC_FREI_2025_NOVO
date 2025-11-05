@@ -1,11 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode'; // Importação correta do jwt-decode
+import { jwtDecode } from 'jwt-decode';
 
 import Barras from '../../assets/images/barras.svg';
 import Pesquisa from '../../assets/images/pesquisa.svg';
 import habuge from '../../assets/images/habuge.svg';
 
+import clickSound from '../../assets/audios/click.mp3';
 import './index.scss';
 
 export default function Header() {
@@ -14,9 +15,11 @@ export default function Header() {
     const [iconeMenu, setIconeMenu] = useState(Barras);
     const [textoBusca, setTextoBusca] = useState('');
     const [isFocused, setIsFocused] = useState(false);
+    const [menuAberto, setMenuAberto] = useState(false);
     
     const navigate = useNavigate();
     const inputRef = useRef(null);
+    const audioRef = useRef(null);
     const token = localStorage.getItem('token');
 
     useEffect(() => {
@@ -32,7 +35,22 @@ export default function Header() {
     }, [token]);
 
     function alternarMenu() {
-        setIconeMenu(iconeMenu === Barras ? habuge : Barras);
+        // Toca o som do clique
+        if (audioRef.current) {
+            audioRef.current.currentTime = 0;
+            audioRef.current.play().catch(error => {
+                console.log('Erro ao reproduzir áudio:', error);
+            });
+        }
+        
+        // Alterna o ícone do menu e o estado
+        setMenuAberto(!menuAberto);
+        setIconeMenu(menuAberto ? Barras : habuge);
+    }
+
+    function fecharMenu() {
+        setMenuAberto(false);
+        setIconeMenu(Barras);
     }
 
     function abrirBusca() {
@@ -46,6 +64,7 @@ export default function Header() {
             navigate(`/buscainformacoes?query=${encodeURIComponent(textoBusca)}`);
             setMostrarCampo(false);
             setIsFocused(false);
+            fecharMenu();
         }
     }
 
@@ -53,23 +72,34 @@ export default function Header() {
         abrirBusca();
     }
 
+    function handleLinkClick() {
+        fecharMenu();
+    }
+
     return (
         <header className="container_header">
-            <div>
+            <div className="menu_hamburguer">
                 <img
                     src={iconeMenu}
                     alt="Menu"
                     onClick={alternarMenu}
-                    height={50}
                     className="hamburguer"
                 />
             </div>
 
-            <nav className="container_nav">
+            <audio ref={audioRef} preload="auto">
+                <source src={clickSound} type="audio/mpeg" />
+                Seu navegador não suporta o elemento de áudio.
+            </audio>
+
+            {/* Overlay para fechar o menu */}
+            {menuAberto && <div className="overlay" onClick={fecharMenu}></div>}
+
+            <nav className={`container_nav ${menuAberto ? 'menu_aberto' : ''}`}>
                 <ul>
-                    <li><Link to="/">INÍCIO</Link></li>
-                    <li><Link to="/filmes">FILMES</Link></li>
-                    <li><Link to="/comunidade">COMUNIDADE</Link></li>
+                    <li><Link to="/" onClick={handleLinkClick}>INÍCIO</Link></li>
+                    <li><Link to="/filmes" onClick={handleLinkClick}>FILMES</Link></li>
+                    <li><Link to="/comunidade" onClick={handleLinkClick}>COMUNIDADE</Link></li>
                 </ul>
             </nav>
 
@@ -101,7 +131,7 @@ export default function Header() {
                     onClick={pesquisa} 
                 />
                 
-                <Link to={nome ? '/perfil' : '/login'}>
+                <Link to={nome ? '/perfil' : '/login'} onClick={fecharMenu}>
                     <h3>{nome ? nome : 'Logar'}</h3>
                 </Link>
             </div>

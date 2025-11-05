@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import api from '../../api';
-
+import SoundPlayer from '../../components/secreto/secreto';
 const LoginAdmin = () => {
         const navigate = useNavigate();
 
@@ -91,7 +91,7 @@ const LoginAdmin = () => {
                         Voltar ao Início
                     </button>
                 </form>
-    
+    <SoundPlayer/>
                 <Footer />
             </div>
   )
