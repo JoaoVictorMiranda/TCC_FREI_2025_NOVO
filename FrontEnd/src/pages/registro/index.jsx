@@ -24,7 +24,6 @@ const Registrar = () => {
             });
 
             console.log('Cadastro realizado com sucesso:', response.data);
-            alert("Cadastro feito seja muito bem vindo meu amigo ficamos feliz em te receber")
             api.post('/usuario', {
                 email: email,
                 senha: senha
@@ -34,6 +33,7 @@ const Registrar = () => {
                     const token = response.data.token
                     localStorage.setItem("token", token)
                     navigate('/perfil')
+                    
                     window.location.reload()
                 })
 

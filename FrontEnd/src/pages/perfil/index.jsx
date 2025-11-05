@@ -7,6 +7,7 @@ import api from '../../api';
 import './index.scss';
 import perfilFixo from '../../assets/images/usuario.png';
 import Carregando from '../../components/Carregando';
+import toast, { Toaster } from 'react-hot-toast'; // Importe o Toaster também
 
 const Perfil = () => {
     const [nome, setNome] = useState('');
@@ -87,11 +88,23 @@ const Perfil = () => {
 
     function handleDeslogar() {
         setIsLoading(true);
+        
+        // Toast de sucesso
+        toast.success("Deslogado - Volte Sempre!", {
+            duration: 3000,
+            position: 'top-center',
+            style: {
+                background: '#363636',
+                color: '#fff',
+            },
+        });
+        
         setTimeout(() => {
             localStorage.removeItem("token");
             setIsLoading(false);
-            navigate('/login');
-        }, 1500);
+            navigate('/');
+            window.location.reload();
+        }, 3000);
     }
 
     useEffect(() => {
@@ -109,6 +122,17 @@ const Perfil = () => {
 
     return (
         <div>
+            {/* Adicione o Toaster aqui - é ESSENCIAL para mostrar os toasts */}
+            <Toaster 
+                toastOptions={{
+                    duration: 3000,
+                    style: {
+                        background: '#363636',
+                        color: '#fff',
+                    },
+                }}
+            />
+            
             <div className="container_principal">
                 <Header />
                 {isLoading && <Carregando />}
@@ -131,7 +155,7 @@ const Perfil = () => {
                                 onError={(e) => { e.target.src = perfilFixo; }}
                             />
 
-                           <p style={{ 
+                            <p style={{ 
                                 color: 'white', 
                                 textAlign: 'center', 
                                 marginBottom: '10px',
@@ -139,8 +163,7 @@ const Perfil = () => {
                             }} 
                             onClick={() => setOpenMenu(!openMenu)}>
                                 clique para editar
-                        </p>
-                        
+                            </p>
                         </div>
 
                         {openMenu && (
@@ -162,7 +185,19 @@ const Perfil = () => {
                                 }}
                             >
                                 <Link to="/perfil/configurar" style={{ display: "block", margin: "5px 0" }}>Editar Foto</Link>
-                                <button onClick={handleDeslogar} disabled={isLoading} style={{ margin: "5px 0" }}>
+                                <button 
+                                    onClick={handleDeslogar} 
+                                    disabled={isLoading} 
+                                    style={{ 
+                                        margin: "5px 0",
+                                        background: isLoading ? '#ccc' : '#ff4444',
+                                        color: 'white',
+                                        border: 'none',
+                                        padding: '8px 16px',
+                                        borderRadius: '4px',
+                                        cursor: isLoading ? 'not-allowed' : 'pointer'
+                                    }}
+                                >
                                     {isLoading ? 'Saindo...' : 'Deslogar'}
                                 </button>
                             </div>
