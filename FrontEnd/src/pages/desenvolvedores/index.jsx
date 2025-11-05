@@ -1,5 +1,7 @@
 // pages/DevelopersPage.jsx
 import React, { useState, useEffect } from 'react';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 const DevelopersPage = () => {
     const [developers, setDevelopers] = useState([]);
@@ -9,9 +11,10 @@ const DevelopersPage = () => {
     // Lista de desenvolvedores do projeto
     const developerUsernames = [
         'JoaoVictorMiranda',
-        'outro-dev',
+        'LucasVianaAraujo',
         'Lucas-Silva-Manoel',
-        'LucasVianaraujo'
+        'LucasGilReche',
+
         // Adicione os usernames reais do GitHub aqui
     ];
 
@@ -245,6 +248,7 @@ const DevelopersPage = () => {
 
     return (
         <div style={styles.page}>
+            <Header />
             <div style={styles.header}>
                 <h1 style={styles.title}>🎯 Nossa Equipe</h1>
                 <p style={styles.subtitle}>
@@ -280,6 +284,7 @@ const DevelopersPage = () => {
                     ))
                 )}
             </div>
+            <Footer />
 
             {!loading && developers.length === 0 && (
                 <div style={styles.error}>

@@ -28,7 +28,7 @@ export async function alterarFotoPerfil(idUser, caminhoImagem) {
 
 export async function seguirUsuario(idUser, idFollower){
     const comando = `
-        INSERT INTO seguidores (id_user, id_seguidor);
+        INSERT INTO seguidores (id_user, id_seguidor)
         VALUE
         (?,?);
     `;

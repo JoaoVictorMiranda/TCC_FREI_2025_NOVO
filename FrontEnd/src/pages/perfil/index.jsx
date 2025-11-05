@@ -7,6 +7,7 @@ import api from '../../api';
 import './index.scss';
 import perfilFixo from '../../assets/images/usuario.png';
 import Carregando from '../../components/Carregando';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Perfil = () => {
     const [nome, setNome] = useState('');
@@ -87,11 +88,18 @@ const Perfil = () => {
 
     function handleDeslogar() {
         setIsLoading(true);
+        
+        toast.success("Deslogado - Volte Sempre!", {
+            duration: 3000,
+            position: 'top-center',
+        });
+        
         setTimeout(() => {
             localStorage.removeItem("token");
             setIsLoading(false);
-            navigate('/login');
-        }, 1500);
+            navigate('/');
+            window.location.reload();
+        }, 3000);
     }
 
     useEffect(() => {
@@ -109,60 +117,36 @@ const Perfil = () => {
 
     return (
         <div>
+            <Toaster />
+            
             <div className="container_principal">
                 <Header />
                 {isLoading && <Carregando />}
 
                 <section className='container_infoUsuario'>
-                    <div className="foto_perfil" style={{ position: "relative" }}>
-                        <div className='imagem' style={{ textAlign: "center" }}>
+                    <div className="foto_perfil">
+                        <div className='imagem'>
                             <img
                                 src={fotoPerfil}
                                 alt="Foto de perfil"
-                                style={{
-                                    width: 150,
-                                    height: 150,
-                                    borderRadius: "50%",
-                                    border: "1px solid black",
-                                    objectFit: "cover",
-                                    cursor: "pointer"
-                                }}
+                                className="foto-perfil-img"
                                 onClick={() => setOpenMenu(!openMenu)}
                                 onError={(e) => { e.target.src = perfilFixo; }}
                             />
 
-                           <p style={{ 
-                                color: 'white', 
-                                textAlign: 'center', 
-                                marginBottom: '10px',
-                                cursor: 'pointer'
-                            }} 
-                            onClick={() => setOpenMenu(!openMenu)}>
+                            <p className="texto-editar-foto" onClick={() => setOpenMenu(!openMenu)}>
                                 clique para editar
-                        </p>
-                        
+                            </p>
                         </div>
 
                         {openMenu && (
-                            <div className='menu'
-                                ref={menuRef}
-                                style={{
-                                    position: "absolute",
-                                    top: "160px",
-                                    left: "50%",
-                                    transform: "translateX(-50%)",
-                                    backgroundColor: "#fff",
-                                    border: "1px solid #ccc",
-                                    borderRadius: "8px",
-                                    boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
-                                    padding: "10px",
-                                    zIndex: 10,
-                                    width: "150px",
-                                    textAlign: "center"
-                                }}
-                            >
-                                <Link to="/perfil/configurar" style={{ display: "block", margin: "5px 0" }}>Editar Foto</Link>
-                                <button onClick={handleDeslogar} disabled={isLoading} style={{ margin: "5px 0" }}>
+                            <div className='menu-perfil' ref={menuRef}>
+                                <Link to="/perfil/configurar" className="menu-link">Editar Foto</Link>
+                                <button 
+                                    onClick={handleDeslogar} 
+                                    disabled={isLoading} 
+                                    className="btn-deslogar"
+                                >
                                     {isLoading ? 'Saindo...' : 'Deslogar'}
                                 </button>
                             </div>
@@ -177,7 +161,7 @@ const Perfil = () => {
 
                         <div className="infos">
                             <div className="infosIndividuais">
-                                <h1>Idade </h1>
+                                <h1>Idade</h1>
                                 <p>{idade}</p>
                             </div>
 
