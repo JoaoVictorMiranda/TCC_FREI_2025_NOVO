@@ -48,6 +48,15 @@ endpoints.post('/usuario/perfil', upload.single('img'), auth, async (req, res) =
 endpoints.post('/follow/:idFollow', auth, async (req, res) => {
     let idUser = req.params.idFollow;
     let idSeguidor = req.user.id_user;
+
+    let info = await repo.seguirUsuario(idSeguidor, idUser);
+
+    res.send({
+        NovoSeguidor: info.insertId
+    })
+
+
+
 })
 
 
