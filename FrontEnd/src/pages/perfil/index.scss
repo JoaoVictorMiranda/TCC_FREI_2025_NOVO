@@ -88,66 +88,90 @@
             padding: 2% 3%;
             border-radius: 24px;
             margin: 2vh;
+            position: relative;
 
             .imagem {
                 padding: 2vh 0;
-                img {
+                text-align: center;
+
+                .foto-perfil-img {
                     width: 150px;
                     height: 150px;
                     border-radius: 50%;
                     object-fit: cover;
                     border: 3px solid #fff;
+                    cursor: pointer;
+                }
+
+                .texto-editar-foto {
+                    color: white;
+                    text-align: center;
+                    margin-bottom: 10px;
+                    cursor: pointer;
+                    
+                    &:hover {
+                        text-decoration: underline;
+                    }
                 }
             }
 
-            .button-editar a {
-                text-decoration: none;
-                background-color: #184ef0;
-                color: rgb(236, 236, 236); 
-                padding: 1vh 2vw;
-                border-radius: 10px;
-                display: inline-block;
-                transition: transform 0.2s ease, background-color 0.2s ease;
-
-                &:hover {
-                    transform: scale(1.05);
-                    background-color: #0f3ac4;
-                }
-            }
-
-            .menu a, .menu button {
-                display: block;
-                width: 100%;
+            .menu-perfil {
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: #fff;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+                padding: 10px;
+                z-index: 10;
+                width: 150px;
                 text-align: center;
-                margin: 0.5vh 0;
-                padding: 1vh 0;
-                border-radius: 10px;
-                border: none;
-                cursor: pointer;
-                font-weight: 700;
-                font-size: 1rem;
-                transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
-            }
+                margin-top: 10px;
 
-            .menu a {
-                text-decoration: none;
-                background-color: #184ef0;
-                color: #ececec;
-            }
+                .menu-link {
+                    display: block;
+                    text-decoration: none;
+                    background-color: #184ef0;
+                    color: #ececec;
+                    padding: 1vh 0;
+                    border-radius: 10px;
+                    margin: 0.5vh 0;
+                    transition: transform 0.2s ease, background-color 0.2s ease;
 
-            .menu a:hover {
-                transform: scale(1.05);
-                background-color: #0f3ac4;
-            }
+                    &:hover {
+                        transform: scale(1.05);
+                        background-color: #0f3ac4;
+                    }
+                }
 
-            .menu button {
-                background-color: #ca0808;
-                color: #fff;
-            }
+                .btn-deslogar {
+                    display: block;
+                    width: 100%;
+                    text-align: center;
+                    margin: 0.5vh 0;
+                    padding: 1vh 0;
+                    border-radius: 10px;
+                    border: none;
+                    cursor: pointer;
+                    font-weight: 700;
+                    font-size: 1rem;
+                    transition: transform 0.2s ease, background-color 0.2s ease;
+                    background-color: #ca0808;
+                    color: #fff;
 
-            .menu button:hover {
-                transform: scale(1.05);
-                background-color: #8a0404;
+                    &:hover:not(:disabled) {
+                        transform: scale(1.05);
+                        background-color: #8a0404;
+                    }
+
+                    &:disabled {
+                        background-color: #ccc;
+                        cursor: not-allowed;
+                        transform: none;
+                    }
+                }
             }
         }
     }
