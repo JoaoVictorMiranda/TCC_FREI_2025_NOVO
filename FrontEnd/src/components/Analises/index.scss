@@ -70,3 +70,78 @@
         background-color: #410102;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .SessaoComentarios {
+        display: flex;
+        width: 100%;
+        height: auto;
+        background-color: black;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 10vh;
+        flex-direction: column;
+
+        .SessaoComentariosConteudo {
+            display: flex;
+            width: 90%;
+            height: auto;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+        }
+
+        .SessaoComentariosTitulo {
+            display: flex;
+            color: white;
+        }
+
+        .BlocoVermelho {
+            display: flex;
+            background-color: red;
+            width: 10%;
+            border-radius: 0.5vh;
+            height: 0.5vh;
+        }
+
+        .ComentariosIsolados {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            height: auto;
+            width: 100%;
+            gap: 1.5vh;
+            margin-bottom: 5vh;
+        }
+
+        h1 {
+            width: 50%;
+            text-align: center;
+            justify-self: center;
+            position: absolute;
+        }
+
+        button {
+            width: 15%;
+            height: 4.5vh;
+            cursor: pointer;
+            border-radius: 1vh;
+            outline: none;
+            transition: all 0.5s;
+            font-size: 1.8vh;
+            font-weight: 700;
+            border: none;
+            background-color: #5A0001;
+            color: white;
+            margin-top: 5vh;
+        }
+
+        button:hover {
+            display: flex;
+            transform: scale(1.1);
+            align-items: center;
+            justify-content: center;
+            background-color: #410102;
+        }
+    }
+}

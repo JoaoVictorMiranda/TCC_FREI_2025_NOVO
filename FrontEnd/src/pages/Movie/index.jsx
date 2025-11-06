@@ -90,7 +90,7 @@ export default function index() {
 
             await api.post('/EnviarComentario', body)
             setModal(false)
-            
+
             await BuscarInfo()
             await BuscarMedia()
         }
@@ -153,11 +153,11 @@ export default function index() {
 
             <div className="SessaoComentarios">
 
-                <DefinirTopico
-                    tema={'ANÁLISES'} />
 
                 <div className="OsComentarios">
 
+                    <DefinirTopico
+                        tema={'ANÁLISES'} />
                     {
                         arr.length ?
                             arr.map((info) => (

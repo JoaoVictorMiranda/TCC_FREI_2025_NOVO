@@ -113,3 +113,121 @@
         }
     }
 }
+
+@media screen and (max-width: 768px) {
+    .container_fundo_home {
+        display: flex;
+        width: 100%;
+        height: 73vh;
+        justify-content: center;
+        background-image: url('../../assets/images/psdsd.svg');
+
+        .alinhador {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            align-self: center;
+            justify-self: center;
+            width: 90%;
+            gap: 5vh;
+
+            .lado_esquerdo {
+                display: flex;
+                height: 50vh;
+                width: 100%;
+                justify-content: center;
+                text-align: justify;
+                flex-direction: column;
+
+                h1 {
+                    font-size: 6vh;
+                    text-align: justify;
+                    color: #AA2522;
+                }
+
+                h3 {
+                    color: white;
+                    font-weight: 500;
+                    text-align: justify;
+                    font-size: 2.5vh;
+                }
+
+                h4 {
+                    color: white;
+                    font-size: 3vh;
+                    width: 100%;
+                    text-align: justify;
+                }
+
+                #Comecar {
+                    width: 100%;
+                    height: 7vh;
+                    border-radius: 1vh;
+                    border: #AA2522 0.3vh solid;
+                    outline: none;
+                    background-color: #AA2522;
+                    color: white;
+                    font-weight: bold;
+                    margin-top: 2vh;
+                    cursor: pointer;
+                    transition: all 0.5s;
+                }
+
+                #Comecar:hover {
+                    color: white;
+                    background-color: transparent;
+                }
+
+                a {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    text-decoration: none;
+                    color: inherit;
+                    width: 100%;
+                    height: 4.5vh;
+                }
+
+                #Navegar {
+                    width: 100%;
+                    height: 7vh;
+                    border-radius: 1vh;
+                    border: white 0.3vh solid;
+                    outline: none;
+                    background-color: transparent;
+                    color: white;
+                    font-weight: bold;
+                    margin-top: 2vh;
+                    cursor: pointer;
+                    transition: all 0.5s;
+                }
+
+                #Navegar:hover {
+                    color: black;
+                    background-color: white;
+                }
+            }
+
+            .AlinhadorBotoes {
+                display: flex;
+                flex-direction: column;
+                gap: 2vh;
+            }
+
+            .lado_direito {
+                display: none;
+                width: 50%;
+                height: 35vh;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+
+                img {
+                    transition: all 10s;
+                }
+            }
+        }
+    }
+}
