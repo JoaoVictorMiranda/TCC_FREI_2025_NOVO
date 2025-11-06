@@ -40,7 +40,7 @@ function Home() {
   const [pagina, setPagina] = useState(1);
   const [URLpages, setURLpages] = useState(moviesURLtop_rated);
 
-  // Buscar comentários
+
   const getComments = async () => {
     try {
       setLoadingComments(true);
@@ -68,7 +68,7 @@ function Home() {
 
       if (error.response?.status === 401) {
         setCommentsError('Acesso não autorizado. Token inválido ou expirado.');
-        localStorage.removeItem('token'); // Limpa token inválido
+        localStorage.removeItem('token');
       } else {
         setCommentsError('Erro ao carregar comentários');
       }
@@ -77,7 +77,7 @@ function Home() {
     }
   };
 
-  // Buscar filmes
+
   const getTopRatedMovies = async (url) => {
     try {
       const res = await fetch(url);

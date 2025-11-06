@@ -104,9 +104,9 @@ const PostarComentario = ({ idFilme }) => {
 
                                 {posts.map((post, pos) => (
                                         <div key={pos} className="Card_post">
-                                                <h2>{post.nome}</h2> {/* usuário que postou */}
+                                                <h2>{post.nome}</h2> 
                                                 <h3>{post.titulo}</h3>
-                                                <p>{post.avaliacao}</p> {/* título do post */}
+                                                <p>{post.avaliacao}</p>
                                                 <p>Filme: {post.id_filme}</p>
                                                 <p>Nota: {post.nota}</p>
                                                 <p>Data: {post.criado_em.split("T")[0]}</p>

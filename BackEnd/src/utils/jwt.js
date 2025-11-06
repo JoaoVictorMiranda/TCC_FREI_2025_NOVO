@@ -50,7 +50,7 @@ export function getAuthentication(checkRole, throw401 = true) {
 
       // Salva as informações do usuário na requisição para uso posterior
       req.user = signd;
-      
+
       // Verifica se precisa checar permissões específicas
       if (checkRole && !checkRole(signd) && signd.role.type !== 'administrador')
         // Se o usuário não tem permissão e não é administrador, bloqueia o acesso

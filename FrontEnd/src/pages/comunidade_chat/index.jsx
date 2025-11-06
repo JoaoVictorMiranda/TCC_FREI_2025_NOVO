@@ -17,19 +17,19 @@ const ChatComunidade = () => {
             
             if(response.status === 401){
                 console.log('Usuário não é membro - redirecionando...');
-                alert(response.data.acesso); // "Acesso negado usuario não pertence a comunidade"
-                navigate('/'); // Redireciona para home
-                return; // ⚠️ IMPORTANTE: para a execução aqui
+                alert(response.data.acesso); 
+                navigate('/'); 
+                return; 
             }
             
-            // Se chegou aqui, o usuário é membro
+         
             console.log('Usuário é membro da comunidade');
-            alert(response.data.acesso); // "Acesso Permitido"
+            alert(response.data.acesso); 
             
         } catch (error) {
             console.log('Erro na verificação:', error);
             
-            // ⚠️ TRATAMENTO ESPECÍFICO PARA ERRO 401
+           
             if (error.response && error.response.status === 401) {
                 alert(error.response.data.acesso);
                 navigate('/');
@@ -51,13 +51,12 @@ const ChatComunidade = () => {
         }
         
         verificarMembro();
-    }, [id, navigate]); // ⚠️ IMPORTANTE: colocar as dependências
+    }, [id, navigate]); 
 
-    // Resto do componente...
+
     return (
         <div>
             <h1>Chat da Comunidade: {id}</h1>
-            {/* Seu form aqui */}
         </div>
     )
 }

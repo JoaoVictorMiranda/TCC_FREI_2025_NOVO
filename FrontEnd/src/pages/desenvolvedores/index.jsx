@@ -8,17 +8,13 @@ const DevelopersPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Lista de desenvolvedores do projeto
     const developerUsernames = [
         'JoaoVictorMiranda',
         'LucasVianaAraujo',
         'Lucas-Silva-Manoel',
         'LucasGilReche',
-
-        // Adicione os usernames reais do GitHub aqui
     ];
 
-    // Buscar dados de um usuário específico
     const fetchUserData = async (username) => {
         try {
             const response = await fetch(
@@ -37,7 +33,7 @@ const DevelopersPage = () => {
         }
     };
 
-    // Buscar dados de todos os desenvolvedores
+
     const fetchAllDevelopers = async () => {
         setLoading(true);
         setError(null);
@@ -47,7 +43,7 @@ const DevelopersPage = () => {
                 developerUsernames.map(username => fetchUserData(username))
             );
 
-            // Filtrar usuários que foram carregados com sucesso
+
             const validDevelopers = developersData.filter(dev => dev !== null);
             setDevelopers(validDevelopers);
 
@@ -62,7 +58,7 @@ const DevelopersPage = () => {
         fetchAllDevelopers();
     }, []);
 
-    // Estilos inline para simplificar
+
     const styles = {
         page: {
             maxWidth: '1200px',
@@ -188,7 +184,7 @@ const DevelopersPage = () => {
         }
     };
 
-    // Componente de card de desenvolvedor
+    
     const DeveloperCard = ({ userData }) => {
         const [isHovered, setIsHovered] = useState(false);
 
@@ -270,12 +266,12 @@ const DevelopersPage = () => {
 
             <div style={styles.grid}>
                 {loading ? (
-                    // Mostrar cards de loading
+        
                     developerUsernames.map((username, index) => (
                         <LoadingCard key={index} />
                     ))
                 ) : (
-                    // Mostrar cards reais
+             
                     developers.map((developer) => (
                         <DeveloperCard
                             key={developer.id}

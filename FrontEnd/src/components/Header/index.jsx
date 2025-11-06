@@ -35,7 +35,7 @@ export default function Header() {
     }, [token]);
 
     function alternarMenu() {
-        // Toca o som do clique
+
         if (audioRef.current) {
             audioRef.current.currentTime = 0;
             audioRef.current.play().catch(error => {
@@ -43,7 +43,7 @@ export default function Header() {
             });
         }
         
-        // Alterna o ícone do menu e o estado
+
         setMenuAberto(!menuAberto);
         setIconeMenu(menuAberto ? Barras : habuge);
     }
@@ -92,7 +92,6 @@ export default function Header() {
                 Seu navegador não suporta o elemento de áudio.
             </audio>
 
-            {/* Overlay para fechar o menu */}
             {menuAberto && <div className="overlay" onClick={fecharMenu}></div>}
 
             <nav className={`container_nav ${menuAberto ? 'menu_aberto' : ''}`}>
