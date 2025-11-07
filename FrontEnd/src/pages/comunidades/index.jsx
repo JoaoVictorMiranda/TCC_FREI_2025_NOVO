@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router';
 import api from '../../api';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer'
+import "./index.scss"
 
 const Comunidades = () => {
         let [nome, setNome] = useState();
@@ -49,29 +50,36 @@ const Comunidades = () => {
 
 
   return (
-    <div>
+    <div className='component-comuni'>
 
             <Header/>
 
-        <h1>Criar Comunidades</h1>
+        <div className='meinho-comuni'>
+
+            <h1>Criar Comunidades</h1>
 
 
-        <form onSubmit={handleSubmit}>
-        <label htmlFor="nome">Nome da comunidade</label>
-        <input type="text"  name='nome' placeholder='Nome da comunidade' onChange={(e) => setNome(e.target.value)} required />
+        <form className='infor-comuni' onSubmit={handleSubmit}>
+        <label id='Nome-comuni' htmlFor="nome">Nome da comunidade</label>
+        <input className='barrinha-aaa' type="text"  name='nome' placeholder='Nome da comunidade' onChange={(e) => setNome(e.target.value)} required />
         <br />
         <label htmlFor="descricao">Descrição da comunidade</label>
-        <input type="text"  name='descricao' placeholder='Descrição da comunidade' 
+        <input className='barrinha-aaa' type="text"  name='descricao' placeholder='Descrição da comunidade' 
         onChange={(e) => setDescricao(e.target.value)} required />
 
         <label htmlFor="foto">Foto de capa da comunidade(optional)</label>
         <br />
-        <input  type="file" 
+        <input  
+
+                className='fotin-grupo'
+                type="file" 
                 accept="image/*"
                 onChange={(e) => setImagem(e.target.files[0])} />
-        <button type='submit'>Mandar</button>
+        <button className='submit' type='submit'>Mandar</button>
         </form>
 
+
+        </div>
         <Footer/>
 
     </div>
