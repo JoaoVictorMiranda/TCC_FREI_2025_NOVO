@@ -118,14 +118,14 @@ function Home() {
             <ul className="menu-categorias">
               <li
                 className="menu-item"
-                style={{fontWeight: '600'}}
+                style={{ fontWeight: '600' }}
                 onClick={() => setURLpages(moviesURLtop_rated)}
               >
                 Ranqueados
               </li>
               <li
                 className="menu-item"
-                style={{fontWeight: '600'}}
+                style={{ fontWeight: '600' }}
                 onClick={() => setURLpages(moviesURLpopulares)}
               >
                 Populares
@@ -145,6 +145,20 @@ function Home() {
                 }}
                 pagination={{ clickable: true }}
                 navigation
+                breakpoints={{
+                  0: {
+                    slidesPerView: 1,
+                  },
+                  480: {
+                    slidesPerView: 1.5,
+                  },
+                  780: {
+                    slidesPerView: 2,
+                  },
+                  1024: {
+                    slidesPerView: 4,
+                  },
+                }}
               >
                 {topMovies.map((movie) => (
                   <SwiperSlide key={movie.id}>
