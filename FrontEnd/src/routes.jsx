@@ -14,6 +14,7 @@ import ExibirFilmes from './pages/Filmes'
 import Comunidades from "./pages/comunidades"
 import ChatComunidade from "./pages/comunidade_chat"
 import Desenvolvedores from "./pages/desenvolvedores"
+import PerfilUsuario from './pages/Usuario'
 
 const Navegacao = () => {
   return (
@@ -32,6 +33,7 @@ const Navegacao = () => {
         <Route path="/comunidade" element={<Comunidades />} />
         <Route path="/comunidade/:id" element={<ChatComunidade />}/>
         <Route path="/desenvolvedores" element={<Desenvolvedores />}/>
+        <Route path='/perfil/:id' element={<PerfilUsuario/>}/>
 
         <Route path="*" element={<NotFound />} />
       </Routes>
