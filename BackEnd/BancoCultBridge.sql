@@ -2,7 +2,6 @@ CREATE DATABASE cultbridge;
 USE cultbridge;
 
 
-
 CREATE TABLE ADMIN(
 id_admin int primary key auto_increment,
 nome varchar(200),
@@ -24,17 +23,19 @@ criado_em datetime
 );
 
 
-CREATE TABLE seguidores(
-    id_seguidores int primary key auto_increment,
-    id_user int,
-    id_seguidor int UNIQUE,
+CREATE TABLE seguidores (
+    id_seguidores INT PRIMARY KEY AUTO_INCREMENT,
+    id_user INT NOT NULL,
+    id_seguidor INT NOT NULL,
     FOREIGN KEY (id_user) REFERENCES usuarios(id_user)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
     FOREIGN KEY (id_seguidor) REFERENCES usuarios(id_user)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
+    CONSTRAINT uq_seguidor UNIQUE (id_user, id_seguidor)
 );
+
 
 
 
@@ -99,7 +100,7 @@ CREATE TABLE favoritos (
 CREATE TABLE comunidades (
     id_comunidade INT PRIMARY KEY AUTO_INCREMENT,          
     nome VARCHAR(200) NOT NULL,                            
-    descricao TEXT,                                        e
+    descricao TEXT,                                        
     id_criador INT NOT NULL,                               
     foto_capa VARCHAR(500),                                
     criado_em DATETIME DEFAULT CURRENT_TIMESTAMP,         

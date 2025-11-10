@@ -1,12 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-
+import Carregando from '../../components/Carregando';
 import Barras from '../../assets/images/barras.svg';
 import Pesquisa from '../../assets/images/pesquisa.svg';
 import habuge from '../../assets/images/habuge.svg';
 
-import clickSound from '../../assets/audios/click.mp3';
 import './index.scss';
 
 export default function Header() {
@@ -16,10 +15,12 @@ export default function Header() {
     const [textoBusca, setTextoBusca] = useState('');
     const [isFocused, setIsFocused] = useState(false);
     const [menuAberto, setMenuAberto] = useState(false);
+    const [menuPerfilAberto, setMenuPerfilAberto] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     
     const navigate = useNavigate();
     const inputRef = useRef(null);
-    const audioRef = useRef(null);
+    const menuPerfilRef = useRef(null);
     const token = localStorage.getItem('token');
 
     useEffect(() => {
@@ -34,23 +35,36 @@ export default function Header() {
         }
     }, [token]);
 
-    function alternarMenu() {
-
-        if (audioRef.current) {
-            audioRef.current.currentTime = 0;
-            audioRef.current.play().catch(error => {
-                console.log('Erro ao reproduzir áudio:', error);
-            });
+    // Fechar menu do perfil quando clicar fora
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (menuPerfilRef.current && !menuPerfilRef.current.contains(event.target)) {
+                setMenuPerfilAberto(false);
+            }
         }
-        
 
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    function alternarMenu() {
         setMenuAberto(!menuAberto);
         setIconeMenu(menuAberto ? Barras : habuge);
+    }
+
+    function alternarMenuPerfil() {
+        setMenuPerfilAberto(!menuPerfilAberto);
     }
 
     function fecharMenu() {
         setMenuAberto(false);
         setIconeMenu(Barras);
+    }
+
+    function fecharMenuPerfil() {
+        setMenuPerfilAberto(false);
     }
 
     function abrirBusca() {
@@ -61,10 +75,14 @@ export default function Header() {
 
     function buscarFilme(evento) {
         if (evento.key === 'Enter' && textoBusca.trim()) {
-            navigate(`/buscainformacoes?query=${encodeURIComponent(textoBusca)}`);
-            setMostrarCampo(false);
-            setIsFocused(false);
-            fecharMenu();
+            setIsLoading(true);
+            setTimeout(() => {
+                navigate(`/buscainformacoes?query=${encodeURIComponent(textoBusca)}`);
+                setMostrarCampo(false);
+                setIsFocused(false);
+                fecharMenu();
+                setIsLoading(false);
+            }, 1000);
         }
     }
 
@@ -74,10 +92,29 @@ export default function Header() {
 
     function handleLinkClick() {
         fecharMenu();
+        fecharMenuPerfil();
+    }
+
+    function handleLogout() {
+        setIsLoading(true);
+        setMenuPerfilAberto(false);
+        
+        setTimeout(() => {
+            localStorage.removeItem('token');
+            setNome('');
+            setIsLoading(false);
+            navigate('/');
+        }, 1500);
     }
 
     return (
         <header className="container_header">
+            {isLoading && (
+                <div className="overlay-carregando">
+                    <Carregando />
+                </div>
+            )}
+
             <div className="menu_hamburguer">
                 <img
                     src={iconeMenu}
@@ -86,11 +123,6 @@ export default function Header() {
                     className="hamburguer"
                 />
             </div>
-
-            <audio ref={audioRef} preload="auto">
-                <source src={clickSound} type="audio/mpeg" />
-                Seu navegador não suporta o elemento de áudio.
-            </audio>
 
             {menuAberto && <div className="overlay" onClick={fecharMenu}></div>}
 
@@ -130,10 +162,46 @@ export default function Header() {
                     onClick={pesquisa} 
                 />
                 
-                <Link to={nome ? '/perfil' : '/login'} onClick={fecharMenu}>
-                    <h3>{nome ? nome : 'Logar'}</h3>
-                </Link>
+                {nome ? (
+                    <div className="container_perfil" ref={menuPerfilRef}>
+                        <div 
+                            className="perfil_trigger"
+                            onClick={alternarMenuPerfil}
+                        >
+                            <span className="nome_usuario">{nome}</span>
+                        </div>
+                        
+                        {menuPerfilAberto && (
+                            <div className="menu_perfil">
+                                <div className="perfil_info">
+                                    <span className="nome_perfil_menu">{nome}</span>
+                                </div>
+                                
+                                <div className="divisor"></div>
+                                
+                                <Link 
+                                    to="/perfil" 
+                                    className="menu_item"
+                                    onClick={handleLinkClick}
+                                >
+                                    Acessar Perfil
+                                </Link>
+                                
+                                <button 
+                                    className="menu_item logout"
+                                    onClick={handleLogout}
+                                >
+                                    Deslogar
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <Link to="/login" onClick={fecharMenu}>
+                        <h3>Logar</h3>
+                    </Link>
+                )}
             </div>
         </header>
     );
-}
+}   
