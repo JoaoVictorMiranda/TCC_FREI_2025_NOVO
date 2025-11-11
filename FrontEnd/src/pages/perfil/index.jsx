@@ -31,18 +31,20 @@ const Perfil = () => {
     };
 
     useEffect(() => {
+        const token = localStorage.getItem('token');
         if (!token) return;
 
         const carregarDadosUsuario = async () => {
             try {
                 const decoded = jwtDecode(token);
-                const userId = idUser || decoded.id_user || decoded.user?.id_user;
-
+                const userId = decoded.id_user || decoded.user?.id_user;
+                
                 const res = await api.get(`/user/${userId}`, {
                     headers: { 'x-access-token': token }
                 });
 
-                const user = res.data;
+                const user = res.data.informacoes;
+                console.log(user)
                 setNome(user.nome || '');
                 if (user.nascimento) setIdade(calcularIdade(user.nascimento));
 
