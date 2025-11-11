@@ -23,7 +23,7 @@ endpoints.get('/post', auth, async (req, res) => {
 
 })
 
-endpoints.get('/post/avaliacao', async (req, resp) => {
+endpoints.get('/post/avaliacao', auth, async (req, resp) => {
     try {
         const id_user = req.user.id_user;
 

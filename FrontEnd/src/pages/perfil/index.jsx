@@ -160,65 +160,40 @@ const Perfil = () => {
                                 src={fotoPerfil}
                                 alt="Foto de perfil"
                                 className="foto-perfil-img"
-                                onClick={() => setOpenMenu(!openMenu)}
                                 onError={(e) => { e.target.src = perfilFixo; }}
                             />
-                            <p
-                                className="texto-editar-foto"
-                                onClick={() => setOpenMenu(!openMenu)}
-                            >
-                                clique para editar
-                            </p>
                         </div>
-
-                        {openMenu && (
-                            <div className='menu-perfil' ref={menuRef}>
-                                <Link
-                                    to="/perfil/configurar"
-                                    className="menu-link"
-                                >
-                                    Editar Foto
-                                </Link>
-
-                                <button
-                                    onClick={handleDeslogar}
-                                    disabled={isLoading}
-                                    className="btn-deslogar"
-                                >
-                                    {isLoading ? 'Saindo...' : 'Deslogar'}
-                                </button>
-                            </div>
-                        )}
                     </div>
 
                     <div className="nome">
                         <div className="only-name">
-                            <h1>Nome:</h1>
                             <p>{nome}</p>
+
+                        <div className="editarPerfil">
+                            <Link
+                                    to="/perfil/configurar"
+                                    className="menu-link"
+                                    >
+                                    Editar Foto
+                                </Link>
+                            </div>
                         </div>
 
                         <div className="infos">
                             <div className="infosIndividuais">
-                                <h1>Idade</h1>
                                 <p>{idade}</p>
+                                <h1>Idade</h1>
                             </div>
                             <div className="infosIndividuais">
-                                <h1>Seguidores</h1>
                                 <p>600000</p>
+                                <h1>Seguidores</h1>
                             </div>
                             <div className="infosIndividuais">
-                                <h1>Quero assistir</h1>
                                 <p>5</p>
+                                <h1>Quero assistir</h1>
                             </div>
                         </div>
 
-                        <button
-                            className={`btn-seguir ${seguindo ? 'seguindo' : ''}`}
-                            onClick={seguirUsuario}
-                            disabled={seguindo}
-                        >
-                            {seguindo ? 'Seguindo' : 'Seguir'}
-                        </button>
                     </div>
                 </section>
 
