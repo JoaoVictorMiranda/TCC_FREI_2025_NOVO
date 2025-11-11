@@ -1,4 +1,4 @@
-.component-comuni{
+.component-comuni {
 
     width: 100%;
     height: 100vh;
@@ -6,52 +6,67 @@
     background-size: cover;
     background-image: url(../../assets/images/background.png);
 
-    .meinho-comuni{
+    .meinho-comuni {
 
 
         display: flex;
         justify-items: center;
         align-items: center;
         flex-direction: column;
-        
+
         text-align: center;
 
         width: 100%;
         height: 100vh;
 
-    .infor-comuni{
-        padding: 10px;
+        .infor-comuni {
+            padding: 10px;
 
-        width: 50%;
-        height: 40vh;
-        color: aliceblue;
-
-        .barrinha-aaa{
-            width: 80%;
-            height: 8%;
-            border-radius: 12px;
-        }
-
-        .fotin-grupo{
-            border-radius: 25px;
-            background-color: aqua;
-        }
-
-        .submit{
-            border: solid 1px;
-            border-radius: 15px;
-
-
-        }
-
-
-        #Nome-comuni{
-
+            width: 50%;
+            height: 40vh;
             color: aliceblue;
-            font-size:  60px;
 
+            .barrinha-aaa {
+                width: 80%;
+                height: 8%;
+                border-radius: 12px;
+            }
+
+            .fotin-grupo {
+                border-radius: 25px;
+            }
+
+            .submit {
+                border: solid 1px;
+                border-radius: 15px;
+
+
+            }
+
+
+            #Nome-comuni {
+
+                color: aliceblue;
+                font-size: 60px;
+
+            }
         }
     }
+
 }
 
+.ListarComunidades {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    width: 60%;
+    align-self: center;
+    gap: 1vh;
+    padding-top: 5vh;
+
+    .BlocoComunidade {
+        border-radius: 1vh;
+        width: 100%;
+        height: 20vh;
+        background-color: gray;
+    }
 }

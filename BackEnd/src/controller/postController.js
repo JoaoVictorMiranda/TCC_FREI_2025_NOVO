@@ -24,9 +24,19 @@ endpoints.get('/post', auth, async (req, res) => {
 })
 
 endpoints.get('/post/avaliacao', auth, async (req, resp) => {
-    const resposta = await repo.PuxarInfoPost()
-    resp.send(resposta)
-})
+    try {
+        const id_user = req.user.id_user;
+
+        const resposta = await repo.listarAvaliacoesRecentes(id_user);
+
+        resp.send(resposta);
+    }
+
+    catch (err) {
+        console.error(err);
+        resp.status(500).send({ erro: "Erro ao buscar análises recentes" });
+    }
+});
 
 endpoints.get('/post/media/:id_filme', auth, async (req, resp) => {
     let id_filme = req.params.id_filme;
@@ -35,11 +45,11 @@ endpoints.get('/post/media/:id_filme', auth, async (req, resp) => {
     resp.send({ media: resposta })
 })
 
-endpoints.get('/post/count/:id_filme', auth, async (req,resp) => {
+endpoints.get('/post/count/:id_filme', auth, async (req, resp) => {
     let id_filme = req.params.id_filme;
 
     const resposta = await repo.ContagemComentarios(id_filme)
-    resp.send({contagem: resposta})
+    resp.send({ contagem: resposta })
 })
 
 endpoints.post('/post/user', auth, async (req, res) => {
@@ -51,12 +61,20 @@ endpoints.post('/post/user', auth, async (req, res) => {
 
 
 endpoints.get('/post/:id_filme', auth, async (req, resp) => {
-    let id_filme = req.params.id_filme;
-    let resposta = await repo.listarPostPorIdFilme(id_filme);
+    try {
+        const id_filme = req.params.id_filme;
+        const id_user = req.user.id_user;
 
-    resp.send({ Info: resposta })
+        const resposta = await repo.listarPostPorIdFilme(id_filme, id_user);
 
-})
+        resp.send({ Info: resposta });
+    }
+
+    catch (err) {
+        console.error(err);
+        resp.status(500).send({ erro: "Erro ao buscar comentários" });
+    }
+});
 
 endpoints.post('/VerSeCurtiu', auth, async (req, resp) => {
     const id = req.user.id_user;

@@ -31,8 +31,19 @@ export default function SessaoComentarios() {
 
     useEffect(() => {
         PuxarInfo()
-    }, [arr])
+    }, [])
 
+    async function CurtirComentario(id_post) {
+        try {
+            const resp = await api.post('/post/curtir', { id_post });
+            return resp.data
+        }
+
+        catch (err) {
+            console.error(err);
+            return { liked: false };
+        }
+    }
 
     return (
         <div className='SessaoComentarios'>
@@ -42,19 +53,20 @@ export default function SessaoComentarios() {
                 <div className="ComentariosIsolados">
                     {
                         arr.length
-                            ?
-                            arr.map((info) => (
+                            ? arr.map((info) => (
                                 <CardComentario
-                                    key={info.id_user}
-                                    id_user={info.id_user}
+                                    key={info.id_post}
+                                    id_post={info.id_post}
                                     perfil={info.nome}
                                     analise={info.avaliacao}
-                                    curtidas={info.curtidas}
+                                    curtidasIniciais={info.curtidas}
                                     nota={info.nota}
+                                    CliqueCurtir={CurtirComentario}
+                                    usuarioCurtiu={info.usuario_curtiu}
+                                    id_user={info.id_user}
                                 />
                             ))
-                            :
-                            <h1>Nenhuma análise encontrada</h1>
+                            : <h1>Nenhuma análise encontrada</h1>
                     }
                 </div>
 

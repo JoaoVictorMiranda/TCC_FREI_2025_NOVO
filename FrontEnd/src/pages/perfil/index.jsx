@@ -72,21 +72,21 @@ const Perfil = () => {
                         setFotoPerfil(construirUrlFoto(res.data.foto_perfil));
                     }
                 })
-                .catch(() => {});
+                .catch(() => { });
         };
 
         window.addEventListener("fotoPerfilAtualizada", atualizarFoto);
         return () => window.removeEventListener("fotoPerfilAtualizada", atualizarFoto);
     }, [token, idUser]);
 
-     useEffect(() => {
+    useEffect(() => {
         if (token) carregarPost();
     }, [token]);
 
     function carregarPost() {
         api.post('/post/user', {}, { headers: { 'x-access-token': token } })
             .then(response => setPost(response.data))
-            .catch(() => {});
+            .catch(() => { });
     }
 
     function calcularIdade(dataISO) {
@@ -138,125 +138,119 @@ const Perfil = () => {
     const verPosts = () => setQtdMostrar(prev => Math.min(prev + 5, post.length));
     const postsParaMostrar = post.slice(0, qtdMostrar);
 
-return (
-    <div>
-        <Toaster />
+    return (
+        <div>
+            <Toaster />
 
-        {isLoading && (
-            <div className="overlay-carregando">
-                <Carregando />
-            </div>
-        )}
+            {isLoading && (
+                <div className="overlay-carregando">
+                    <Carregando />
+                </div>
+            )}
 
-        <div className="container_principal">
-            <Header />
-            
-            <section className='container_infoUsuario'>
-                <div className="foto_perfil">
-                    <div className='imagem'>
-                        <img
-                            src={fotoPerfil}
-                            alt="Foto de perfil"
-                            className="foto-perfil-img"
-                            onClick={() => setOpenMenu(!openMenu)}
-                            onError={(e) => { e.target.src = perfilFixo; }}
-                        />
-                        <p 
-                            className="texto-editar-foto" 
-                            onClick={() => setOpenMenu(!openMenu)}
-                        >
-                            clique para editar
-                        </p>
+            <div className="container_principal">
+                <Header />
+
+                <section className='container_infoUsuario'>
+                    <div className="foto_perfil">
+                        <div className='imagem'>
+                            <img
+                                src={fotoPerfil}
+                                alt="Foto de perfil"
+                                className="foto-perfil-img"
+                                onClick={() => setOpenMenu(!openMenu)}
+                                onError={(e) => { e.target.src = perfilFixo; }}
+                            />
+                            <p
+                                className="texto-editar-foto"
+                                onClick={() => setOpenMenu(!openMenu)}
+                            >
+                                clique para editar
+                            </p>
+                        </div>
+
+                        {openMenu && (
+                            <div className='menu-perfil' ref={menuRef}>
+                                <Link
+                                    to="/perfil/configurar"
+                                    className="menu-link"
+                                >
+                                    Editar Foto
+                                </Link>
+
+                                <button
+                                    onClick={handleDeslogar}
+                                    disabled={isLoading}
+                                    className="btn-deslogar"
+                                >
+                                    {isLoading ? 'Saindo...' : 'Deslogar'}
+                                </button>
+                            </div>
+                        )}
                     </div>
 
-                    {openMenu && (
-                        <div className='menu-perfil' ref={menuRef}>
-                            <Link 
-                                to="/perfil/configurar" 
-                                className="menu-link"
-                            >
-                                Editar Foto
-                            </Link>
-
-                            <button 
-                                onClick={handleDeslogar} 
-                                disabled={isLoading} 
-                                className="btn-deslogar"
-                            >
-                                {isLoading ? 'Saindo...' : 'Deslogar'}
-                            </button>
+                    <div className="nome">
+                        <div className="only-name">
+                            <h1>Nome:</h1>
+                            <p>{nome}</p>
                         </div>
+
+                        <div className="infos">
+                            <div className="infosIndividuais">
+                                <h1>Idade</h1>
+                                <p>{idade}</p>
+                            </div>
+                            <div className="infosIndividuais">
+                                <h1>Seguidores</h1>
+                                <p>600000</p>
+                            </div>
+                            <div className="infosIndividuais">
+                                <h1>Quero assistir</h1>
+                                <p>5</p>
+                            </div>
+                        </div>
+
+                        <button
+                            className={`btn-seguir ${seguindo ? 'seguindo' : ''}`}
+                            onClick={seguirUsuario}
+                            disabled={seguindo}
+                        >
+                            {seguindo ? 'Seguindo' : 'Seguir'}
+                        </button>
+                    </div>
+                </section>
+
+                <div className={`container_posts ${post.length === 0 ? 'vazio' : ''}`}>
+                    {post.length === 0 ? (
+                        <div className="sem-posts">
+                            <p>Este usuário ainda não publicou nenhuma análise</p>
+                        </div>
+                    ) : (
+                        postsParaMostrar.map((post) => (
+                            <div key={post.id_post} className="Card_post">
+                                <h2>{post.nome}</h2>
+                                <h3>{post.titulo}</h3>
+                                <p>Filme: {post.id_filme}</p>
+                                <p>Nota: {post.nota}</p>
+                                <p>Data: {post.criado_em.split('T')[0]}</p>
+                                <p>Curtidas: {post.curtidas}</p>
+                            </div>
+                        ))
                     )}
                 </div>
 
-                <div className="nome">
-                    <div className="only-name">
-                        <h1>Nome:</h1>
-                        <p>{nome}</p>
-                    </div>
-
-                    <div className="infos">
-                        <div className="infosIndividuais">
-                            <h1>Idade</h1>
-                            <p>{idade}</p>
-                        </div>
-                        <div className="infosIndividuais">
-                            <h1>Seguidores</h1>
-                            <p>600000</p>
-                        </div>
-                        <div className="infosIndividuais">
-                            <h1>Quero assistir</h1>
-                            <p>5</p>
-                        </div>
-                    </div>
-
-                    <button 
-                        className={`btn-seguir ${seguindo ? 'seguindo' : ''}`} 
-                        onClick={seguirUsuario}
-                        disabled={seguindo}
+                {post.length > 5 && qtdMostrar < post.length && (
+                    <button
+                        className="button-ver-posts"
+                        onClick={verPosts}
                     >
-                        {seguindo ? 'Seguindo' : 'Seguir'}
+                        Ver todos os posts
                     </button>
-                </div>
-            </section>
-
-            <div className={`container_posts ${post.length === 0 ? 'vazio' : ''}`}>
-                {post.length === 0 ? (
-                    <div className="sem-posts">
-                        <p>Este usuário ainda não publicou nenhuma análise</p>
-                    </div>
-                ) : (
-                    postsParaMostrar.map((post) => (
-                        <div key={post.id_post} className="Card_post">
-                            <h2>{post.nome}</h2>
-                            <h3>{post.titulo}</h3>
-                            <p>Filme: {post.id_filme}</p>
-                            <p>Nota: {post.nota}</p>
-                            <p>Data: {post.criado_em}</p>
-                            <p>Curtidas: {post.curtidas}</p>
-                            <button 
-                                type='button' 
-                                onClick={() => alert("CURTIDO")}
-                            >
-                                Curtir
-                            </button>
-                        </div>
-                    ))
                 )}
             </div>
 
-            {post.length > 5 && qtdMostrar < post.length && (
-                <button 
-                    className="button-ver-posts" 
-                    onClick={verPosts}
-                >
-                    Ver todos os posts
-                </button>
-            )}
+            <Footer />
         </div>
-
-        <Footer />
-    </div>
     );
 };
 

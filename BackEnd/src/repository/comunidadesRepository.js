@@ -1,7 +1,7 @@
-import {connection} from './connection.js';
+import { connection } from './connection.js';
 
 
-export async function criarComunidades(dados,caminho, idCriador){
+export async function criarComunidades(dados, caminho, idCriador) {
         const comando = `
         INSERT INTO comunidades ( nome, descricao, id_criador, foto_capa)
         VALUES
@@ -17,7 +17,14 @@ export async function criarComunidades(dados,caminho, idCriador){
         return info.insertId;
 }
 
-export async function InsertMember(idComunity, idUser){
+export async function ListarComunidades() {
+        let [resultados] = await connection.query(`
+                select * from comunidades                
+                `)
+        return resultados
+}
+
+export async function InsertMember(idComunity, idUser) {
         const comando = `
                 INSERT INTO comunidade_membros(id_comunidade, id_user, is_moderador)
                 VALUES
@@ -29,7 +36,7 @@ export async function InsertMember(idComunity, idUser){
         ])
         return info.insertId;
 }
-export async function InsertModerator(idComunity, idUser){
+export async function InsertModerator(idComunity, idUser) {
         const comando = `
                 INSERT INTO comunidade_membros(id_comunidade, id_user, is_moderador)
                 VALUES
@@ -48,21 +55,21 @@ export async function CreatePost(data, idUser) {
             (id_comunidade, id_user, conteudo, tipo, url_imagem)
             VALUES (?, ?, ?, ?, ?);
         `;
-        
+
         let [info] = await connection.query(comando, [
-            data.id_comunidade,
-            idUser,
-            data.conteudo,
-            data.tipo || 'texto',  
-            data.url_imagem || null
+                data.id_comunidade,
+                idUser,
+                data.conteudo,
+                data.tipo || 'texto',
+                data.url_imagem || null
         ]);
-        
+
         return info.insertId;
-    }
+}
 
 
 
-    export async function sendMessage( idComunidade, dados, idUser){
+export async function sendMessage(idComunidade, dados, idUser) {
         const comando = `
                 INSERT INTO comunidade_chat(id_comunidade, id_user, mensagem, editado_em)
                  VALUES
@@ -74,36 +81,36 @@ export async function CreatePost(data, idUser) {
                 dados.mensagem
         ]);
         return info.insertId
-    }
+}
 
 
 
-    export async function listMessages(idSala){
-        const comando  = `
+export async function listMessages(idSala) {
+        const comando = `
             SELECT * FROM chat_mensagem
             WHERE id_sala = ?;
         `;
-        
+
         let [info] = await connection.query(comando, [idSala]);
         return info;
-    }
-    
-    export async function VerificarUser(idUser, idSala){
+}
+
+export async function VerificarUser(idUser, idSala) {
         const comando = `
             select id_user from comunidade_membros
             where id_user = ? AND id_comunidade = ?;
         `;
-        let[info] = await connection.query(comando, [idUser, idSala]);
-        
+        let [info] = await connection.query(comando, [idUser, idSala]);
+
         return info
-    }
+}
 
 
 
 
 
 
-    
+
 /*
 CREATE TABLE comunidade_chat (
     id_mensagem INT PRIMARY KEY AUTO_INCREMENT,            -- ID único da mensagem

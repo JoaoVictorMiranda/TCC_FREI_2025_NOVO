@@ -85,7 +85,7 @@ endpoints.get('/user/:id', auth, async (req, res) => {
             return res.status(404).json({ erro: 'Usuário não encontrado' });
         }
 
-        res.status(200).json(usuario);
+        res.status(200).json({informacoes: usuario});
 
     } catch (error) {
         console.error('Erro ao buscar usuário:', error);

@@ -72,6 +72,18 @@ export default function index() {
         setArr(resp.data.Info)
     }
 
+    async function CurtirComentario(id_post) {
+        try {
+            const resp = await api.post('/post/curtir', { id_post });
+            return resp.data
+        }
+
+        catch (err) {
+            console.error(err);
+            return { liked: false };
+        }
+    }
+
     async function EnviarAvaliacao() {
         if (!titulo || !avaliacao || !nota) {
             toast.error('Erro ao enviar análise!')
@@ -149,37 +161,31 @@ export default function index() {
                 </div>
             </div>
 
-            {/* <CardComentario /> */}
-
             <div className="SessaoComentarios">
-
 
                 <div className="OsComentarios">
 
                     <DefinirTopico
                         tema={'ANÁLISES'} />
                     {
-                        arr.length ?
-                            arr.map((info) => (
-                                <div className="Comentarios">
-                                    <CardComentario
-                                        key={info.id_user}
-                                        id_user={info.id_user}
-                                        perfil={info.nome}
-                                        analise={info.avaliacao}
-                                        curtidas={info.curtidas}
-                                        nota={info.nota}
-                                    />
-                                </div>
-                            ))
-
-                            : <h1>Nenhuma análise encontrada</h1>
+                        arr.map((info) => (
+                            <div className="Comentarios" key={info.id_post}>
+                                <CardComentario
+                                    id_post={info.id_post}
+                                    perfil={info.nome}
+                                    analise={info.avaliacao}
+                                    curtidasIniciais={info.curtidas}
+                                    nota={info.nota}
+                                    CliqueCurtir={CurtirComentario}
+                                    usuarioCurtiu={info.usuario_curtiu}
+                                    id_user={info.id_user}
+                                />
+                            </div>
+                        ))
                     }
                 </div>
             </div>
 
-            {/* <PostarComentario idFilme={id} /> */}
-            {/* <CardComentario /> */}
             <Footer />
 
             <ModalPostarComentario
