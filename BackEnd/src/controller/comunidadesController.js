@@ -22,7 +22,6 @@ endpoints.get('/comunidades', auth, async (req, resp) => {
     resp.send({ dados: resposta })
 })
 
-
 endpoints.post('/comunidade/entrar/:idComunity', auth, async (req, res) => {
     let idComunity = req.params.idComunity;
     const idUser = req.user.id_user;

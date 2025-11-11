@@ -1,3 +1,4 @@
+import { IoPerson } from "react-icons/io5";
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import api from '../../api';
@@ -13,9 +14,17 @@ const Comunidades = () => {
     let [descricao, setDescricao] = useState();
     let [imagem, setImagem] = useState();
     const [modal, setModal] = useState(false)
+    const [comunidadePerfil, setComunidadePerfil] = useState()
     const [busca, setBusca] = useState('')
     const [comunidade, setComunidade] = useState([])
     const navigate = useNavigate();
+
+    const construirUrlFoto = (caminho) => {
+        if (!caminho) return;
+        if (caminho.startsWith('data:')) return caminho;
+        if (caminho.startsWith('http')) return caminho;
+        return `http://localhost:5022/${caminho}`;
+    };
 
     useEffect(() => {
         let token = localStorage.getItem("token");
@@ -46,6 +55,9 @@ const Comunidades = () => {
             });
 
             alert("COMUNIDADE CRIADA COM SUCESSO");
+
+            await PuxarComunidades()
+            setModal(false)
         } catch (error) {
             console.error("Erro ao criar comunidade:", error);
             alert("Erro ao criar comunidade");
@@ -79,9 +91,22 @@ const Comunidades = () => {
                 <div className="ListarComunidades">
                     {
                         comunidade.map((comunidade) => (
-                            <div className='BlocoComunidade' onClick={() => navigate(`/comunidade/${comunidade.id_comunidade}`)}>
-                                {comunidade.nome}
-                                {comunidade.descricao}
+                            <div className='BlocoComunidade' style={{cursor: 'pointer'}} onClick={() => navigate(`/comunidade/${comunidade.id_comunidade}`)}>
+                                <div className="FotoComunidade">
+                                    <img src={
+                                        construirUrlFoto(comunidade.foto_capa) ?
+                                        construirUrlFoto(comunidade.foto_capa) :
+                                        'Nenhuma foto'
+                                    } 
+                                    alt="" />
+                                </div>
+                                <div className="Informacoes">
+                                    <h4>{comunidade.nome}</h4>
+                                    <h5>{comunidade.descricao ? comunidade.descricao : 'Nenhuma descrição definida'}</h5>
+                                    <div className="Usuarios">
+                                        <IoPerson /><h5>80</h5>
+                                    </div>
+                                </div>
                             </div>
                         ))
                     }

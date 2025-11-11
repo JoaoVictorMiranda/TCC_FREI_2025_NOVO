@@ -5,13 +5,21 @@ import { generateToken } from '../utils/jwt.js'
 const endpoints = Router();
 
 endpoints.post('/user/cadastro', async (req, res) => {
-    let dados = req.body;
+    try {
+        let dados = req.body;
 
-    let registro = await repo.inserirUsuario(dados);
+        let registro = await repo.inserirUsuario(dados);
 
-    res.send({
-        NovoId: registro
-    })
+        res.send({
+            NovoId: registro
+        })
+    }
+
+    catch (error) {
+        res.status(401).send({
+            'erro': error
+        })
+    }
 })
 
 endpoints.post('/usuario', async (req, res) => {

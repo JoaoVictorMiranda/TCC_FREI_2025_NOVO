@@ -60,7 +60,7 @@ endpoints.post('/post/user', auth, async (req, res) => {
 })
 
 
-endpoints.get('/post/:id_filme', async (req, resp) => {
+endpoints.get('/post/:id_filme',auth, async (req, resp) => {
     try {
         const id_filme = req.params.id_filme;
         const id_user = req.user.id_user;

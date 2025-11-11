@@ -15,13 +15,13 @@ const Perfil = () => {
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
     const [post, setPost] = useState([]);
-    const [fotoPerfil, setFotoPerfil] = useState(perfilFixo);
     const [isLoading, setIsLoading] = useState(false);
     const [openMenu, setOpenMenu] = useState(false);
     const menuRef = useRef();
     const [qtdMostrar, setQtdMostrar] = useState(5);
     const [seguindo, setSeguindo] = useState(false);
     const { idUser } = useParams();
+    const [fotoPerfil, setFotoPerfil] = useState(perfilFixo);
 
     const construirUrlFoto = (caminho) => {
         if (!caminho) return perfilFixo;
