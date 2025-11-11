@@ -78,20 +78,29 @@
   .editarPerfil {
     margin-top: 0.6rem;
 
-    a {
+    button {
       display: inline-block;
-      text-decoration: none;
+      background: transparent;
       color: #fff;
       font-weight: 700;
-      background: transparent;
       border: 2px solid #fff;
       border-radius: 10px;
       padding: 0.5rem 1.5rem;
+      cursor: pointer;
       transition: all 0.3s ease;
 
       &:hover {
         background-color: #fff;
         color: #181D22;
+      }
+
+      &.seguindo {
+        background-color: #28a745;
+        border-color: #28a745;
+        color: #fff;
+        &:hover {
+          background-color: #218838;
+        }
       }
     }
   }
@@ -108,6 +117,12 @@
     p {
       font-size: 1.6rem;
       font-weight: 800;
+      cursor: pointer;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #ca0808;
+      }
     }
 
     h1 {
@@ -233,71 +248,70 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease;
 }
 
 .card-seguidores {
-  background: linear-gradient(145deg, #1c1f26, #262b34);
-  border: 1px solid #333842;
-  border-radius: 15px;
-  padding: 2rem;
+  background-color: #20252d;
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
   width: 90%;
-  max-width: 400px;
+  max-width: 420px;
   color: #fff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
   text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-  animation: fadeIn 0.25s ease-in-out;
+  animation: popIn 0.3s ease;
 
   h2 {
     font-size: 1.6rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: #fff;
+    margin-bottom: 1.5rem;
+    color: #ca0808;
+    font-weight: 800;
   }
 
   ul {
     list-style: none;
-    max-height: 300px;
+    max-height: 250px;
     overflow-y: auto;
-    margin: 0;
-    padding: 0;
+    padding: 0 5px;
+    margin-bottom: 1.5rem;
 
     li {
-      padding: 0.8rem 1rem;
-      margin-bottom: 0.5rem;
-      background-color: rgba(255, 255, 255, 0.05);
+      background: #2a3038;
       border-radius: 10px;
-      font-size: 1rem;
-      font-weight: 500;
-      transition: background 0.2s ease;
+      padding: 0.9rem 1rem;
+      margin-bottom: 0.8rem;
+      font-weight: 600;
+      text-align: left;
+      transition: all 0.2s ease;
 
       &:hover {
-        background-color: rgba(255, 255, 255, 0.15);
+        background: #343b46;
+        transform: scale(1.02);
       }
     }
   }
 
   button {
-    margin-top: 1.5rem;
-    padding: 0.7rem 2rem;
+    padding: 0.7rem 1.8rem;
+    border: none;
+    border-radius: 10px;
     background-color: #ca0808;
     color: #fff;
-    border: none;
-    border-radius: 50px;
-    font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
+    font-size: 1rem;
     transition: all 0.3s ease;
 
     &:hover {
       background-color: #a20606;
       transform: scale(1.05);
-      box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
     }
   }
 }
@@ -305,11 +319,19 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-20px);
-  } 
+  }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
+@keyframes popIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

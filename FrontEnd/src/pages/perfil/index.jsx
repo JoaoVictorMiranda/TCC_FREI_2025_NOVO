@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -10,225 +10,211 @@ import Carregando from '../../components/Carregando';
 import toast, { Toaster } from 'react-hot-toast';
 
 const Perfil = () => {
-    const [nome, setNome] = useState('');
-    const [idade, setIdade] = useState('');
-    const token = localStorage.getItem('token');
-    const navigate = useNavigate();
-    const [post, setPost] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [openMenu, setOpenMenu] = useState(false);
-    const menuRef = useRef();
-    const [qtdMostrar, setQtdMostrar] = useState(5);
-    const [seguindo, setSeguindo] = useState(false);
-    const { idUser } = useParams();
-    const [fotoPerfil, setFotoPerfil] = useState(perfilFixo);
+  const [nome, setNome] = useState('');
+  const [idade, setIdade] = useState('');
+  const [fotoPerfil, setFotoPerfil] = useState(perfilFixo);
+  const [seguidores, setSeguidores] = useState(0);
+  const [seguindo, setSeguindo] = useState(0);
+  const [listaSeguidores, setListaSeguidores] = useState([]);
+  const [mostrarSeguidores, setMostrarSeguidores] = useState(false);
+  const [meusSeguidores, setMeusSeguidores] = useState([]);
+  const [mostrarMeusSeguidores, setMostrarMeusSeguidores] = useState(false);
+  const [post, setPost] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [qtdMostrar, setQtdMostrar] = useState(5);
 
-    const construirUrlFoto = (caminho) => {
-        if (!caminho) return perfilFixo;
-        if (caminho.startsWith('data:')) return caminho;
-        if (caminho.startsWith('http')) return caminho;
-        return `http://localhost:5022/${caminho}`;
+  const token = localStorage.getItem('token');
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const decodedToken = token ? jwtDecode(token) : null;
+  const userIdLogado = decodedToken?.id_user || decodedToken?.user?.id_user;
+
+  const construirUrlFoto = (caminho) => {
+    if (!caminho) return perfilFixo;
+    if (caminho.startsWith('data:')) return caminho;
+    if (caminho.startsWith('http')) return caminho;
+    return `http://localhost:5022/${caminho}`;
+  };
+
+  useEffect(() => {
+    if (!token) return;
+
+    const carregarDados = async () => {
+      try {
+        const userIdPerfil = id || userIdLogado;
+        const res = await api.get(`/user/${userIdPerfil}`, {
+          headers: { 'x-access-token': token },
+        });
+        const user = res.data.informacoes;
+        setNome(user.nome);
+        if (user.nascimento) setIdade(calcularIdade(user.nascimento));
+        setFotoPerfil(construirUrlFoto(user.foto_perfil));
+        setSeguidores(user.seguidores || 0);
+        setSeguindo(user.seguindo || 0);
+      } catch (error) {
+        console.error('Erro ao carregar dados do usuário:', error);
+      }
     };
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token) return;
+    carregarDados();
+  }, [token, id]);
 
-        const carregarDadosUsuario = async () => {
-            try {
-                const decoded = jwtDecode(token);
-                const userId = decoded.id_user || decoded.user?.id_user;
-                
-                const res = await api.get(`/user/${userId}`, {
-                    headers: { 'x-access-token': token }
-                });
+  useEffect(() => {
+    if (token) carregarPost();
+  }, [token]);
 
-                const user = res.data.informacoes;
-                console.log(user)
-                setNome(user.nome || '');
-                if (user.nascimento) setIdade(calcularIdade(user.nascimento));
-
-                if (user.foto_perfil) {
-                    setFotoPerfil(construirUrlFoto(user.foto_perfil));
-                } else {
-                    setFotoPerfil(perfilFixo);
-                }
-            } catch (error) {
-                console.error("Erro ao carregar dados do usuário:", error);
-                setFotoPerfil(perfilFixo);
-            }
-        };
-
-        carregarDadosUsuario();
-    }, [token, idUser]);
-
-    useEffect(() => {
-        const atualizarFoto = () => {
-            if (!token) return;
-            const decoded = jwtDecode(token);
-            const userId = idUser || decoded.id || decoded.user?.id;
-
-            api.get(`/user/${userId}`, { headers: { 'x-access-token': token } })
-                .then(res => {
-                    if (res.data.foto_perfil) {
-                        setFotoPerfil(construirUrlFoto(res.data.foto_perfil));
-                    }
-                })
-                .catch(() => { });
-        };
-
-        window.addEventListener("fotoPerfilAtualizada", atualizarFoto);
-        return () => window.removeEventListener("fotoPerfilAtualizada", atualizarFoto);
-    }, [token, idUser]);
-
-    useEffect(() => {
-        if (token) carregarPost();
-    }, [token]);
-
-    function carregarPost() {
-        api.post('/post/user', {}, { headers: { 'x-access-token': token } })
-            .then(response => setPost(response.data))
-            .catch(() => { });
+  async function carregarPost() {
+    try {
+      const res = await api.post('/post/user', {}, { headers: { 'x-access-token': token } });
+      setPost(res.data);
+    } catch (error) {
+      console.error('Erro ao carregar posts:', error);
     }
+  }
 
-    function calcularIdade(dataISO) {
-        const hoje = new Date();
-        const nascimento = new Date(dataISO);
-        let idade = hoje.getFullYear() - nascimento.getFullYear();
-        const mes = hoje.getMonth() - nascimento.getMonth();
-        if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) idade--;
-        return idade;
+  function calcularIdade(dataISO) {
+    const hoje = new Date();
+    const nascimento = new Date(dataISO);
+    let idade = hoje.getFullYear() - nascimento.getFullYear();
+    const mes = hoje.getMonth() - nascimento.getMonth();
+    if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) idade--;
+    return idade;
+  }
+
+  async function handleDeslogar() {
+    setIsLoading(true);
+    toast.success("Deslogado - Volte Sempre!", { duration: 3000, position: 'top-center' });
+    setTimeout(() => {
+      localStorage.removeItem("token");
+      setIsLoading(false);
+      navigate('/');
+      window.location.reload();
+    }, 3000);
+  }
+
+  const verPosts = () => setQtdMostrar(prev => Math.min(prev + 5, post.length));
+  const postsParaMostrar = post.slice(0, qtdMostrar);
+
+  // Carregar seguidores de qualquer perfil
+  async function carregarSeguidores(userIdParam) {
+    try {
+      const res = await api.get(`/seguidores/${userIdParam}`, { headers: { 'x-access-token': token } });
+      setListaSeguidores(res.data.seguidores || res.data); // depende de como o backend retorna
+      setMostrarSeguidores(true);
+    } catch (error) {
+      console.error('Erro ao carregar seguidores:', error.response?.data || error.message);
     }
+  }
 
-    async function handleDeslogar() {
-        setIsLoading(true);
-        toast.success("Deslogado - Volte Sempre!", {
-            duration: 3000,
-            position: 'top-center',
-        });
-        setTimeout(() => {
-            localStorage.removeItem("token");
-            setIsLoading(false);
-            navigate('/');
-            window.location.reload();
-        }, 3000);
+  // Carregar apenas os meus seguidores
+  async function carregarMeusSeguidores() {
+    try {
+      const res = await api.get('/user/seguidores', { headers: { 'x-access-token': token } });
+      setMeusSeguidores(res.data.seguidores || res.data);
+      setMostrarMeusSeguidores(true);
+    } catch (error) {
+      console.error('Erro ao carregar meus seguidores:', error.response?.data || error.message);
     }
+  }
 
-    async function seguirUsuario() {
-        if (!token) return toast.error("É necessário estar logado");
-        try {
-            const decoded = jwtDecode(token);
-            const idUser = decoded.id_user || decoded.id;
-            await api.post(`/follow/${idUser}`, {}, { headers: { 'x-access-token': token } });
-            setSeguindo(true);
-            toast.success("Agora você está seguindo este usuário!");
-        } catch {
-            toast.error("Erro ao seguir usuário");
-        }
-    }
+  return (
+    <div>
+      <Toaster />
+      {isLoading && (
+        <div className="overlay-carregando">
+          <Carregando />
+        </div>
+      )}
+      <div className="container_principal">
+        <Header />
 
-    useEffect(() => {
-        function handleClickOutside(event) {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
-                setOpenMenu(false);
-            }
-        }
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
+        <section className='container_infoUsuario'>
+          <div className="foto_perfil">
+            <div className='imagem'>
+              <img
+                src={fotoPerfil}
+                alt="Foto de perfil"
+                className="foto-perfil-img"
+                onError={(e) => { e.target.src = perfilFixo; }}
+              />
+            </div>
+          </div>
 
-    const verPosts = () => setQtdMostrar(prev => Math.min(prev + 5, post.length));
-    const postsParaMostrar = post.slice(0, qtdMostrar);
-
-    return (
-        <div>
-            <Toaster />
-
-            {isLoading && (
-                <div className="overlay-carregando">
-                    <Carregando />
-                </div>
-            )}
-
-            <div className="container_principal">
-                <Header />
-
-                <section className='container_infoUsuario'>
-                    <div className="foto_perfil">
-                        <div className='imagem'>
-                            <img
-                                src={fotoPerfil}
-                                alt="Foto de perfil"
-                                className="foto-perfil-img"
-                                onError={(e) => { e.target.src = perfilFixo; }}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="nome">
-                        <div className="only-name">
-                            <p>{nome}</p>
-
-                        <div className="editarPerfil">
-                            <Link
-                                    to="/perfil/configurar"
-                                    className="menu-link"
-                                    >
-                                    Editar Foto
-                                </Link>
-                            </div>
-                        </div>
-
-                        <div className="infos">
-                            <div className="infosIndividuais">
-                                <p>{idade}</p>
-                                <h1>Idade</h1>
-                            </div>
-                            <div className="infosIndividuais">
-                                <p>600000</p>
-                                <h1>Seguidores</h1>
-                            </div>
-                            <div className="infosIndividuais">
-                                <p>5</p>
-                                <h1>Quero assistir</h1>
-                            </div>
-                        </div>
-
-                    </div>
-                </section>
-
-                <div className={`container_posts ${post.length === 0 ? 'vazio' : ''}`}>
-                    {post.length === 0 ? (
-                        <div className="sem-posts">
-                            <p>Este usuário ainda não publicou nenhuma análise</p>
-                        </div>
-                    ) : (
-                        postsParaMostrar.map((post) => (
-                            <div key={post.id_post} className="Card_post">
-                                <h2>{post.nome}</h2>
-                                <h3>{post.titulo}</h3>
-                                <p>Filme: {post.id_filme}</p>
-                                <p>Nota: {post.nota}</p>
-                                <p>Data: {post.criado_em.split('T')[0]}</p>
-                                <p>Curtidas: {post.curtidas}</p>
-                            </div>
-                        ))
-                    )}
-                </div>
-
-                {post.length > 5 && qtdMostrar < post.length && (
-                    <button
-                        className="button-ver-posts"
-                        onClick={verPosts}
-                    >
-                        Ver todos os posts
-                    </button>
-                )}
+          <div className="nome">
+            <div className="only-name">
+              <p>{nome}</p>
+              <div className="editarPerfil">
+                <Link to="/perfil/configurar" className="menu-link">Editar Foto</Link>
+              </div>
             </div>
 
-            <Footer />
+            <div className="infos">
+              <div className="infosIndividuais">
+                <p>{idade}</p>
+                <h1>Idade</h1>
+              </div>
+
+              <div className="infosIndividuais">
+                <p onClick={() => carregarSeguidores(id || userIdLogado)} style={{ cursor: 'pointer' }}>
+                  {seguidores}
+                </p>
+                <h1>Seguidores</h1>
+              </div>
+
+              <div className="infosIndividuais">
+                <p>{seguindo}</p>
+                <h1>Seguindo</h1>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div className={`container_posts ${post.length === 0 ? 'vazio' : ''}`}>
+          {post.length === 0 ? (
+            <div className="sem-posts">
+              <p>Você ainda não publicou nenhuma análise</p>
+            </div>
+          ) : (
+            postsParaMostrar.map((post) => (
+              <div key={post.id_post} className="Card_post">
+                <h2>{post.nome}</h2>
+                <h3>{post.titulo}</h3>
+                <p>Filme: {post.id_filme}</p>
+                <p>Nota: {post.nota}</p>
+                <p>Data: {post.criado_em.split('T')[0]}</p>
+                <p>Curtidas: {post.curtidas}</p>
+              </div>
+            ))
+          )}
         </div>
-    );
+
+        {post.length > 5 && qtdMostrar < post.length && (
+          <button className="button-ver-posts" onClick={verPosts}>Ver todos os posts</button>
+        )}
+      </div>
+
+      <Footer />
+
+      {/* Modal seguidores de qualquer perfil */}
+      {mostrarSeguidores && (
+        <div className="overlay-seguidores">
+          <div className="card-seguidores">
+            <h2>Seguidores do meu Perfil</h2>
+            <ul>
+              {listaSeguidores.length === 0 ? (
+                <li>Nenhum seguidor encontrado</li>
+              ) : (
+                listaSeguidores.map(seguidor => (
+                  <li key={seguidor.id_user}>{seguidor.nome}</li>
+                ))
+              )}
+            </ul>
+            <button onClick={() => setMostrarSeguidores(false)}>Fechar</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default Perfil;

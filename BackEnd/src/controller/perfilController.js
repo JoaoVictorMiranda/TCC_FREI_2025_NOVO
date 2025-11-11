@@ -75,6 +75,53 @@ endpoints.post('/follow/:idFollow', auth, async (req, res) => {
 });
 
 
+endpoints.delete('/unfollow/:idFollow', auth, async (req, res) => {
+    try {
+        const idUser = Number(req.params.idFollow);
+        const idSeguidor = Number(req.user.id_user);
+
+        const [existe] = await connection.query(`
+            SELECT 1 FROM seguidores
+            WHERE id_user = ? AND id_seguidor = ?
+            LIMIT 1
+        `, [idUser, idSeguidor]);
+
+        if (existe.length === 0) {
+            return res.status(400).send({ erro: 'Você não segue este usuário.' });
+        }
+
+        await connection.query(`
+            DELETE FROM seguidores
+            WHERE id_user = ? AND id_seguidor = ?
+        `, [idUser, idSeguidor]);
+
+        res.status(200).send({ mensagem: 'Deixou de seguir com sucesso.' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({ erro: 'Erro ao deixar de seguir usuário.' });
+    }
+});
+
+
+endpoints.get('/verificar-follow/:idFollow', auth, async (req, res) => {
+    try {
+        const idUser = Number(req.params.idFollow);
+        const idSeguidor = Number(req.user.id_user);
+
+        const [rows] = await connection.query(`
+            SELECT 1 FROM seguidores
+            WHERE id_user = ? AND id_seguidor = ?
+            LIMIT 1
+        `, [idUser, idSeguidor]);
+
+        res.status(200).send({ seguindo: rows.length > 0 });
+    } catch (error) {
+        console.error('Erro ao verificar follow:', error);
+        res.status(500).send({ erro: 'Erro ao verificar follow.' });
+    }
+});
+
+
 endpoints.get('/user/:id', auth, async (req, res) => {
     try {
         const idUser = Number(req.params.id);
@@ -85,13 +132,84 @@ endpoints.get('/user/:id', auth, async (req, res) => {
             return res.status(404).json({ erro: 'Usuário não encontrado' });
         }
 
-        res.status(200).json({informacoes: usuario});
+        const [seguidores] = await connection.query(`
+            SELECT COUNT(*) AS total
+            FROM seguidores
+            WHERE id_user = ?
+        `, [idUser]);
+
+        const [seguindo] = await connection.query(`
+            SELECT COUNT(*) AS total
+            FROM seguidores
+            WHERE id_seguidor = ?
+        `, [idUser]);
+
+        usuario.seguidores = seguidores[0].total;
+        usuario.seguindo = seguindo[0].total;
+
+        res.status(200).json({ informacoes: usuario });
 
     } catch (error) {
         console.error('Erro ao buscar usuário:', error);
         res.status(500).json({ erro: 'Erro interno do servidor' });
     }
 });
+
+
+endpoints.get('/seguidores/:idUser', auth, async (req, res) => {
+    try {
+        const idUser = Number(req.params.idUser);
+
+        const [rows] = await connection.query(`
+            SELECT 
+                u.id_user,
+                u.nome,
+                u.foto_perfil
+            FROM seguidores s
+            INNER JOIN usuarios u ON u.id_user = s.id_seguidor
+            WHERE s.id_user = ?
+        `, [idUser]);
+
+        res.status(200).send(rows);
+    } catch (error) {
+        console.error('Erro ao listar seguidores:', error);
+        res.status(500).send({ erro: 'Erro ao listar seguidores.' });
+    }
+});
+
+endpoints.get('/seguidores/:idUser', auth, async (req, res) => {
+    try {
+        const idUser = Number(req.params.idUser);
+        const seguidores = await repo.listarSeguidores(idUser);
+
+        if (seguidores.length === 0) {
+            return res.status(200).send({ mensagem: 'Nenhum seguidor encontrado', seguidores: [] });
+        }
+
+        res.status(200).send({ seguidores });
+    } catch (error) {
+        console.error('Erro ao listar seguidores:', error);
+        res.status(500).send({ erro: 'Erro interno ao listar seguidores.' });
+    }
+});
+
+endpoints.get('/user/seguidores', auth, async (req, res) => {
+    try {
+        const idUser = Number(req.user.id_user);
+        const seguidores = await repo.buscarMeusSeguidores(idUser);
+
+        if (!seguidores || seguidores.length === 0) {
+            return res.status(200).json({ mensagem: 'Você ainda não tem seguidores', seguidores: [] });
+        }
+
+        res.status(200).json({ seguidores });
+    } catch (error) {
+        console.error('Erro ao buscar meus seguidores:', error);
+        res.status(500).json({ erro: 'Erro interno ao listar seguidores.' });
+    }
+});
+
+
 
 
 export default endpoints;
