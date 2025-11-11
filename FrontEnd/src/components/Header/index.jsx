@@ -5,6 +5,7 @@ import Carregando from '../../components/Carregando';
 import Barras from '../../assets/images/barras.svg';
 import Pesquisa from '../../assets/images/pesquisa.svg';
 import habuge from '../../assets/images/habuge.svg';
+import clickSound from '../../assets/audios/click.mp3';
 
 import './index.scss';
 
@@ -21,6 +22,7 @@ export default function Header() {
     const navigate = useNavigate();
     const inputRef = useRef(null);
     const menuPerfilRef = useRef(null);
+    const audioRef = useRef(null);
     const token = localStorage.getItem('token');
 
     useEffect(() => {
@@ -35,7 +37,6 @@ export default function Header() {
         }
     }, [token]);
 
-    // Fechar menu do perfil quando clicar fora
     useEffect(() => {
         function handleClickOutside(event) {
             if (menuPerfilRef.current && !menuPerfilRef.current.contains(event.target)) {
@@ -50,6 +51,14 @@ export default function Header() {
     }, []);
 
     function alternarMenu() {
+        // Toca o som do clique
+        if (audioRef.current) {
+            audioRef.current.currentTime = 0;
+            audioRef.current.play().catch(error => {
+                console.log('Erro ao reproduzir áudio:', error);
+            });
+        }
+        
         setMenuAberto(!menuAberto);
         setIconeMenu(menuAberto ? Barras : habuge);
     }
@@ -123,6 +132,11 @@ export default function Header() {
                     className="hamburguer"
                 />
             </div>
+
+            <audio ref={audioRef} preload="auto">
+                <source src={clickSound} type="audio/mpeg" />
+                Seu navegador não suporta o elemento de áudio.
+            </audio>
 
             {menuAberto && <div className="overlay" onClick={fecharMenu}></div>}
 
@@ -204,4 +218,4 @@ export default function Header() {
             </div>
         </header>
     );
-}   
+}
