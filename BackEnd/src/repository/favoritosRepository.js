@@ -36,7 +36,6 @@ export async function removerFavoritos(idUser, idFilme){
 
 
 
-/*   CONTAR APENAS FAVORITOS GERAL SEPARAR POR USUARIO EM OUTRA FUNCTION   */
 export async function contarFavoritos(){
         const comando = `
                 SELECT favoritos.id_usuario, count(favoritos.id_usuario) AS TotalFavoritos FROM favoritos
@@ -50,15 +49,3 @@ export async function contarFavoritos(){
 
 
 
-
-
-/*
-
-CREATE TABLE favoritos (
-	id_favorito int primary key auto_increment,
-    id_usuario int,
-    id_filme int,
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_user)
-);
-
-*/
