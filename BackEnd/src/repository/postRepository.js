@@ -35,29 +35,6 @@ export async function VerSeCurtiu(id_user) {
     return info;
 }
 
-/*CREATE TABLE post_avaliacao (
-    id_post int PRIMARY KEY AUTO_INCREMENT,
-    titulo VARCHAR(200),
-    id_filme VARCHAR(200),
-    avaliacao varchar(300),
-    id_user int,
-    curtidas int,
-    nota int,
-    criado_em datetime,
-    FOREIGN KEY (id_user) REFERENCES usuarios(id_user)
-);
-
-CREATE TABLE usuarios(
- id_user int primary key auto_increment, 
-nome varchar(300),
-nascimento DATE,
-email varchar(200),
-senha varchar(50),
-criado_em datetime
-);
-
-*/
-
 
 export async function listarPostPorFilme() {
     const comando = `
@@ -224,12 +201,3 @@ export async function curtirPost(idUser, idPost) {
 
 
 
-
-
-/*CREATE TABLE curtidas(
-    id_curtida int primary key auto_increment,
-    id_user int,
-    id_post int UNIQUE,
-    FOREIGN KEY (id_user) REFERENCES usuarios(id_user),
-    FOREIGN KEY (id_post) REFERENCES post_avaliacao(id_post)
-); */

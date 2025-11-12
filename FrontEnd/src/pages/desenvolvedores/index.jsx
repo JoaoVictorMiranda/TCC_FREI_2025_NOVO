@@ -229,7 +229,7 @@ const DevelopersPage = () => {
         );
     };
 
-    // Componente de loading
+ 
     const LoadingCard = () => (
         <div style={styles.loadingCard}>
             <div style={styles.skeletonAvatar}></div>
