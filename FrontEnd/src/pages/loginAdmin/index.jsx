@@ -5,6 +5,7 @@ import Footer from '../../components/Footer';
 import './index.scss'
 import api from '../../api';
 import SoundPlayer from '../../components/secreto/secreto';
+
 const LoginAdmin = () => {
     const navigate = useNavigate();
 
@@ -13,7 +14,6 @@ const LoginAdmin = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
 
         api.post('/usuario', {
             email: email,
@@ -28,24 +28,20 @@ const LoginAdmin = () => {
             .catch(error => {
                 console.error('Deu merda:', error);
             });
-
-
-
     };
 
     const handleVoltar = () => {
         navigate('/');
     };
 
-
     return (
-        <div className="login-container">
+        <div className="painel-login">
             <Header />
 
-            <form onSubmit={handleSubmit} className="login-form">
+            <form onSubmit={handleSubmit} className="formulario-login">
                 <h1>Admin</h1>
 
-                <div className="input-group">
+                <div className="grupo-input">
                     <label htmlFor="email">Email</label>
                     <input
                         type="email"
@@ -57,7 +53,7 @@ const LoginAdmin = () => {
                     />
                 </div>
 
-                <div className="input-group">
+                <div className="grupo-input">
                     <label htmlFor="password">Senha</label>
                     <input
                         type="password"
@@ -69,17 +65,16 @@ const LoginAdmin = () => {
                     />
                 </div>
 
-                <div className="help-links">
+                <div className="links-ajuda">
                     <Link to="/forgot-password">Esqueceu a senha?</Link>
                     <Link to="/registrar">Criar conta</Link>
                 </div>
 
-                <button type="submit" className="login-button" >
-                    Login
+                <button type="submit" className="botao-login">
+                    Entrar
                 </button>
 
-
-                <button type="button" onClick={handleVoltar} className="back-button">
+                <button type="button" onClick={handleVoltar} className="botao-retorno">
                     Voltar ao Início
                 </button>
             </form>
@@ -88,4 +83,4 @@ const LoginAdmin = () => {
     )
 }
 
-export default LoginAdmin
+export default LoginAdmin;
