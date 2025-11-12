@@ -4,6 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 import apiTMDB from '../../apiTMDB.js';
 import api from '../../api.js';
 import Profile from '../../assets/images/profile.jpg';
+import { Toaster, toast } from 'react-hot-toast';
 import CardComentario from '../CardComentario';
 import DefinirTopico from '../Topicos/index.jsx';
 import './index.scss';
@@ -17,8 +18,18 @@ export default function SessaoComentarios() {
     const navigate = useNavigate();
 
     async function PuxarInfo() {
-        const resp = await api.get('/post/avaliacao');
-        setArr(resp.data.slice(0, 6));
+        const token = localStorage.getItem('token')
+
+        if (token) {
+            const resp = await api.get('/post/avaliacao');
+            setArr(resp.data.slice(0, 6));
+        }
+
+        if (!token) {
+            const resp = await api.get('/post/avaliacao/deslogado')
+            console.log(resp.data)
+            setArr(resp.data.slice(0, 6))
+        }
     }
 
     useEffect(() => {
@@ -26,10 +37,19 @@ export default function SessaoComentarios() {
     }, []);
 
     async function CurtirComentario(id_post) {
+        const token = localStorage.getItem('token')
+        if (!token) {
+            toast.error('Precisa Logar')
+            return
+        }
+
         try {
+
             const resp = await api.post('/post/curtir', { id_post });
             return resp.data;
-        } catch (err) {
+        }
+
+        catch (err) {
             console.error(err);
             return { liked: false };
         }
@@ -85,16 +105,16 @@ export default function SessaoComentarios() {
                                         <Link to={`/movie/${info.id_filme}`} className="MenuLink">
                                             Ver Filme
                                         </Link>
-                                    
+
                                         <a
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 IrParaPerfil(info.id_user);
                                             }}
                                             className="MenuLink"
-                                            >
+                                        >
                                             Ver Perfil
-                                            </a>
+                                        </a>
 
 
 
@@ -107,6 +127,11 @@ export default function SessaoComentarios() {
                     )}
                 </div>
             </div>
+
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
         </div>
     );
 }
