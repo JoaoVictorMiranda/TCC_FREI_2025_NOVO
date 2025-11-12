@@ -16,11 +16,11 @@ Imagine um lugar onde você pode:
 
 Pois é, esse lugar existe - e está bem aqui!
 
-## 🎯 No que acreditamos
+##  No que acreditamos
 
 Acreditamos que o cinema vai além da tela. Ele inspira, provoca conversas e une pessoas. Por isso criamos um espaço onde essas conexões podem acontecer de verdade.
 
-## 🔒 Sua privacidade em primeiro lugar
+##  Sua privacidade em primeiro lugar
 
 A gente cuida dos seus dados como cuidamos dos nossos próprios:
 
@@ -29,7 +29,7 @@ A gente cuida dos seus dados como cuidamos dos nossos próprios:
 - Usamos cookies só pro que é necessário funcionar
 - Você sempre tem controle sobre suas informações
 
-## 👨‍💻 Quem está por trás disso?
+##  Quem está por trás disso?
 
 Somos um time de estudantes apaixonados por tecnologia e cinema, desenvolvendo esse projeto com orientação de professores incríveis. Isso aqui é nosso jeito de unir duas paixões: código e cultura.
 - ## João Victor Miranda Reis
