@@ -99,8 +99,6 @@ const Login = () => {
 
                 <section className='right-side-login'>
 
-                    <div className="divider">ou</div>
-
                     <button type="button" onClick={handleVoltar} className="back-button">
                         Voltar ao Início
                     </button>
