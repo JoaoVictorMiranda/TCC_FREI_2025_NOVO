@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import api from '../../api.js';
 import 'swiper/css';
+import DefinirTopico from '../../components/Topicos/index.jsx';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
@@ -107,13 +108,8 @@ function Home() {
           id="DestaquesCinema">
           <div className="highlights_content">
             <div className="highlights_title">
-              <div className="lado_esquerdo">
-                <img src={Foguinho} alt="Ícone de fogo" />
-              </div>
-              <div className="lado_direito">
-                <h1>DESTAQUES DO CINEMA</h1>
-                <h3>Esses filmes estão bombando!</h3>
-              </div>
+              <DefinirTopico
+              tema={'DESTAQUES'}/>
             </div>
             <ul className="menu-categorias">
               <li
