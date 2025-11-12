@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router'
 import './index.scss';
 import InstagramIcon from '../../assets/instagram.svg';
-import FacebookIcon from '../../assets/facebook.svg';
+
 import TikTokIcon from '../../assets/tiktok.svg';
 
 import YoutubeIcon from '../../assets/youtube.svg';
@@ -21,13 +21,14 @@ const Footer = () => {
             <p>O CultBridge é uma mescla de redes sociais e comunicativas acopladas em uma só interface.</p>
             <div className="icons">
               <div><img src={InstagramIcon} alt="Instagram" /></div>
-              <div><img src={FacebookIcon} alt="Facebook" /></div>
+           
               <div><img src={TikTokIcon} alt="TikTok" /></div>
-
               <div><img src={YoutubeIcon} alt="YouTube" /></div>
             </div>
 
             <button type='button' onClick={handleBackToTop}>Voltar ao Topo</button>
+
+
           </div>
         </div>
 
