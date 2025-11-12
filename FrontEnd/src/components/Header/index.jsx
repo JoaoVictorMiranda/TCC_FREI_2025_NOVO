@@ -51,7 +51,7 @@ export default function Header() {
     }, []);
 
     function alternarMenu() {
-        // Toca o som do clique
+       
         if (audioRef.current) {
             audioRef.current.currentTime = 0;
             audioRef.current.play().catch(error => {
