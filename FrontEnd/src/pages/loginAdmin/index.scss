@@ -1,4 +1,4 @@
-.login-container {
+.painel-login {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -8,7 +8,7 @@
     background-size: cover;
     background-position: center;
 
-    .login-form {
+    .formulario-login {
         display: flex;
         flex-direction: column;
         width: 40%;
@@ -29,7 +29,7 @@
             font-weight: 600;
         }
 
-        .input-group {
+        .grupo-input {
             margin-bottom: 3vh;
 
             label {
@@ -54,7 +54,7 @@
             }
         }
 
-        .help-links {
+        .links-ajuda {
             display: flex;
             justify-content: space-between;
             margin-bottom: 3vh;
@@ -70,7 +70,7 @@
             }
         }
 
-        .login-button {
+        .botao-login {
             width: 100%;
             padding: 2vh;
             background: #CB1B25;
@@ -136,7 +136,7 @@
             }
         }
 
-        .back-button {
+        .botao-retorno {
             width: 100%;
             padding: 2vh;
             background: #FFFFFF;
@@ -158,10 +158,10 @@
 }
 
 @media (max-width: 768px) {
-    .login-container {
+    .painel-login {
         padding: 4vh 2vh;
 
-        .login-form {
+        .formulario-login {
             width: 90%;
             padding: 4vh 3vh;
             margin-top: 8vh;
@@ -170,7 +170,7 @@
                 font-size: 3.5vh;
             }
 
-            .help-links {
+            .links-ajuda {
                 flex-direction: column;
                 gap: 1.5vh;
                 text-align: center;
@@ -181,8 +181,8 @@
                 align-items: center;
             }
 
-            .login-button,
-            .back-button {
+            .botao-login,
+            .botao-retorno {
                 font-size: 1.8vh;
                 padding: 1.8vh;
             }
