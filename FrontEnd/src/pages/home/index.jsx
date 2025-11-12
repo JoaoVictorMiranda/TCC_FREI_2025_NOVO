@@ -103,7 +103,7 @@ function Home() {
 
         <HomeCultBridge />
 
-        {/* SEÇÃO DE FILMES */}
+
         <div className="container_highlights"
           id="DestaquesCinema">
           <div className="highlights_content">
@@ -164,13 +164,9 @@ function Home() {
               </Swiper>
             </div>
           </div>
+
         </div>
-        {/* <ul className='lista_paginas'>
-          <li id='Bolinha' onClick={() => setPagina(1)}>1</li>
-          <li id='Bolinha' onClick={() => setPagina(2)}>2</li>
-          <li id='Bolinha' onClick={() => setPagina(3)}>3</li>
-          <li id='Bolinha' onClick={() => setPagina(4)}>4</li>
-        </ul> */}
+
 
         <div className="Recomendacoes"
           id="RecomendacoesFilmesSeries">
