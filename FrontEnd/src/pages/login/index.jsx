@@ -26,18 +26,18 @@ const Login = () => {
             email: email,
             senha: senha
         })
-        .then(response => {
-            console.log(response.data);
-            const token = response.data.token
-            localStorage.setItem("token", token)
-            
-            toast.success('Logado com sucesso!')
-            
-            setTimeout(() => {
-                navigate('/perfil')
-                window.location.reload()
-            }, 1000) 
-        })
+            .then(response => {
+                console.log(response.data);
+                const token = response.data.token
+                localStorage.setItem("token", token)
+
+                toast.success('Logado com sucesso!')
+
+                setTimeout(() => {
+                    navigate('/perfil')
+                    window.location.reload()
+                }, 1000)
+            })
             .catch(error => {
                 toast.error("Erro ao logar.")
                 console.error('Deu ruim hein:', error);

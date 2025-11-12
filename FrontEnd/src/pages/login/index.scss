@@ -190,7 +190,10 @@
 
     .login-form {
       display: flex;
-      width: 100%;
+      width: 80%;
+      padding-right: 10vh;
+      align-items: center;
+      justify-content: center;
 
       .left-side-login {
         display: flex;
@@ -203,6 +206,7 @@
       }
 
       .right-side-login {
+        display: none;
         background-color: #1C1D1D;
         width: 100%;
         padding: 50px;
