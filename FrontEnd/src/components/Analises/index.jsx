@@ -47,8 +47,10 @@ export default function SessaoComentarios() {
 
             if (userId === id_user_comentario) {
                 navigate(`/perfil`);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
                 navigate(`/perfil/${id_user_comentario}`);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         } catch (err) {
             console.error("Erro ao navegar para o perfil:", err);

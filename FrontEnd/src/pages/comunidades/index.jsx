@@ -31,7 +31,7 @@ const Comunidades = () => {
         let token = localStorage.getItem("token");
 
         if (!token) {
-            toast.error('Erro ao validar token')
+            toast.error('você não possui permissão para acesar esta pagina')
             navigate('/login')
         }
     })
