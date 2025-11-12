@@ -25,7 +25,6 @@ export default function index() {
     const [media, setMedia] = useState([]);
     const [count, setCount] = useState([])
     const [arr, setArr] = useState([]);
-    const [titulo, setTitulo] = useState('');
     const [avaliacao, setAvaliacao] = useState('');
     const [nota, setNota] = useState('')
 
@@ -85,7 +84,7 @@ export default function index() {
     }
 
     async function EnviarAvaliacao() {
-        if (!titulo || !avaliacao || !nota) {
+        if (!avaliacao || !nota) {
             toast.error('Erro ao enviar análise!')
             return
         }

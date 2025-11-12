@@ -78,12 +78,6 @@
         }
     }
 
-    .Usuarios {
-        display: flex;
-        align-items: flex-end;
-        height: 4vh;
-    }
-
     .Informacoes {
         display: flex;
         padding: 1vh;
@@ -93,11 +87,19 @@
     .BlocoComunidade {
         border-radius: 1vh;
         width: 100%;
-        height: 30vh;
+        height: 25vh;
         background-color: #1C1D1D;
         color: white;
         flex-direction: column;
         transition: all 0.5s;
+
+        h4 {
+            font-size: 2.5vh;
+        }
+
+        h5 {
+            font-size: 1.9vh;
+        }
     }
 
     .BlocoComunidade:hover {

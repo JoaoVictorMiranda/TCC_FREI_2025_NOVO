@@ -61,6 +61,11 @@
     }
 }
 
+.MensagemComentario .Analise h4 {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 @media screen and (max-width: 768px) {
     .CardComentario {
         flex-direction: row;

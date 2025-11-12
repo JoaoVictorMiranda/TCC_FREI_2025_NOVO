@@ -103,7 +103,6 @@ function Home() {
 
         <HomeCultBridge />
 
-
         <div className="container_highlights"
           id="DestaquesCinema">
           <div className="highlights_content">

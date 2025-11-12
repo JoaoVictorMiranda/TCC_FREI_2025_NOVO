@@ -92,6 +92,16 @@ const Comunidades = () => {
         PesquisarFilmes()
     }, [busca])
 
+    function limitarTitulo(texto, limite = 22) {
+        if (!texto) return '';
+        return texto.length > limite ? texto.substring(0, limite) + '...' : texto;
+    }
+
+    function limitarDesc(texto, limite = 29) {
+        if (!texto) return '';
+        return texto.length > limite ? texto.substring(0, limite) + '...' : texto;
+    }
+
     return (
         <div className='component-comuni'>
 
@@ -119,11 +129,8 @@ const Comunidades = () => {
                                         alt="" />
                                 </div>
                                 <div className="Informacoes">
-                                    <h4>{comunidade.nome}</h4>
-                                    <h5>{comunidade.descricao ? comunidade.descricao : 'Nenhuma descrição definida'}</h5>
-                                    <div className="Usuarios">
-                                        <IoPerson /><h5>80</h5>
-                                    </div>
+                                    <h4>{limitarTitulo(comunidade.nome)}</h4>
+                                    <h5>{limitarDesc(comunidade.descricao) ? limitarDesc(comunidade.descricao) : 'Nenhuma descrição definida'}</h5>
                                 </div>
                             </div>
                         ))

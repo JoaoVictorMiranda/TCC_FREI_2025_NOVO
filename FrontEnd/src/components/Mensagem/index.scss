@@ -1,6 +1,7 @@
 .MensagemComentario {
     display: flex;
     min-height: 10vh;
+    max-width: auto;
     background-color: white;
     border-radius: 1vh;
 
@@ -19,12 +20,12 @@
             object-fit: cover;
         }
     }
+}
 
-    .AlinhadorMensagem {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
+.MensagemComentario .Analise h4 {
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 @media screen and (max-width: 768px) {

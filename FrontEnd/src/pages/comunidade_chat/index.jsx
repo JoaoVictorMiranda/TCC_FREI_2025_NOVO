@@ -51,7 +51,7 @@ const ChatComunidade = () => {
             return;
         }
 
-        
+
     }, [id, navigate]);
 
     return (
