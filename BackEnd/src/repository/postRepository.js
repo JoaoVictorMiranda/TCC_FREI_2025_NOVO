@@ -142,6 +142,7 @@ export async function listarAvaliacoesRecentes(id_user) {
             post_avaliacao.id_user,
             usuarios.nome,
             post_avaliacao.titulo,
+            post_avaliacao.id_filme,
             post_avaliacao.avaliacao,
             post_avaliacao.nota,
             COUNT(curtidas.id_curtida) AS curtidas,
@@ -161,7 +162,7 @@ export async function listarAvaliacoesRecentes(id_user) {
         ORDER BY post_avaliacao.criado_em DESC
         LIMIT 6;
     `;
-    
+
     const [linhas] = await connection.query(comando, [id_user]);
     return linhas;
 }

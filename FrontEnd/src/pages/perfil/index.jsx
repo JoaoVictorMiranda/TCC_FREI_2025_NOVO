@@ -8,6 +8,8 @@ import './index.scss';
 import perfilFixo from '../../assets/images/usuario.png';
 import Carregando from '../../components/Carregando';
 import toast, { Toaster } from 'react-hot-toast';
+import apiTMDB from '../../apiTMDB';
+const apiKey = import.meta.env.VITE_API_KEY;
 
 const Perfil = () => {
   const [nome, setNome] = useState('');
@@ -22,6 +24,7 @@ const Perfil = () => {
   const [post, setPost] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [qtdMostrar, setQtdMostrar] = useState(5);
+  const [nomesFilmes, setNomesFilmes] = useState({}); // Estado para selecionar os nomes dos filmes
 
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
@@ -39,8 +42,9 @@ const Perfil = () => {
   useEffect(() => {
     if (!token) return;
 
-    const carregarDados = async () => {
+    const carregarTudo = async () => {
       try {
+
         const userIdPerfil = id || userIdLogado;
         const res = await api.get(`/user/${userIdPerfil}`, {
           headers: { 'x-access-token': token },
@@ -51,22 +55,42 @@ const Perfil = () => {
         setFotoPerfil(construirUrlFoto(user.foto_perfil));
         setSeguidores(user.seguidores || 0);
         setSeguindo(user.seguindo || 0);
+
+
+        await carregarPost();
       } catch (error) {
-        console.error('Erro ao carregar dados do usuário:', error);
+        console.error('Erro ao carregar dados do perfil:', error);
       }
     };
 
-    carregarDados();
+    carregarTudo();
   }, [token, id]);
-
-  useEffect(() => {
-    if (token) carregarPost();
-  }, [token]);
 
   async function carregarPost() {
     try {
-      const res = await api.post('/post/user', {}, { headers: { 'x-access-token': token } });
-      setPost(res.data);
+      const res = await api.post('/post/user', {}, {
+        headers: { 'x-access-token': token },
+      });
+
+      const postsRecebidos = res.data || [];
+      setPost(postsRecebidos);
+
+      // -pega os nomes do filme com base no id mandado pelos posts la de baixo
+      const nomes = {};
+      await Promise.all(postsRecebidos.map(async (postItem) => {
+        if (!postItem.id_filme) return;
+        try {
+          const response = await apiTMDB.get(
+            `/movie/${postItem.id_filme}?${apiKey}&language=pt-BR`
+          );
+          nomes[postItem.id_filme] = response.data.title;
+        } catch (error) {
+          console.error('Erro ao buscar nome do filme:', error);
+          nomes[postItem.id_filme] = 'Desconhecido';
+        }
+      }));
+
+      setNomesFilmes(nomes);
     } catch (error) {
       console.error('Erro ao carregar posts:', error);
     }
@@ -95,27 +119,32 @@ const Perfil = () => {
   const verPosts = () => setQtdMostrar(prev => Math.min(prev + 5, post.length));
   const postsParaMostrar = post.slice(0, qtdMostrar);
 
-  // Carregar seguidores de qualquer perfil
+
   async function carregarSeguidores(userIdParam) {
     try {
-      const res = await api.get(`/seguidores/${userIdParam}`, { headers: { 'x-access-token': token } });
-      setListaSeguidores(res.data.seguidores || res.data); // depende de como o backend retorna
+      const res = await api.get(`/seguidores/${userIdParam}`, {
+        headers: { 'x-access-token': token },
+      });
+      setListaSeguidores(res.data.seguidores || res.data);
       setMostrarSeguidores(true);
     } catch (error) {
       console.error('Erro ao carregar seguidores:', error.response?.data || error.message);
     }
   }
 
-  // Carregar apenas os meus seguidores
   async function carregarMeusSeguidores() {
     try {
-      const res = await api.get('/user/seguidores', { headers: { 'x-access-token': token } });
+      const res = await api.get('/user/seguidores', {
+        headers: { 'x-access-token': token },
+      });
       setMeusSeguidores(res.data.seguidores || res.data);
       setMostrarMeusSeguidores(true);
     } catch (error) {
       console.error('Erro ao carregar meus seguidores:', error.response?.data || error.message);
     }
   }
+
+
 
   return (
     <div>
@@ -175,27 +204,30 @@ const Perfil = () => {
               <p>Você ainda não publicou nenhuma análise</p>
             </div>
           ) : (
-            postsParaMostrar.map((post) => (
-              <div key={post.id_post} className="Card_post">
-                <h2>{post.nome}</h2>
-                <h3>{post.titulo}</h3>
-                <p>Filme: {post.id_filme}</p>
-                <p>Nota: {post.nota}</p>
-                <p>Data: {post.criado_em.split('T')[0]}</p>
-                <p>Curtidas: {post.curtidas}</p>
+            postsParaMostrar.map((postItem) => (
+
+              <div key={postItem.id_post} className="Card_post" onClick={() => navigate(`/movie/${postItem.id_filme}`)} >
+                <h2>{postItem.nome}</h2>
+                <h3>{postItem.titulo}</h3>
+                <p>Filme: {nomesFilmes[postItem.id_filme] || 'Carregando...'}</p>
+                <p>Nota: {postItem.nota}</p>
+                <p>Data: {postItem.criado_em.split('T')[0]}</p>
+                <p>Curtidas: {postItem.curtidas}</p>
               </div>
+
             ))
           )}
         </div>
 
         {post.length > 5 && qtdMostrar < post.length && (
-          <button className="button-ver-posts" onClick={verPosts}>Ver todos os posts</button>
+          <button className="button-ver-posts" onClick={verPosts}>
+            Ver todos os posts
+          </button>
         )}
       </div>
 
       <Footer />
 
-      {/* Modal seguidores de qualquer perfil */}
       {mostrarSeguidores && (
         <div className="overlay-seguidores">
           <div className="card-seguidores">

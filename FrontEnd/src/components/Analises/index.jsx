@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import apiTMDB from '../../apiTMDB.js'
+import { useNavigate } from 'react-router-dom';
 const imageURL = import.meta.env.VITE_IMG;
 const apiKey = import.meta.env.VITE_API_KEY;
 
@@ -15,6 +16,7 @@ import DefinirTopico from '../Topicos/index.jsx';
 export default function SessaoComentarios() {
     const [movie, setMovie] = useState(null)
     const [arr, setArr] = useState([])
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -54,17 +56,21 @@ export default function SessaoComentarios() {
                     {
                         arr.length
                             ? arr.map((info) => (
-                                <CardComentario
-                                    key={info.id_post}
-                                    id_post={info.id_post}
-                                    perfil={info.nome}
-                                    analise={info.avaliacao}
-                                    curtidasIniciais={info.curtidas}
-                                    nota={info.nota}
-                                    CliqueCurtir={CurtirComentario}
-                                    usuarioCurtiu={info.usuario_curtiu}
-                                    id_user={info.id_user}
-                                />
+
+                                <div onClick={() => navigate(`/movie/${info.id_filme}`)}>
+                                    <CardComentario
+                                        key={info.id_post}
+                                        id_post={info.id_post}
+                                        perfil={info.nome}
+                                        analise={info.avaliacao}
+                                        curtidasIniciais={info.curtidas}
+                                        nota={info.nota}
+                                        CliqueCurtir={CurtirComentario}
+                                        usuarioCurtiu={info.usuario_curtiu}
+                                        id_user={info.id_user}
+                                    />
+                                </div>
+
                             ))
                             : <h1>Nenhuma análise encontrada</h1>
                     }
