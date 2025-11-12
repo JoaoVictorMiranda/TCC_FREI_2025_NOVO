@@ -110,22 +110,6 @@ function Home() {
               <DefinirTopico
               tema={'DESTAQUES'}/>
             </div>
-            <ul className="menu-categorias">
-              <li
-                className="menu-item"
-                style={{ fontWeight: '600' }}
-                onClick={() => setURLpages(moviesURLtop_rated)}
-              >
-                Ranqueados
-              </li>
-              <li
-                className="menu-item"
-                style={{ fontWeight: '600' }}
-                onClick={() => setURLpages(moviesURLpopulares)}
-              >
-                Populares
-              </li>
-            </ul>
 
             <div className="carrossel"
             >

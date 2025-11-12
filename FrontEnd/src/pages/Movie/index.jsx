@@ -142,9 +142,6 @@ export default function index() {
                         </div>
                         <div className="Information">
                             <CardDetalhes
-                                Info={'Assistiram'}
-                                Quantidade={`${count ? count : '0'}`} />
-                            <CardDetalhes
                                 Quantidade={`${media ? media : '0'}`}
                                 Info={'Aproveitamento'} />
                             <CardDetalhes

@@ -23,7 +23,7 @@ const Footer = () => {
             <h2>CULTBRIDGE</h2>
             <p>O CultBridge é uma mescla de redes sociais e comunicativas acopladas em uma só interface.</p>
             <div className="icons">
-              <div onClick={() => handleSocialMediaClick('http://chess.com/play')}>
+              <div onClick={() => handleSocialMediaClick('https://www.instagram.com/institutonsfatima/')}>
                 <img src={InstagramIcon} alt="Instagram" />
               </div>
               <div onClick={() => handleSocialMediaClick('https://www.tiktok.com/@celordecortes')}>
@@ -57,7 +57,7 @@ const Footer = () => {
             <h3>Legal</h3>
             <ul>
               <Link to={'/desenvolvedores'} ><li>Desenvolvedores</li></Link>
-              <li>Contato</li>
+              <Link to={'/desenvolvedores'} ><li>Contato</li></Link>
             </ul>
           </div>
         </div>

@@ -1,106 +1,131 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router';
-import './index.scss';
-import api from '../../api.js';
-import Header from '../../components/Header/index.jsx';
-import Footer from '../../components/Footer/index.jsx';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import "./index.scss";
+import api from "../../api.js";
+import Header from "../../components/Header/index.jsx";
+import Footer from "../../components/Footer/index.jsx";
 
 const Registrar = () => {
-    const [nome, setNome] = useState('');
-    const [nascimento, setNascimento] = useState('');
-    const [email, setEmail] = useState('');
-    const [senha, setSenha] = useState('');
-    const navigate = useNavigate();
+  const [nome, setNome] = useState("");
+  const [nascimento, setNascimento] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [mostrarSenha, setMostrarSenha] = useState(false);
+  const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const anoAtual = new Date().getFullYear();
 
-        try {
-            const response = await api.post('/user/cadastro', {
-                nome: nome,
-                nascimento: nascimento,
-                email: email,
-                senha: senha
-            });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-            console.log('Cadastro realizado com sucesso:', response.data);
-            api.post('/usuario', {
-                email: email,
-                senha: senha
-            })
-                .then(response => {
-                    console.log(response.data);
-                    const token = response.data.token
-                    localStorage.setItem("token", token)
-                    navigate('/perfil')
-                    
-                    window.location.reload()
-                })
+    const dominiosPermitidos = [
+      "gmail.com",
+      "hotmail.com",
+      "outlook.com",
+      "yahoo.com",
+      "icloud.com",
+      "live.com",
+      "bol.com.br",
+      "uol.com.br",
+      "terra.com.br",
+    ];
 
+    const dominioEmail = email.split("@")[1]?.toLowerCase();
 
-        } catch (error) {
-            console.error('Erro ao cadastrar:', error.response?.data || error.message);
-        }
-    };
+    if (!dominiosPermitidos.includes(dominioEmail)) {
+      alert("Por favor, use um e-mail válido como Gmail, Hotmail, Outlook, Yahoo, iCloud, etc.");
+      return;
+    }
 
-    return (
-        <div className='container_registro'>
-            <Header />
-            <div className="registro">
+    try {
+      const response = await api.post("/user/cadastro", {
+        nome,
+        nascimento,
+        email,
+        senha,
+      });
 
-                    <h1>Crie Sua Conta:</h1>
+      console.log("Cadastro realizado com sucesso:", response.data);
 
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="nome">Nome: </label>
-                    <input
-                        type="text"
-                        id="nome"
-                        name="nome"
-                        placeholder="Seu Nome"
-                        value={nome}
-                        onChange={(e) => setNome(e.target.value)}
-                        required
-                    />
+      const loginResponse = await api.post("/usuario", { email, senha });
+      const token = loginResponse.data.token;
+      localStorage.setItem("token", token);
+      navigate("/perfil");
+      window.location.reload();
+    } catch (error) {
+      console.error("Erro ao cadastrar:", error.response?.data || error.message);
+      alert("Erro: este email já está cadastrado");
+    }
+  };
 
-                    <label htmlFor="nascimento">Data de Nascimento: </label>
-                    <input
-                        type="date"
-                        id="nascimento"
-                        name="nascimento"
-                        value={nascimento}
-                        onChange={(e) => setNascimento(e.target.value)}
-                        required
-                    />
+  return (
+    <div className="container_registro">
+      <Header />
+      <div className="registro">
+        <h1>Crie Sua Conta:</h1>
 
-                    <label htmlFor="email">Email: </label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="seu@email.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="nome">Nome:</label>
+          <input
+            type="text"
+            id="nome"
+            placeholder="Seu Nome"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            required
+          />
 
-                    <label htmlFor="senha">Senha: </label>
-                    <input
-                        type="password"
-                        id="senha"
-                        name="senha"
-                        placeholder="SenhaForte1234"
-                        value={senha}
-                        onChange={(e) => setSenha(e.target.value)}
-                        required
-                    />
+          <label htmlFor="nascimento">Data de Nascimento:</label>
+          <input
+            type="date"
+            id="nascimento"
+            value={nascimento}
+            onChange={(e) => setNascimento(e.target.value)}
+            min="1900-01-01"
+            max={`${anoAtual}-12-31`}
+            required
+          />
 
-                    <button type="submit">Registrar</button>
-                </form>
-                <p>Já tem login? <Link to="/login">Entrar</Link></p>
-            </div>
-            <Footer />
-        </div>
-    );
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="seu@email.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+          <label htmlFor="senha">Senha:</label>
+          <div className="input-senha">
+            <input
+              type={mostrarSenha ? "text" : "password"}
+              id="senha"
+              placeholder="Senha forte"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+              required
+            />
+            <button
+              type="button"
+              className="btn-olho"
+              onClick={() => setMostrarSenha(!mostrarSenha)}
+            >
+              {mostrarSenha ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
+
+          <button type="submit">Registrar</button>
+        </form>
+
+        <p>
+          Já tem login? <Link to="/login">Entrar</Link>
+        </p>
+      </div>
+      <Footer />
+    </div>
+  );
 };
 
 export default Registrar;
