@@ -2,12 +2,14 @@ import { connection } from './connection.js';
 
 export async function EnviarMensagem(idSala, Usuario, dados) {
         let [resultados] = await connection.query(`
-                insert into chat_mensagem (id_user, id_comunidade, mensagem, criada_em)
+                insert into comunidade_chat (id_comunidade, id_user, mensagem, criado_em, editado_em)
                 values
-                (?,?,?,NOW())
-                `, [Usuario, idSala, dados.mensagem])
+                (?,?,?,NOW(), NULL)
+                `, [idSala, Usuario, dados.mensagem])
         return resultados
 }
+
+
 
 export async function ContarComunidades() {
         let [resultados] = await connection.query(`
@@ -103,9 +105,9 @@ export async function sendMessage(idComunidade, dados, idUser) {
 
 export async function listMessages(idSala) {
         const comando = `
-            SELECT chat_mensagem.*, usuarios.foto_perfil, usuarios.nome
-            FROM chat_mensagem
-            INNER JOIN usuarios ON chat_mensagem.id_user = usuarios.id_user
+            SELECT comunidade_chat.*, usuarios.foto_perfil, usuarios.nome
+            FROM comunidade_chat
+            INNER JOIN usuarios ON comunidade_chat.id_user = usuarios.id_user
             WHERE id_comunidade = ?;
         `;
 
