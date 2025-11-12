@@ -9,7 +9,20 @@ export async function EnviarMensagem(idSala, Usuario, dados) {
         return resultados
 }
 
+export async function BuscarComunidadesFiltro(busca) {
+        let [resultados] = await connection.query(`
+        select * from comunidades
+        where nome like ?        
+        `, [`%${busca}%`])
+        return resultados
+}
 
+export async function ListarComunidades() {
+        let [resultados] = await connection.query(`
+                select * from comunidades                
+                `)
+        return resultados
+}
 
 export async function ContarComunidades() {
         let [resultados] = await connection.query(`
@@ -35,12 +48,6 @@ export async function criarComunidades(dados, caminho, idCriador) {
         return info.insertId;
 }
 
-export async function ListarComunidades() {
-        let [resultados] = await connection.query(`
-                select * from comunidades                
-                `)
-        return resultados
-}
 
 export async function InsertMember(idComunity, idUser) {
         const comando = `

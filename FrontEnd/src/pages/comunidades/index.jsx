@@ -62,8 +62,8 @@ const Comunidades = () => {
 
             await PuxarComunidades()
             setModal(false)
-        } 
-        
+        }
+
         catch (error) {
             console.error("Erro ao criar comunidade:", error);
             alert("Erro ao criar comunidade");
@@ -71,14 +71,26 @@ const Comunidades = () => {
     };
 
     async function PuxarComunidades() {
-        const resp = await api.get('/comunidades')
-        console.log(resp.data.dados)
+        const resp = await api.get('/comunidades/busca')
         setComunidade(resp.data.dados)
     }
 
     useEffect(() => {
         PuxarComunidades()
     }, [])
+
+    async function PesquisarFilmes() {
+        if (busca.trim().length === 0) {
+            return PuxarComunidades()
+        }
+
+        const resp = await api.get(`/comunidades/pesquisar?busca=${busca}`)
+        setComunidade(resp.data.dados)
+    }
+
+    useEffect(() => {
+        PesquisarFilmes()
+    }, [busca])
 
     return (
         <div className='component-comuni'>
@@ -97,7 +109,7 @@ const Comunidades = () => {
                 <div className="ListarComunidades">
                     {
                         comunidade.map((comunidade) => (
-                            <div className='BlocoComunidade' style={{ cursor: 'pointer' }} onClick={() => navigate(`/comunidade/${comunidade.id_comunidade}`)}>
+                            <div key={comunidade.id_comunidade} className='BlocoComunidade' style={{ cursor: 'pointer' }} onClick={() => navigate(`/comunidade/${comunidade.id_comunidade}`)}>
                                 <div className="FotoComunidade">
                                     <img src={
                                         construirUrlFoto(comunidade.foto_capa) ?

@@ -17,7 +17,14 @@ endpoints.post('/comunidade', upload.single('img'), auth, async (req, res) => {
     res.send({ NewId: NewId });
 });
 
-endpoints.get('/comunidades', auth, async (req, resp) => {
+endpoints.get('/comunidades/pesquisar', auth, async (req, resp) => {
+    const busca = req.query.busca
+
+    const resposta = await repo.BuscarComunidadesFiltro(busca)
+    resp.send({ dados: resposta })
+})
+
+endpoints.get('/comunidades/busca', auth, async (req, resp) => {
     const resposta = await repo.ListarComunidades()
     resp.send({ dados: resposta })
 })
