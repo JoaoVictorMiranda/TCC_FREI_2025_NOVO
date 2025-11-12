@@ -15,8 +15,6 @@ const ChatComunidade = () => {
     const [mensagem, setMensagem] = useState('')
     const navigate = useNavigate();
 
- 
-
     async function ListarMensagens() {
         const resp = await api.get(`/comunidade/chat/list/${id}`)
         setMensagens(resp.data)

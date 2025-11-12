@@ -126,7 +126,6 @@ export default function index() {
                         <h3>{movie.release_date.split('-')[0]}</h3>
                     </div>
                     <div className="Trailer">
-                        <h2>ASSISTIR TRAILER</h2>
                         <button onClick={() => setModal(true)}>REGISTRAR</button>
                     </div>
                 </div>
@@ -184,7 +183,7 @@ export default function index() {
                                 </div>
                             ))
                             :
-                            <h2 style={{textAlign: 'center'}}>Nenhuma análise encontrada</h2>
+                            <h2 style={{ textAlign: 'center' }}>Nenhuma análise encontrada</h2>
                     }
                 </div>
             </div>
