@@ -4,7 +4,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import './index.scss'
 import api from '../../api';
-import SoundPlayer from '../../components/secreto/secreto';
+
 const LoginAdmin = () => {
     const navigate = useNavigate();
 
