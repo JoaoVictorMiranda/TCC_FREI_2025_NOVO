@@ -64,9 +64,9 @@ export default function index() {
                     <h3>ONDE AS SUAS IDEIAS ENCONTRAM SENTIDO</h3>
                     <div className="AlinhadorBotoes">
 
-                        <button id='Comecar'><Link to={'/comunidade'}>CRIAR COMUNIDADE</Link></button>
+                        <Link id='Criar' to={'/comunidade'}>CRIAR COMUNIDADE</Link>
 
-                        <button id='Navegar'><Link to={'/filmes'}>NAVEGAR</Link></button>
+                        <Link id='Navegar' to={'/filmes'}>NAVEGAR</Link>
                     </div>
                 </div>
                 <div className="lado_direito">
