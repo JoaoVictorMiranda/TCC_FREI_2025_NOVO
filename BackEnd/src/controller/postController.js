@@ -38,6 +38,19 @@ endpoints.get('/post/avaliacao', auth, async (req, resp) => {
     }
 });
 
+endpoints.get('/post/avaliacao/deslogado', async (req, resp) => {
+    try {
+        const resposta = await repo.listarAvaliacoesRecentesDeslogado();
+
+        resp.send(resposta);
+    }
+
+    catch (err) {
+        console.error(err);
+        resp.status(500).send({ erro: "Erro ao buscar análises recentes" });
+    }
+});
+
 endpoints.get('/post/media/:id_filme', auth, async (req, resp) => {
     let id_filme = req.params.id_filme;
 
@@ -60,12 +73,26 @@ endpoints.post('/post/user', auth, async (req, res) => {
 })
 
 
-endpoints.get('/post/:id_filme',auth, async (req, resp) => {
+endpoints.get('/post/:id_filme', auth, async (req, resp) => {
     try {
         const id_filme = req.params.id_filme;
         const id_user = req.user.id_user;
 
         const resposta = await repo.listarPostPorIdFilme(id_filme, id_user);
+
+        resp.send({ Info: resposta });
+    }
+
+    catch (err) {
+        console.error(err);
+        resp.status(500).send({ erro: "Erro ao buscar comentários" });
+    }
+});
+
+endpoints.get('/post/deslogado/:id_filme', async (req, resp) => {
+    try {
+        const id_filme = req.params.id_filme;
+        const resposta = await repo.listarPostPorIdFilmeDeslogado(id_filme);
 
         resp.send({ Info: resposta });
     }

@@ -112,6 +112,30 @@ export async function listarPostPorIdFilme(id_filme, id_user) {
     return linhas;
 }
 
+export async function listarPostPorIdFilmeDeslogado(id_filme) {
+    const comando = `
+        SELECT 
+            post_avaliacao.id_post,
+            post_avaliacao.id_user,
+            usuarios.nome,
+            post_avaliacao.titulo,
+            post_avaliacao.criado_em,
+            post_avaliacao.avaliacao,
+            post_avaliacao.nota,
+            post_avaliacao.id_filme,
+            COUNT(curtidas.id_curtida) AS curtidas
+        FROM post_avaliacao
+        INNER JOIN usuarios ON usuarios.id_user = post_avaliacao.id_user
+        LEFT JOIN curtidas ON curtidas.id_post = post_avaliacao.id_post
+        WHERE post_avaliacao.id_filme = ?
+        GROUP BY post_avaliacao.id_post
+        ORDER BY post_avaliacao.criado_em DESC;
+    `;
+
+    const [linhas] = await connection.query(comando, [id_filme]);
+    return linhas;
+}
+
 export async function listarAvaliacoesRecentes(id_user) {
     const comando = `
         SELECT 
@@ -141,6 +165,29 @@ export async function listarAvaliacoesRecentes(id_user) {
     `;
 
     const [linhas] = await connection.query(comando, [id_user]);
+    return linhas;
+}
+
+export async function listarAvaliacoesRecentesDeslogado() {
+    const comando = `
+        SELECT 
+            post_avaliacao.id_post,
+            post_avaliacao.id_user,
+            usuarios.nome,
+            post_avaliacao.titulo,
+            post_avaliacao.id_filme,
+            post_avaliacao.avaliacao,
+            post_avaliacao.nota,
+            COUNT(curtidas.id_curtida) AS curtidas
+        FROM post_avaliacao
+        INNER JOIN usuarios ON usuarios.id_user = post_avaliacao.id_user
+        LEFT JOIN curtidas ON curtidas.id_post = post_avaliacao.id_post
+        GROUP BY post_avaliacao.id_post
+        ORDER BY post_avaliacao.criado_em DESC
+        LIMIT 6;
+    `;
+
+    const [linhas] = await connection.query(comando);
     return linhas;
 }
 
