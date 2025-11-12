@@ -18,14 +18,6 @@ export default function SessaoComentarios() {
     const [arr, setArr] = useState([])
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchMovie = async () => {
-            const resp = await apiTMDB.get(`/movie/666?${apiKey}&language=pt-BR`)
-            setMovie(resp.data)
-        }
-        fetchMovie()
-    }, [])
-
     async function PuxarInfo() {
         const resp = await api.get('/post/avaliacao')
         setArr(resp.data.slice(0, 6))

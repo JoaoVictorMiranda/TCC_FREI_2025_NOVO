@@ -7,9 +7,7 @@ import "./index.scss";
 import api from '../../api.js'
 import { jwtDecode } from 'jwt-decode';
 
-export default function CardComentario({ id_post, id_user, perfil, nota, analise, curtidasIniciais, CliqueCurtir, usuarioCurtiu }) {
-    const [curtidas, setCurtidas] = useState(curtidasIniciais || 0);
-    const [curtido, setCurtido] = useState(usuarioCurtiu || false);
+export default function CardMensagem({ id_user, perfil, nota, analise }) {
     const [fotoPerfil, setFotoPerfil] = useState(foto_perfil);
     const token = localStorage.getItem("token");
 
@@ -39,35 +37,22 @@ export default function CardComentario({ id_post, id_user, perfil, nota, analise
         carregarFoto();
     }, [id_user]);
 
-    async function handleCurtir() {
-        const resultado = await CliqueCurtir(id_post);
-        if (resultado.liked) {
-            setCurtidas(c => c + 1);
-            setCurtido(true);
-        } else {
-            setCurtidas(c => c - 1);
-            setCurtido(false);
-        }
-    }
-
     function IrParaPerfil() {
         const token = localStorage.getItem("token");
         const decoded = jwtDecode(token);
         const userId = decoded.id_user || decoded.user?.id_user;
         if (userId === id_user) {
             navigate(`/perfil`);
-        } else {
+        }
+
+        else {
             navigate(`/perfil/${id_user}`);
         }
     }
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
     return (
-        <div className="CardComentario">
-            <div className="FotoPerfil">
+        <div className="MensagemComentario">
+            <div className="FotoPerfilMensagem">
                 <img
                     onClick={IrParaPerfil}
                     style={{ cursor: 'pointer' }}
@@ -76,32 +61,12 @@ export default function CardComentario({ id_post, id_user, perfil, nota, analise
                     alt=""
                 />
             </div>
-            <div className="AlinhadorComentario">
+            <div className="AlinhadorMensagem">
                 <div className="Perfil">
                     <h3>{perfil}</h3>
-<<<<<<< Updated upstream
-                    <h3> -- Nota: {nota ?? "0"}</h3>
-=======
-                    <h3>{nota ?? ""}</h3>
->>>>>>> Stashed changes
                 </div>
                 <div className="Analise">
                     <h4>{analise}</h4>
-                </div>
-                <div className="Curtidas">
-                    {curtido ? (
-                        <FaHeart
-                            color="red"
-                            style={{ fontSize: 25, cursor: "pointer" }}
-                            onClick={handleCurtir}
-                        />
-                    ) : (
-                        <CiHeart
-                            style={{ fontSize: 25, cursor: "pointer" }}
-                            onClick={handleCurtir}
-                        />
-                    )}
-                    <h4 style={{ paddingLeft: 5 }}>{curtidas}</h4>
                 </div>
             </div>
         </div>

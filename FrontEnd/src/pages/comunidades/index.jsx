@@ -6,6 +6,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer'
 import DefinirTopico from '../../components/Topicos';
 import ModalPostarComentario from '../../components/ModalPostarComentario';
+import { Toaster, toast } from 'react-hot-toast'
 import { CiSearch } from "react-icons/ci";
 import "./index.scss"
 
@@ -30,7 +31,7 @@ const Comunidades = () => {
         let token = localStorage.getItem("token");
 
         if (!token) {
-            alert("TA PERDIDO FI?");
+            toast.error('Erro ao validar token')
             navigate('/login')
         }
     })
@@ -47,6 +48,11 @@ const Comunidades = () => {
             formData.append('img', imagem);
         }
 
+        if (!nome || !descricao) {
+            toast.error('Não pode enviar campos vazios')
+            return
+        }
+
         try {
             await api.post('/comunidade', formData, {
                 headers: {
@@ -54,11 +60,11 @@ const Comunidades = () => {
                 }
             });
 
-            alert("COMUNIDADE CRIADA COM SUCESSO");
-
             await PuxarComunidades()
             setModal(false)
-        } catch (error) {
+        } 
+        
+        catch (error) {
             console.error("Erro ao criar comunidade:", error);
             alert("Erro ao criar comunidade");
         }
@@ -91,14 +97,14 @@ const Comunidades = () => {
                 <div className="ListarComunidades">
                     {
                         comunidade.map((comunidade) => (
-                            <div className='BlocoComunidade' style={{cursor: 'pointer'}} onClick={() => navigate(`/comunidade/${comunidade.id_comunidade}`)}>
+                            <div className='BlocoComunidade' style={{ cursor: 'pointer' }} onClick={() => navigate(`/comunidade/${comunidade.id_comunidade}`)}>
                                 <div className="FotoComunidade">
                                     <img src={
                                         construirUrlFoto(comunidade.foto_capa) ?
-                                        construirUrlFoto(comunidade.foto_capa) :
-                                        'Nenhuma foto'
-                                    } 
-                                    alt="" />
+                                            construirUrlFoto(comunidade.foto_capa) :
+                                            'Nenhuma foto'
+                                    }
+                                        alt="" />
                                 </div>
                                 <div className="Informacoes">
                                     <h4>{comunidade.nome}</h4>
@@ -113,7 +119,6 @@ const Comunidades = () => {
                 </div>
             </div>
 
-
             <Footer />
 
             <ModalPostarComentario
@@ -121,27 +126,39 @@ const Comunidades = () => {
                 setModal={() => setModal(!modal)}
                 fechar={() => setModal(false)}
                 tema={'Criar Comunidade'}
+                salvar={handleSubmit}
                 conteudo={
-                    <form className='infor-comuni' onSubmit={handleSubmit}>
-                        <label id='Nome-comuni' htmlFor="nome">Nome da comunidade</label>
-                        <input className='barrinha-aaa' type="text" name='nome' placeholder='Nome da comunidade' onChange={(e) => setNome(e.target.value)} required />
-                        <br />
-                        <label htmlFor="descricao">Descrição da comunidade</label>
-                        <input className='barrinha-aaa' type="text" name='descricao' placeholder='Descrição da comunidade'
-                            onChange={(e) => setDescricao(e.target.value)} required />
-
-                        <label htmlFor="foto">Foto de capa da comunidade(optional)</label>
-                        <br />
-                        <input
-
-                            className='fotin-grupo'
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => setImagem(e.target.files[0])} />
-                        <button className='submit' type='submit'>Mandar</button>
-                    </form>} />
-
-        </div>
+                    <div className="CriarComunidade">
+                        <form className='infor-comuni' onSubmit={handleSubmit}>
+                            <div className="Coluna">
+                                <label id='Nome-comuni' htmlFor="nome">Nome da comunidade</label>
+                                <input className='barrinha-aaa' type="text" name='nome' onChange={(e) => setNome(e.target.value)} required />
+                            </div>
+                            <div className="Coluna">
+                                <label htmlFor="descricao">Descrição da comunidade</label>
+                                <input
+                                    className='barrinha-aaa'
+                                    type="text"
+                                    name='descricao'
+                                    onChange={(e) => setDescricao(e.target.value)}
+                                    required />
+                            </div>
+                            <div className="Coluna">
+                                <label htmlFor="foto">Foto de capa da comunidade(optional)</label>
+                                <input
+                                    className='fotin-grupo'
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={(e) => setImagem(e.target.files[0])} />
+                            </div>
+                        </form>
+                    </div>}
+            />
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
+        </div >
     )
 }
 

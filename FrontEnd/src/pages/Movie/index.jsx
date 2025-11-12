@@ -168,20 +168,23 @@ export default function index() {
                     <DefinirTopico
                         tema={'ANÁLISES'} />
                     {
-                        arr.map((info) => (
-                            <div className="Comentarios" key={info.id_post}>
-                                <CardComentario
-                                    id_post={info.id_post}
-                                    perfil={info.nome}
-                                    analise={info.avaliacao}
-                                    curtidasIniciais={info.curtidas}
-                                    nota={info.nota}
-                                    CliqueCurtir={CurtirComentario}
-                                    usuarioCurtiu={info.usuario_curtiu}
-                                    id_user={info.id_user}
-                                />
-                            </div>
-                        ))
+                        arr.length >= 1 ?
+                            arr.map((info) => (
+                                <div className="Comentarios" key={info.id_post}>
+                                    <CardComentario
+                                        id_post={info.id_post}
+                                        perfil={info.nome}
+                                        analise={info.avaliacao}
+                                        curtidasIniciais={info.curtidas}
+                                        nota={info.nota}
+                                        CliqueCurtir={CurtirComentario}
+                                        usuarioCurtiu={info.usuario_curtiu}
+                                        id_user={info.id_user}
+                                    /> :
+                                </div>
+                            ))
+                            :
+                            <h2 style={{textAlign: 'center'}}>Nenhuma análise encontrada</h2>
                     }
                 </div>
             </div>

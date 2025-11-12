@@ -63,31 +63,39 @@ endpoints.post('/comunidade/chat/:idComunidade', auth, async (req, res) => {
     })
 })
 
-endpoints.post('/comunidade/chat/list/:idSala', auth, async (req, res) => {
+endpoints.get('/comunidade/chat/list/:idSala', auth, async (req, res) => {
     let idSala = req.params.idSala;
     let registros = await repo.listMessages(idSala)
 
     res.send(registros)
-
 })
 
+endpoints.post('/comunidade/mensagem/:idSala', auth, async (req, resp) => {
+    let idSala = req.params.idSala
+    let Usuario = req.user.id_user
+    let dados = req.body
 
+    let resposta = await repo.EnviarMensagem(idSala, Usuario, dados)
 
-
-endpoints.post('/comunidade/membros/:idSala', auth, async (req, res) => {
-    let idSala = req.params.idSala;
-    let idUser = req.user.id_user;
-
-    let info = await repo.VerificarUser(idUser, idSala)
-
-    if (info.length === 0) {
-        res.status(401).send({
-            acesso: "Acesso negado usuario não pertence a comunidade"
-        })
-    } else {
-        res.send({
-            acesso: "Acesso Permitido"
-        })
-    }
+    resp.send({
+        'Certinho': resposta
+    })
 })
+
+// endpoints.post('/comunidade/membros/:idSala', auth, async (req, res) => {
+//     let idSala = req.params.idSala;
+//     let idUser = req.user.id_user;
+
+//     let info = await repo.VerificarUser(idUser, idSala)
+
+//     if (info.length === 0) {
+//         res.status(401).send({
+//             acesso: "Acesso negado usuario não pertence a comunidade"
+//         })
+//     } else {
+//         res.send({
+//             acesso: "Acesso Permitido"
+//         })
+//     }
+// })
 export default endpoints;
