@@ -92,7 +92,6 @@ export default function index() {
 
         try {
             const body = {
-                titulo: titulo,
                 id_filme: id,
                 avaliacao: avaliacao,
                 nota: nota
@@ -198,8 +197,6 @@ export default function index() {
                 salvar={EnviarAvaliacao}
                 conteudo={
                     <div className='Modal'>
-                        <label style={{ fontWeight: '500' }}>Titulo</label>
-                        <input type='text' value={titulo} onChange={e => setTitulo(e.target.value)} />
                         <label style={{ fontWeight: '500' }}>Avaliação</label>
                         <input type='text' value={avaliacao} onChange={e => setAvaliacao(e.target.value)} />
                         <label style={{ fontWeight: '500' }}>Nota</label>
