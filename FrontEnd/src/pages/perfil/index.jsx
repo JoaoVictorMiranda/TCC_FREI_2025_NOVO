@@ -24,7 +24,7 @@ const Perfil = () => {
   const [post, setPost] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [qtdMostrar, setQtdMostrar] = useState(5);
-  const [nomesFilmes, setNomesFilmes] = useState({}); // Estado para selecionar os nomes dos filmes
+  const [nomesFilmes, setNomesFilmes] = useState({}); 
 
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
@@ -75,7 +75,7 @@ const Perfil = () => {
       const postsRecebidos = res.data || [];
       setPost(postsRecebidos);
 
-      // -pega os nomes do filme com base no id mandado pelos posts la de baixo
+     
       const nomes = {};
       await Promise.all(postsRecebidos.map(async (postItem) => {
         if (!postItem.id_filme) return;

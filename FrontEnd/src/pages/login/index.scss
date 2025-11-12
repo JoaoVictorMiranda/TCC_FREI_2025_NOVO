@@ -6,7 +6,7 @@
   flex-direction: column;
   position: relative;
 
-  /* Overlay transparente para deixar o background mais claro ou opaco */
+  
   background:
     linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
     url(../../assets/images/BackgroundFilmes.png);
@@ -176,7 +176,7 @@
   }
 }
 
-// Responsividadecd 
+
 @media (max-width: 768px) {
   .login-container {
     padding: 10px;

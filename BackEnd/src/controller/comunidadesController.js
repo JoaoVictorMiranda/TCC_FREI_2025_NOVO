@@ -87,20 +87,4 @@ endpoints.get('/contar/comunidades', auth, async (req, resp) => {
     resp.send(resposta)
 })
 
-// endpoints.post('/comunidade/membros/:idSala', auth, async (req, res) => {
-//     let idSala = req.params.idSala;
-//     let idUser = req.user.id_user;
-
-//     let info = await repo.VerificarUser(idUser, idSala)
-
-//     if (info.length === 0) {
-//         res.status(401).send({
-//             acesso: "Acesso negado usuario não pertence a comunidade"
-//         })
-//     } else {
-//         res.send({
-//             acesso: "Acesso Permitido"
-//         })
-//     }
-// })
 export default endpoints;

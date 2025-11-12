@@ -2,12 +2,14 @@ import { connection } from './connection.js';
 
 export async function EnviarMensagem(idSala, Usuario, dados) {
         let [resultados] = await connection.query(`
-                insert into chat_mensagem (id_user, id_comunidade, mensagem, criada_em)
+                insert into comunidade_chat (id_comunidade, id_user, mensagem, criado_em, editado_em)
                 values
-                (?,?,?,NOW())
-                `, [Usuario, idSala, dados.mensagem])
+                (?,?,?,NOW(), NULL)
+                `, [idSala, Usuario, dados.mensagem])
         return resultados
 }
+
+
 
 export async function ContarComunidades() {
         let [resultados] = await connection.query(`
@@ -103,9 +105,9 @@ export async function sendMessage(idComunidade, dados, idUser) {
 
 export async function listMessages(idSala) {
         const comando = `
-            SELECT chat_mensagem.*, usuarios.foto_perfil, usuarios.nome
-            FROM chat_mensagem
-            INNER JOIN usuarios ON chat_mensagem.id_user = usuarios.id_user
+            SELECT comunidade_chat.*, usuarios.foto_perfil, usuarios.nome
+            FROM comunidade_chat
+            INNER JOIN usuarios ON comunidade_chat.id_user = usuarios.id_user
             WHERE id_comunidade = ?;
         `;
 
@@ -122,23 +124,3 @@ export async function VerificarUser(idUser, idSala) {
 
         return info
 }
-
-
-
-
-
-
-
-/*
-CREATE TABLE comunidade_chat (
-    id_mensagem INT PRIMARY KEY AUTO_INCREMENT,            -- ID único da mensagem
-    id_comunidade INT,                                     -- Comunidade onde foi enviada
-    id_user INT,                                           -- Quem enviou a mensagem
-    mensagem TEXT NOT NULL,                                -- Texto da mensagem
-    criado_em DATETIME DEFAULT CURRENT_TIMESTAMP,          -- Quando foi enviada
-    editado_em DATETIME,                                   -- Se foi editada, quando
-    FOREIGN KEY (id_comunidade) REFERENCES comunidades(id_comunidade) ON DELETE CASCADE,
-    FOREIGN KEY (id_user) REFERENCES usuarios(id_user) ON DELETE CASCADE
-    -- COMO USA: Mensagens do chat geral que todos os membros veem
-);
-*/
