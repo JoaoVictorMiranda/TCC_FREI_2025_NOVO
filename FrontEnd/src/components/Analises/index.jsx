@@ -16,7 +16,9 @@ import DefinirTopico from '../Topicos/index.jsx';
 export default function SessaoComentarios() {
     const [movie, setMovie] = useState(null)
     const [arr, setArr] = useState([])
+
     const navigate = useNavigate();
+
 
     async function PuxarInfo() {
         const resp = await api.get('/post/avaliacao')

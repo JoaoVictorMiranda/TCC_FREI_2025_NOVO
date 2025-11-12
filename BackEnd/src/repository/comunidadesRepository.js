@@ -9,6 +9,14 @@ export async function EnviarMensagem(idSala, Usuario, dados) {
         return resultados
 }
 
+export async function ContarComunidades() {
+        let [resultados] = await connection.query(`
+        select count(id_user) as usuarios
+        from usuarios        
+        `)
+        return resultados
+}
+
 export async function criarComunidades(dados, caminho, idCriador) {
         const comando = `
         INSERT INTO comunidades ( nome, descricao, id_criador, foto_capa)

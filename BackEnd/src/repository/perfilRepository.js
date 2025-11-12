@@ -21,6 +21,14 @@ export async function alterarFotoPerfil(idUser, caminhoImagem) {
     }
 }
 
+export async function ContarUsuarios() {
+        let [resultados] = await connection.query(`
+        select count(id_user) as usuarios
+        from usuarios        
+        `)
+        return resultados
+}
+
 export async function seguirUsuario(idUser, idFollower) {
     const comando = `
         INSERT INTO seguidores (id_user, id_seguidor)

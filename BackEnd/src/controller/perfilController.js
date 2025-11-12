@@ -74,6 +74,10 @@ endpoints.post('/follow/:idFollow', auth, async (req, res) => {
     }
 });
 
+endpoints.get('/contar/usuarios', auth, async (req,resp) => {
+    const resposta = await repo.ContarUsuarios()
+    resp.send(resposta)
+})
 
 endpoints.delete('/unfollow/:idFollow', auth, async (req, res) => {
     try {

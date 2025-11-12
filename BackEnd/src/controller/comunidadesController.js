@@ -82,6 +82,11 @@ endpoints.post('/comunidade/mensagem/:idSala', auth, async (req, resp) => {
     })
 })
 
+endpoints.get('/contar/comunidades', auth, async (req, resp) => {
+    const resposta = await repo.ContarComunidades()
+    resp.send(resposta)
+})
+
 // endpoints.post('/comunidade/membros/:idSala', auth, async (req, res) => {
 //     let idSala = req.params.idSala;
 //     let idUser = req.user.id_user;
