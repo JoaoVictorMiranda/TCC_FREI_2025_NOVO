@@ -61,10 +61,6 @@ export default function CardComentario({ id_post, id_user, perfil, nota, analise
         }
     }
 
-    
-
-    
-
 
     return (
         <div className="CardComentario">
@@ -80,7 +76,7 @@ export default function CardComentario({ id_post, id_user, perfil, nota, analise
             <div className="AlinhadorComentario">
                 <div className="Perfil">
                     <h3>{perfil}</h3>
-                    <h3>{nota ?? "0"}</h3>
+                    <h3> -- Nota: {nota ?? "0"}</h3>
                 </div>
                 <div className="Analise">
                     <h4>{analise}</h4>
