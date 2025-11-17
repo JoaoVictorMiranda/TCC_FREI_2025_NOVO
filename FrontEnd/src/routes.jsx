@@ -15,6 +15,7 @@ import Comunidades from "./pages/comunidades"
 import ChatComunidade from "./pages/comunidade_chat"
 import Desenvolvedores from "./pages/desenvolvedores"
 import PerfilUsuario from './pages/Usuario'
+import Privacidade from "./pages/politicas/PoliticasPrivacidade"
 
 const Navegacao = () => {
   return (
@@ -34,6 +35,8 @@ const Navegacao = () => {
         <Route path="/comunidade/:id" element={<ChatComunidade />}/>
         <Route path="/desenvolvedores" element={<Desenvolvedores />}/>
         <Route path='/perfil/:id' element={<PerfilUsuario/>}/>
+        <Route path="/privacidade" element={<Privacidade/>}/>
+
 
         <Route path="*" element={<NotFound />} />
       </Routes>
