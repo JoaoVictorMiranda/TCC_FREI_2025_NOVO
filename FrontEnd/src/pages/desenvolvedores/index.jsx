@@ -1,4 +1,3 @@
-// pages/DevelopersPage.jsx
 import React, { useState, useEffect } from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -17,22 +16,14 @@ const DevelopersPage = () => {
 
     const fetchUserData = async (username) => {
         try {
-            const response = await fetch(
-                `https://api.github.com/users/${username}`
-            );
+            const response = await fetch(`https://api.github.com/users/${username}`);
+            if (!response.ok) throw new Error(`Erro ao buscar ${username}`);
 
-            if (!response.ok) {
-                throw new Error(`Erro ao buscar ${username}`);
-            }
-
-            const data = await response.json();
-            return data;
-        } catch (err) {
-            console.error(`Erro no usuário ${username}:`, err);
+            return await response.json();
+        } catch {
             return null;
         }
     };
-
 
     const fetchAllDevelopers = async () => {
         setLoading(true);
@@ -43,10 +34,8 @@ const DevelopersPage = () => {
                 developerUsernames.map(username => fetchUserData(username))
             );
 
-
             const validDevelopers = developersData.filter(dev => dev !== null);
             setDevelopers(validDevelopers);
-
         } catch (err) {
             setError('Erro ao carregar dados dos desenvolvedores');
         } finally {
@@ -58,7 +47,7 @@ const DevelopersPage = () => {
         fetchAllDevelopers();
     }, []);
 
-
+    // ESTILOS
     const styles = {
         page: {
             maxWidth: '1200px',
@@ -137,9 +126,7 @@ const DevelopersPage = () => {
             transition: 'background 0.2s',
             marginTop: '8px'
         },
-        githubButtonHover: {
-            background: '#000'
-        },
+        githubButtonHover: { background: '#000' },
         loadingCard: {
             background: 'white',
             borderRadius: '12px',
@@ -161,16 +148,15 @@ const DevelopersPage = () => {
             margin: '8px auto',
             width: '80%'
         },
-        skeletonShort: {
-            width: '60%'
-        },
+        skeletonShort: { width: '60%' },
         error: {
             background: '#fee',
             border: '1px solid #fcc',
             borderRadius: '8px',
             padding: '20px',
             textAlign: 'center',
-            color: '#c33'
+            color: '#c33',
+            marginTop: '20px'
         },
         retryButton: {
             background: '#007acc',
@@ -184,7 +170,7 @@ const DevelopersPage = () => {
         }
     };
 
-    
+
     const DeveloperCard = ({ userData }) => {
         const [isHovered, setIsHovered] = useState(false);
 
@@ -197,97 +183,80 @@ const DevelopersPage = () => {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
-                <img
-                    src={userData.avatar_url}
-                    alt={userData.name || userData.login}
-                    style={styles.avatar}
-                />
-                <div>
-                    <h3 style={styles.name}>
-                        {userData.name || userData.login}
-                    </h3>
-                    <p style={styles.bio}>
-                        {userData.bio || 'Desenvolvedor'}
-                    </p>
-                    <div style={styles.stats}>
-                        <span>📂 {userData.public_repos} repos</span>
-                        <span>👥 {userData.followers} seguidores</span>
-                    </div>
-                    <a
-                        href={userData.html_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                            ...styles.githubButton,
-                            ...(isHovered ? styles.githubButtonHover : {})
-                        }}
-                    >
-                        🌟 Ver no GitHub
-                    </a>
+                <img src={userData.avatar_url} style={styles.avatar} />
+
+                <h3 style={styles.name}>
+                    {userData.name || userData.login}
+                </h3>
+
+                <p style={styles.bio}>
+                    {userData.bio || 'Desenvolvedor'}
+                </p>
+
+                <div style={styles.stats}>
+                    <span>📂 {userData.public_repos} repos</span>
+                    <span>👥 {userData.followers} seguidores</span>
                 </div>
+
+                <a
+                    href={userData.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                        ...styles.githubButton,
+                        ...(isHovered ? styles.githubButtonHover : {})
+                    }}
+                >
+                    🌟 Ver no GitHub
+                </a>
             </div>
         );
     };
 
- 
+
     const LoadingCard = () => (
         <div style={styles.loadingCard}>
             <div style={styles.skeletonAvatar}></div>
             <div style={styles.skeletonText}></div>
             <div style={{ ...styles.skeletonText, ...styles.skeletonShort }}></div>
-            <div style={styles.stats}>
-                <span>📂 ... repos</span>
-                <span>👥 ... seguidores</span>
-            </div>
         </div>
     );
 
+
     return (
-        <div style={styles.page}>
+        <>
+            {/* Agora 100% da largura */}
             <Header />
-            <div style={styles.header}>
-                <h1 style={styles.title}>🎯 Nossa Equipe</h1>
-                <p style={styles.subtitle}>
-                    Conheça os desenvolvedores que construíram este projeto
-                </p>
-            </div>
 
-            {error && (
-                <div style={styles.error}>
-                    <p>{error}</p>
-                    <button
-                        style={styles.retryButton}
-                        onClick={fetchAllDevelopers}
-                    >
-                        Tentar Novamente
-                    </button>
+            {/* Conteúdo central */}
+            <main style={styles.page}>
+                <div style={styles.header}>
+                    <h1 style={styles.title}>🎯 Nossa Equipe</h1>
+                    <p style={styles.subtitle}>
+                        Conheça os desenvolvedores que construíram este projeto
+                    </p>
                 </div>
-            )}
 
-            <div style={styles.grid}>
-                {loading ? (
-        
-                    developerUsernames.map((username, index) => (
-                        <LoadingCard key={index} />
-                    ))
-                ) : (
-             
-                    developers.map((developer) => (
-                        <DeveloperCard
-                            key={developer.id}
-                            userData={developer}
-                        />
-                    ))
+                {error && (
+                    <div style={styles.error}>
+                        <p>{error}</p>
+                        <button style={styles.retryButton} onClick={fetchAllDevelopers}>
+                            Tentar Novamente
+                        </button>
+                    </div>
                 )}
-            </div>
-            <Footer />
 
-            {!loading && developers.length === 0 && (
-                <div style={styles.error}>
-                    <p>Nenhum desenvolvedor foi carregado. Verifique os usernames do GitHub.</p>
+                <div style={styles.grid}>
+                    {loading
+                        ? developerUsernames.map((u, i) => <LoadingCard key={i} />)
+                        : developers.map(dev => <DeveloperCard key={dev.id} userData={dev} />)
+                    }
                 </div>
-            )}
-        </div>
+            </main>
+
+            {/* Agora 100% da largura */}
+            <Footer />
+        </>
     );
 };
 

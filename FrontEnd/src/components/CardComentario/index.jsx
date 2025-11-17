@@ -76,7 +76,7 @@ export default function CardComentario({ id_post, id_user, perfil, nota, analise
                 <div className="Perfil">
                     <h3>{perfil}</h3>
 
-                    <h3>{nota ?? ""}</h3>
+                    <h3> - NOTA: {nota ?? ""}</h3>
                 </div>
                 <div className="Analise">
                     <h4>{analise}</h4>

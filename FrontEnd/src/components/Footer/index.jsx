@@ -26,9 +26,6 @@ const Footer = () => {
               <div onClick={() => handleSocialMediaClick('https://www.instagram.com/institutonsfatima/')}>
                 <img src={InstagramIcon} alt="Instagram" />
               </div>
-              <div onClick={() => handleSocialMediaClick('https://www.tiktok.com/@celordecortes')}>
-                <img src={TikTokIcon} alt="TikTok" />
-              </div>
               <div onClick={() => handleSocialMediaClick('https://www.youtube.com/watch?v=h154ztlslzw&list=PLZAo-GJfQBsGpRZInH93bdSgEANKtoABC')}>
                 <img src={YoutubeIcon} alt="YouTube" />
               </div>
@@ -58,6 +55,7 @@ const Footer = () => {
             <ul>
               <Link to={'/desenvolvedores'} ><li>Desenvolvedores</li></Link>
               <Link to={'/desenvolvedores'} ><li>Contato</li></Link>
+              <Link to={'/privacidade'} ><li>Políticas de Privacidade</li></Link>
             </ul>
           </div>
         </div>
